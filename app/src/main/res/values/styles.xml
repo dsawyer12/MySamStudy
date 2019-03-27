@@ -1,11 +1,56 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+    <!-- Light Theme -->
+
+    <style name="AppThemeLight" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="actionOverflowButtonStyle">@style/OverFlow</item>
+        <item name="android:windowAnimationStyle">@style/FadeAnimation</item>
+        <item name="colorPrimary">@color/lightOrange</item>
+        <item name="colorPrimaryDark">@color/darkBlue</item>
+        <item name="backGround">@color/white</item>
+        <item name="cardView">@color/white</item>
+        <item name="titleTextColor">@color/white</item>
+        <item name="primaryText">@color/black</item>
+        <item name="secondaryText">@color/darkBlue</item>
+        <item name="toolBar">@color/lightOrange</item>
+        <item name="primaryButton">@color/lightOrange</item>
+        <item name="secondaryButton">@color/darkBlue</item>
+        <item name="colorAccent">@color/lightBlue</item>
+        <item name="navView">@color/white</item>
+        <item name="menuItem">@color/black</item>
+    </style>
+
+    <!-- Dark Theme -->
+
+    <style name="AppThemeDark" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="actionOverflowButtonStyle">@style/OverFlow</item>
+        <item name="android:windowAnimationStyle">@style/FadeAnimation</item>
+        <item name="colorPrimary">@color/lightOrange</item>
+        <item name="colorPrimaryDark">@color/darkBlue</item>
+        <item name="backGround">@color/darkBackGround</item>
+        <item name="cardView">@color/lightBackground</item>
+        <item name="titleTextColor">@color/white</item>
+        <item name="toolBar">@color/lightOrange</item>
+        <item name="primaryText">@color/white</item>
+        <item name="secondaryText">@color/darkBlue</item>
+        <item name="primaryButton">@color/lightOrange</item>
+        <item name="secondaryButton">@color/darkBlue</item>
+        <item name="colorAccent">@color/lightBlue</item>
+        <item name="navView">@color/lightBackground</item>
+        <item name="menuItem">@color/white</item>
+    </style>
+
+    <!-- Toolbar Menu Theme -->
+
+    <style name="OverFlow" parent="@style/Widget.AppCompat.Light.ActionButton.Overflow">
+        <item name="android:src">@drawable/ic_options</item>
+    </style>
+
+    <!-- Fade Animation -->
+
+    <style name="FadeAnimation">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
     </style>
 
 </resources>
