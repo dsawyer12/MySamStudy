@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="style">
+        <attr name="colorPrimary" format="color"/>
+        <attr name="colorPrimaryDark" format="color"/>
+        <attr name="backGround" format="color"/>
+        <attr name="cardView" format="color"/>
+        <attr name="titleTextColor" format="color"/>
+        <attr name="primaryText" format="color"/>
+        <attr name="secondaryText" format="color"/>
+        <attr name="primaryButton" format="color"/>
+        <attr name="secondaryButton" format="color"/>
+        <attr name="toolBar" format="color"/>
+        <attr name="navView" format="color"/>
+        <attr name="menuItem" format="color"/>
+    </declare-styleable>
+</resources>
