@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -14,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mysamstudy.R;
 import com.example.mysamstudy.objects.Card;
@@ -27,6 +29,7 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 
 public class SetActivity extends AppCompatActivity implements View.OnClickListener {
+    private static final String TAG = "TAG";
 
     TextView set_title, header_title;
     ImageView set_edit, set_add, back_btn, header_exapansion;
@@ -75,7 +78,6 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
         set = getIntent().getParcelableExtra("set");
         if (set != null){
             set_title.setText(set.getSetName());
-            header_title.setText(String.valueOf(set.getSetSize()) + " Card(s)");
             SettingsManager.getSharedPreferences(this, SettingsManager.user_session);
             Gson gson = new Gson();
             String jobj =  SettingsManager.getUserSession(SettingsManager.user_session);
@@ -116,28 +118,38 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
         ArrayList<Card> setCards = dbm.getCards(set.getSetId());
         set.setCards(setCards);
         if (set.getCards() != null){
+            header_title.setText(String.valueOf(set.getSetSize()) + " Card(s)");
             adapter = new SetListAdapter(this, set);
             list.setAdapter(adapter);
         }
         else{
             no_cards.setVisibility(View.VISIBLE);
+            header_title.setText("0 Card(s)");
         }
     }
 
     private void addListItem(String question, String answer) {
         DatabaseManager dbManager = new DatabaseManager(this);
         Card newCard = new Card(set.getSetId(), question, answer);
-        dbManager.addCard(newCard);
+        long result = dbManager.addCard(newCard);
 
-        if (set.getCards() != null){
-            set.getCards().add(newCard);
-            reInitList();
+        if (result != 0){
+            if (set.getCards() != null){
+                set.getCards().add(newCard);
+                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
+                reInitList();
+            }
+            else{
+                ArrayList<Card> newSetCardList = new ArrayList<>();
+                newSetCardList.add(newCard);
+                set.setCards(newSetCardList);
+                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
+                reInitList();
+            }
         }
         else{
-            ArrayList<Card> newSetCardList = new ArrayList<>();
-            newSetCardList.add(newCard);
-            set.setCards(newSetCardList);
-            reInitList();
+            Log.d(TAG, "Failed to add card to set");
+            Toast.makeText(this, "Failed to add card to set", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -151,7 +163,7 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
             list.setVisibility(View.VISIBLE);
             set_add.setImageResource(R.drawable.ic_add);
             header_exapansion.setImageResource(R.drawable.ic_collapse);
-            inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
+            setList();
         }
         else{
             adapter = new SetListAdapter(this, set);
@@ -163,7 +175,7 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
             list.setVisibility(View.VISIBLE);
             set_add.setImageResource(R.drawable.ic_add);
             header_exapansion.setImageResource(R.drawable.ic_collapse);
-            inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
+            setList();
         }
     }
 
@@ -179,20 +191,24 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
                     String question = new_card_question.getText().toString().trim();
                     String answer = new_card_answer.getText().toString().trim();
                     if (!question.isEmpty() && !answer.isEmpty()){
+                        Log.d(TAG, "NEITHER ARE EMPTY : PROCEED");
                         addListItem(question, answer);
                     }
 
                     if (question.isEmpty() && !answer.isEmpty()){
+                        Log.d(TAG, "Q IS EMPTY");
                         new_card_question.setError("Enter a Question");
                         new_card_question.requestFocus();
                         return;
                     }
                     if (answer.isEmpty() && !question.isEmpty()){
+                        Log.d(TAG, "A IS EMPTY");
                         new_card_answer.setError("Enter an Answer");
                         new_card_answer.requestFocus();
                         return;
                     }
                     else{
+                        Log.d(TAG, "BOTH ARE EMPTY : REVERT");
                         createMode = false;
                         new_card.setVisibility(View.GONE);
                         list.setVisibility(View.VISIBLE);
@@ -202,6 +218,7 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
                     }
                 }
                 else{
+                    Log.d(TAG, "CREATE-MODE IS NOT ACTIVE");
                     createMode = true;
                     new_card.setVisibility(View.VISIBLE);
                     no_cards.setVisibility(View.GONE);
@@ -209,7 +226,6 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
                     set_add.setImageResource(R.drawable.ic_finish);
                     header_exapansion.setImageResource(R.drawable.ic_expand);
                     new_card_question.requestFocus();
-                    inputManager.showSoftInput(new_card_question, InputMethodManager.SHOW_IMPLICIT);
                 }
                 break;
 

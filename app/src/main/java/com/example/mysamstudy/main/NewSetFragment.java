@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mysamstudy.R;
 import com.example.mysamstudy.objects.Set;
@@ -86,6 +87,7 @@ public class NewSetFragment extends Fragment implements View.OnClickListener {
         }
         else{
             Log.d(TAG, "createSet: UNSUCCESFUL");
+            Toast.makeText(getActivity(), "Failed to create set", Toast.LENGTH_LONG).show();
         }
     }
 
