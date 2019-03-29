@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/backGround">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:text="Are you sure you want to quit?"
+        android:textSize="22sp"
+        android:textColor="?attr/primaryText"
+        android:textStyle="bold"
+        android:layout_weight="1"
+        android:gravity="center"/>
+
+    <Button
+        android:id="@+id/confirm_quit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:background="@drawable/button_accessory_blue"
+        android:textColor="@color/white"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:text="Quit"/>
+
+    <Button
+        android:id="@+id/confirm_continue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:background="@drawable/button_accessory_orange"
+        android:textColor="@color/white"
+        android:layout_marginBottom="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:text="Continue"/>
+
+</LinearLayout>

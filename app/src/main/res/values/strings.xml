@@ -1,3 +1,10 @@
 <resources>
+
     <string name="app_name">MySamStudy</string>
+
+    <!--    Navigation Drawer   -->
+    <string name="open_drawer">Open drawer</string>
+    <string name="close_drawer">Close drawer</string>
+
+
 </resources>

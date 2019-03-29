@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".main.AccountActivity"
+    android:background="?attr/backGround">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/toolBar">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/back_btn"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/ic_back"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:paddingStart="0dp"
+                android:paddingEnd="10dp"
+                android:gravity="center_vertical"
+                android:layout_weight="1"
+                android:text="Account Settings"
+                android:textColor="?attr/titleTextColor"
+                android:layout_gravity="center"
+                android:textSize="20sp"/>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+    <TextView
+        android:id="@+id/account_created"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Account created - Jan 1, 2019"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:textColor="?attr/primaryText"
+        android:textSize="12sp"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="18dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Allow others to view your study sets"
+            android:textStyle="bold"
+            android:paddingTop="10dp"
+            android:textColor="@color/lightBlue"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="10dp"
+            android:background="@drawable/bottom_border_accessory_orange">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Allow your study sets to be searchable and viewed by other users. You can share all of your sets or you can select the sets you want to share."
+                android:textColor="?attr/primaryText"
+                android:textSize="12sp"/>
+
+            <RadioGroup
+                android:id="@+id/share_radio_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:id="@+id/share_none"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="?attr/primaryText"
+                    android:text="Don't Allow Sharing"
+                    android:buttonTint="@color/lightOrange"
+                    android:layout_marginTop="8dp"/>
+
+                <RadioButton
+                    android:id="@+id/share_all"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="?attr/primaryText"
+                    android:text="Share All"
+                    android:buttonTint="@color/lightOrange"
+                    android:layout_marginTop="8dp"/>
+
+                <RadioButton
+                    android:id="@+id/select_share"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="?attr/primaryText"
+                    android:text="Only Share Selected"
+                    android:buttonTint="@color/lightOrange"
+                    android:layout_marginTop="8dp"/>
+
+            </RadioGroup>
+
+            <ImageView
+                android:id="@+id/share_list"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_expand" />
+
+            <ListView
+                android:id="@+id/listview"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </ListView>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Personal Information"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/lightBlue"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="10dp"
+            android:background="@drawable/bottom_border_accessory_orange">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="First Name..."
+                android:layout_marginTop="10dp"
+                android:textColor="?attr/primaryText"/>
+
+            <EditText
+                android:id="@+id/first_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bottom_border_accessory_black"
+                android:textColor="?attr/primaryText"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Last Name..."
+                android:layout_marginTop="10dp"
+                android:textColor="?attr/primaryText"/>
+
+            <EditText
+                android:id="@+id/last_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bottom_border_accessory_black"
+                android:textColor="?attr/primaryText"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Username..."
+                android:layout_marginTop="10dp"
+                android:textColor="?attr/primaryText"/>
+
+            <EditText
+                android:id="@+id/username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bottom_border_accessory_black"
+                android:textSize="16sp"
+                android:layout_marginTop="10dp"
+                android:textColor="?attr/primaryText"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Password"
+                android:layout_marginTop="30dp"
+                android:textColor="?attr/primaryText"/>
+
+            <Button
+                android:id="@+id/password"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="Edit Password"
+                android:textAllCaps="false"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:textColor="@color/white"
+                android:background="@drawable/button_accessory_blue"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/save_changes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:background="@drawable/button_accessory_orange"
+        android:textColor="@color/white"
+        android:layout_marginBottom="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:text="Save Changes"/>
+
+</LinearLayout>

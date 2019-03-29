@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/rootView">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/cardView"
+        android:layout_margin="5dp">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:baselineAligned="false"
+            android:background="@drawable/full_border_accessory_orange">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/setName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:paddingEnd="20dp"
+                    android:paddingStart="0dp"
+                    android:layout_marginStart="10dp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:layout_marginTop="10dp"
+                    android:textColor="?attr/primaryButton"
+                    android:textSize="20sp"/>
+
+                <TextView
+                    android:id="@+id/numCards"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:layout_marginStart="10dp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:layout_marginBottom="10dp"
+                    android:paddingEnd="20dp"
+                    android:paddingStart="0dp"
+                    android:textColor="?attr/primaryText"
+                    android:textSize="14sp"/>
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:id="@+id/start"
+                    android:layout_width="60dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/button_accessory_blue"
+                    android:text="Start"
+                    android:layout_marginEnd="40dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/white"
+                    android:textAllCaps="false"/>
+
+            </RelativeLayout>
+
+            <CheckBox
+                android:id="@+id/checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                android:checked="false"
+                android:clickable="false"
+                android:layout_marginEnd="10dp"/>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>
