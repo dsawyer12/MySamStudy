@@ -18,10 +18,10 @@ public class Card implements Parcelable {
         this.FK = FK;
     }
 
-    public Card(int FK, String cardQuestion, String cardAnswer) {
-        this.FK = FK;
+    public Card(String cardQuestion, String cardAnswer, int FK) {
         this.cardQuestion = cardQuestion;
         this.cardAnswer = cardAnswer;
+        this.FK = FK;
     }
 
     protected Card(Parcel in) {

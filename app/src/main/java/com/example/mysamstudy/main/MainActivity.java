@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.mysamstudy.R;
 import com.example.mysamstudy.objects.Set;
@@ -157,10 +158,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             adapter.setIs_deleteView(false);
             delete_set.setVisibility(View.GONE);
             adapter.notifyDataSetChanged();
+            return;
         }
-        else{
-            super.onBackPressed();
-        }
+        super.onBackPressed();
+
     }
 
     @Override
@@ -178,29 +179,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 finish();
                 break;
             case(R.id.delete_sets):
-                ConfirmRemoveSetsDialogue dialog = new ConfirmRemoveSetsDialogue();
-                Bundle args = new Bundle();
-                args.putParcelableArrayList("delete_set", adapter.getDelete_set());
-                dialog.setArguments(args);
-                dialog.show(getSupportFragmentManager(), "remove_sets_dialog");
-
-
-                // REMOVE SELECTED SETS FROM THE DATABASE
-
-
-//                for (int i = 0; i < adapter.getDelete_set().size(); i++){
-//                    sets.remove(adapter.getDelete_set().get(i));
-//                }
-//                adapter.setIs_deleteView(false);
-//                is_delete_view = false;
-//                delete_set.setVisibility(View.GONE);
-//                adapter.notifyDataSetChanged();
-//                if (adapter.getCount() == 0){
-//                    cardview.setVisibility(View.VISIBLE);
-//                }
-//                else{
-//                    cardview.setVisibility(View.GONE);
-//                }
+                if(adapter.getDelete_set().isEmpty()){
+                    Toast.makeText(this, "Select the sets you wish to remove", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    ConfirmRemoveSetsDialogue dialog = new ConfirmRemoveSetsDialogue();
+                    Bundle args = new Bundle();
+                    args.putParcelableArrayList("delete_set", adapter.getDelete_set());
+                    dialog.setArguments(args);
+                    dialog.show(getSupportFragmentManager(), "remove_sets_dialog");
+                }
                 break;
         }
     }

@@ -8,25 +8,25 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.mysamstudy.R;
-import com.example.mysamstudy.objects.Set;
+import com.example.mysamstudy.objects.Card;
 
 import java.util.ArrayList;
 
-public class BaseSetListAdapter extends BaseAdapter {
+public class BaseCardListAdapter extends BaseAdapter {
 
+    private ArrayList<Card> cards;
     private Context context;
-    private ArrayList<Set> sets;
     private LayoutInflater layoutInflater;
 
-    public BaseSetListAdapter(Context context, ArrayList<Set> sets) {
-        this.layoutInflater = LayoutInflater.from(context);
+    public BaseCardListAdapter(Context context, ArrayList<Card> cards) {
         this.context = context;
-        this.sets = sets;
+        this.cards = cards;
+        this.layoutInflater = LayoutInflater.from(context);
     }
 
     @Override
     public int getCount() {
-        return sets.size();
+        return cards.size();
     }
 
     @Override
@@ -44,26 +44,20 @@ public class BaseSetListAdapter extends BaseAdapter {
         final ViewHolder holder;
         if (convertView == null){
             holder = new ViewHolder();
-            convertView = layoutInflater.inflate(R.layout.snippet_base_set_list_item, parent, false);
-            holder.set_name = convertView.findViewById(R.id.setName);
-            holder.set_size = convertView.findViewById(R.id.numCards);
+            convertView = layoutInflater.inflate(R.layout.snippet_card_item, parent, false);
+            holder.card_question = convertView.findViewById(R.id.card_question);
+            holder.card_answer = convertView.findViewById(R.id.card_answer);
             convertView.setTag(holder);
         }
         else{
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.set_name.setText(sets.get(position).getSetName());
-        holder.set_size.setText(sets.get(position).getSetName());
-        if (sets.get(position).getSetSize() == 0){
-            holder.set_size.setText("No Cards");
-        }
-        else{
-            holder.set_size.setText(String.valueOf(sets.get(position).getSetSize()));
-        }
+        holder.card_question.setText(cards.get(position).getCardQuestion());
+        holder.card_answer.setText(cards.get(position).getCardAnswer());
         return convertView;
     }
 
-    public class ViewHolder {
-        TextView set_name, set_size;
+    public class ViewHolder{
+        TextView card_question, card_answer;
     }
 }

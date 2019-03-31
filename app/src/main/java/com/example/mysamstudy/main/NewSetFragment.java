@@ -80,8 +80,7 @@ public class NewSetFragment extends Fragment implements View.OnClickListener {
         long result = databaseManager.addSet(set);
         if (result != 0){
             Log.d(TAG, "createSet: Success");
-            Intent intent = new Intent(getActivity(), SetActivity.class);
-            intent.putExtra("selectedSet", set);
+            Intent intent = new Intent(getActivity(), MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }

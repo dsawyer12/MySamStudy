@@ -1,10 +1,12 @@
 package com.example.mysamstudy.main;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,21 +15,25 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.example.mysamstudy.R;
-import com.example.mysamstudy.objects.Set;
-import com.example.mysamstudy.utils.BaseSetListAdapter;
+import com.example.mysamstudy.objects.Card;
+import com.example.mysamstudy.utils.BaseCardListAdapter;
 import com.example.mysamstudy.utils.DatabaseManager;
 
 import java.util.ArrayList;
 
-public class ConfirmRemoveSetsDialogue extends DialogFragment implements View.OnClickListener{
+public class ConfirmRemoveCardsDialogue extends DialogFragment implements View.OnClickListener {
     private static final String TAG = "TAG";
+    ArrayList<Card> delete_set;
+    OnCardsReomved listener;
 
-    ArrayList<Set> delete_set;
+    public interface OnCardsReomved{
+        void onRemove(boolean remove);
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.dialogue_confirm_remove_sets, container, false);
+        return inflater.inflate(R.layout.dialogue_confirm_remove_cards, container, false);
     }
 
     @Override
@@ -43,17 +49,45 @@ public class ConfirmRemoveSetsDialogue extends DialogFragment implements View.On
 
         delete_set = getSetFromBundle();
 
-        BaseSetListAdapter adapter = new BaseSetListAdapter(getActivity(), delete_set);
+        BaseCardListAdapter adapter = new BaseCardListAdapter(getActivity(), delete_set);
         listview.setAdapter(adapter);
     }
 
-    public ArrayList<Set> getSetFromBundle(){
+    public ArrayList<Card> getSetFromBundle(){
         Bundle bundle = this.getArguments();
         if (bundle != null){
             return bundle.getParcelableArrayList("delete_set");
         }
-        else{
+        else
             return null;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        try {
+            listener = (OnCardsReomved) getActivity();
+        } catch (Exception e) {
+            Log.d(TAG, e.getMessage());
+        }
+        super.onAttach(context);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case(R.id.confirm_btn):
+                DatabaseManager dbm = new DatabaseManager(getActivity());
+
+                listener.onRemove(true);
+//                Intent intent = new Intent(getActivity(), SetActivity.class);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                startActivity(intent);
+                getDialog().dismiss();
+                break;
+
+            case(R.id.cancel_btn):
+                getDialog().dismiss();
+                break;
         }
     }
 
@@ -64,25 +98,5 @@ public class ConfirmRemoveSetsDialogue extends DialogFragment implements View.On
         params.width = RelativeLayout.LayoutParams.MATCH_PARENT;
         params.height = RelativeLayout.LayoutParams.MATCH_PARENT;
         getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case(R.id.confirm_btn):
-                DatabaseManager dbm = new DatabaseManager(getActivity());
-                for (int i = 0; i < delete_set.size(); i++){
-                    dbm.deleteSet(delete_set.get(i).getSetId());
-                }
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-                getDialog().dismiss();
-                break;
-
-            case(R.id.cancel_btn):
-                getDialog().dismiss();
-                break;
-        }
     }
 }
