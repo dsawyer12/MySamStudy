@@ -22,9 +22,12 @@ import android.widget.ListView;
 
 import com.example.mysamstudy.R;
 import com.example.mysamstudy.objects.Set;
+import com.example.mysamstudy.objects.User;
 import com.example.mysamstudy.utils.CardListAdapter;
 import com.example.mysamstudy.utils.DatabaseManager;
 import com.example.mysamstudy.utils.SettingsManager;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 
@@ -32,9 +35,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = "TAG";
 
-    // comment that
-
     DatabaseManager databaseManager;
+    private User user;
 
     DrawerLayout drawer;
     ListView listview;
@@ -65,6 +67,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         databaseManager = new DatabaseManager(this);
+        SettingsManager.getSharedPreferences(this, SettingsManager.user_session);
+        Gson gson = new Gson();
+        String jobj = SettingsManager.getUserSession(SettingsManager.user_session);
+        user = gson.fromJson(jobj, User.class);
 
         listview = findViewById(R.id.listview);
         cardview = findViewById(R.id.cardview);
@@ -99,6 +105,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onClick() {
                 Log.d(TAG, "onClick: ");
             }
+
+            @Override
+            public void onClick(Set set) {
+                Intent intent = new Intent(MainActivity.this, SetActivity.class);
+                intent.putExtra("selectedSet", set);
+                startActivity(intent);
+            }
         };
 
         getData();
@@ -118,16 +131,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void getData(){
-        sets = databaseManager.getSets();
-        if (sets == null){
-            Log.d(TAG, "no sets");
-            cardview.setVisibility(View.VISIBLE);
-        }
-        else{
-            Log.d(TAG, "There are sets to display!!");
-            Log.d(TAG, String.valueOf(sets.size()));
+        sets = databaseManager.getSets(user.getUser_id());
+        if (sets != null){
+
+            for (int i = 0; i < sets.size(); i++){
+                Log.d(TAG, String.valueOf(sets.get(i).getSetSize()));
+            }
+
             adapter = new CardListAdapter(this, sets, listener);
             listview.setAdapter(adapter);
+        }
+        else{
+            Log.d(TAG, "no sets");
+            cardview.setVisibility(View.VISIBLE);
         }
     }
 
@@ -215,3 +231,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return true;
     }
 }
+
+

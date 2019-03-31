@@ -2,6 +2,7 @@ package com.example.mysamstudy.utils;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,7 @@ public class CardListAdapter extends BaseAdapter {
     public interface OnItemLongClickListener{
         void onLongClick(boolean in_deleteView);
         void onClick();
+        void onClick(Set set);
     }
 
     public CardListAdapter(Context context, ArrayList<Set> sets, OnItemLongClickListener listener) {
@@ -81,8 +83,8 @@ public class CardListAdapter extends BaseAdapter {
         }
 
         holder.setName.setText(sets.get(position).getSetName());
-        if (sets.get(position).getCards() != null){
-            holder.numCards.setText(String.valueOf(sets.get(position).getCards().size()) + " card(s)");
+        if (sets.get(position).getSetSize() != 0){
+            holder.numCards.setText(String.valueOf(sets.get(position).getSetSize() + " card"));
             holder.start.setEnabled(true);
         }
         else{
@@ -116,9 +118,7 @@ public class CardListAdapter extends BaseAdapter {
                     }
                 }
                 else{
-                    Intent intent = new Intent(context, SetActivity.class);
-                    intent.putExtra("set", sets.get(position));
-                    context.startActivity(intent);
+                    listener.onClick(sets.get(position));
                 }
             }
         });

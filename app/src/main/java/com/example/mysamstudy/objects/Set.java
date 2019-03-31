@@ -2,10 +2,12 @@ package com.example.mysamstudy.objects;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import java.util.ArrayList;
 
 public class Set implements Parcelable{
+    private static final String TAG = "TAG";
     private String setName;
     private int setId, FK;
     private int setSize = 0;
@@ -17,7 +19,7 @@ public class Set implements Parcelable{
     public Set(String setName, int FK) {
         this.setName = setName;
         this.FK = FK;
-        cards = new ArrayList<>();
+        cards = null;
     }
 
     public Set(int id, String setName, int setSize, boolean show_answers, boolean loop_set, boolean share, int FK) {
@@ -117,21 +119,11 @@ public class Set implements Parcelable{
     }
 
     public int getSetSize() {
-        if (getCards() != null){
-            return cards.size();
-        }
-        else{
-            return 0;
-        }
+        return setSize;
     }
 
     public void setSetSize(int setSize) {
-        if (cards != null){
-            this.setSize = cards.size();
-        }
-        else{
-            this.setSize = 0;
-        }
+        setSetSize(setSize);
     }
 
     public ArrayList<Card> getCards() {

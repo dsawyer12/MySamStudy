@@ -81,7 +81,7 @@ public class NewSetFragment extends Fragment implements View.OnClickListener {
         if (result != 0){
             Log.d(TAG, "createSet: Success");
             Intent intent = new Intent(getActivity(), SetActivity.class);
-            intent.putExtra("set", set);
+            intent.putExtra("selectedSet", set);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
