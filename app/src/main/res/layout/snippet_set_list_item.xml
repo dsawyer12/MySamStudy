@@ -36,7 +36,7 @@
                     android:ellipsize="end"
                     android:layout_marginTop="10dp"
                     android:textColor="?attr/primaryButton"
-                    android:textSize="20sp"/>
+                    android:textSize="22sp"/>
 
                 <TextView
                     android:id="@+id/numCards"

@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,9 +17,11 @@ import android.widget.Toast;
 
 import com.example.mysamstudy.R;
 import com.example.mysamstudy.objects.Set;
+import com.example.mysamstudy.utils.DatabaseManager;
 import com.example.mysamstudy.utils.SettingsManager;
 
 public class SetStartActivity extends AppCompatActivity implements View.OnClickListener{
+    private static final String TAG = "TAG";
 
     int current_card;
     CardFragment cardFragment;
@@ -45,13 +48,19 @@ public class SetStartActivity extends AppCompatActivity implements View.OnClickL
         back_btn = findViewById(R.id.back_button);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         back_btn.setOnClickListener(this);
         next_btn.setOnClickListener(this);
+
         set = getIntent().getParcelableExtra("mySet");
 
         if (set != null){
             current_card = 0;
             set_title.setText(set.getSetName());
+
+            DatabaseManager dmb = new DatabaseManager(this);
+            set.setCards(dmb.getCards(set.getSetId()));
+
             startSession();
         }
     }

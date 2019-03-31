@@ -3,30 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="150dp"
-    android:background="@color/lightOrange">
-
-    <TextView
-        android:id="@+id/username"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/register_date"
-        android:layout_gravity="bottom"
-        android:text="Username"
-        android:textStyle="bold"
-        android:textSize="24sp"
-        android:textColor="@color/darkBlue"
-        android:layout_marginBottom="10dp"
-        android:layout_marginStart="10dp"/>
-
-    <TextView
-        android:id="@+id/register_date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:text="Account Created - April 26, 2019"
-        android:textColor="@color/black"
-        android:layout_marginStart="15dp"
-        android:textSize="12sp"
-        android:layout_marginBottom="10dp"/>
+    android:layout_marginTop="20dp"
+    android:background="@drawable/shsu_banner">
 
 </RelativeLayout>

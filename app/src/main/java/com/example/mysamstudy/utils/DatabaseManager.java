@@ -155,8 +155,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         values.put(email, user.getEmail());
         values.put(password, user.getPassword());
         values.put(register_date, user.getRegister_date());
-        long id = database.insert(USERS_TABLE, null, values);
-        return id;
+        return database.insert(USERS_TABLE, null, values);
     }
 
     public void removeUser(){
@@ -184,10 +183,10 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
     }
 
-    public ArrayList<Set> getSets(){
+    public ArrayList<Set> getSets(int userId){
         SQLiteDatabase database = this.getWritableDatabase();
         ArrayList<Set> setsList = new ArrayList<>();
-        String query = "SELECT * FROM " + SETS_TABLE;
+        String query = "SELECT * FROM " + SETS_TABLE + " WHERE " + user_id + " = '" + userId + "'";
         Cursor c = database.rawQuery(query, null);
         if (!(c.moveToFirst()) || c.getCount() == 0){
             c.close();
@@ -206,7 +205,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
             ));
         }
         while (c.moveToNext());
-
+        c.close();
         return setsList;
     }
 
@@ -220,6 +219,12 @@ public class DatabaseManager extends SQLiteOpenHelper {
         values.put(share_set, 0);
         values.put(user_id, set.getFK());
         return database.insert(SETS_TABLE, null, values);
+    }
+
+    public void updateSetSize(int setId, int value){
+        SQLiteDatabase database = this.getWritableDatabase();
+        String query = "UPDATE " + SETS_TABLE + " SET " + set_size + " = " + value + " WHERE " + set_id + " = " + setId;
+        database.execSQL(query);
     }
 
     public void deleteSet(Set set){
@@ -269,6 +274,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
             ));
         }
         while(c.moveToNext());
+        c.close();
         return cardList;
     }
 
@@ -278,7 +284,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         values.put(question, card.getCardQuestion());
         values.put(answer, card.getCardAnswer());
         values.put(set_id, card.getFK());
-        return db.insert(CARDS_TABLE, null, values);
+        return db.insert(CARDS_TABLE,null, values);
     }
 
     public  void removeCard(Card card){

@@ -1,6 +1,7 @@
 package com.example.mysamstudy.utils;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,9 +52,12 @@ public class SetListAdapter extends BaseAdapter {
         else{
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.set_question.setText(set.getCards().get(position).getCardQuestion());
-        holder.set_answer.setText(set.getCards().get(position).getCardAnswer());
-        holder.card_number.setText(String.valueOf(position + 1));
+        if (set.getSetSize() != 0){
+            Log.d(TAG, "size : " + String.valueOf(set.getSetSize()));
+            holder.set_question.setText(set.getCards().get(position).getCardQuestion());
+            holder.set_answer.setText(set.getCards().get(position).getCardAnswer());
+            holder.card_number.setText(String.valueOf(position + 1));
+        }
         return convertView;
     }
 
