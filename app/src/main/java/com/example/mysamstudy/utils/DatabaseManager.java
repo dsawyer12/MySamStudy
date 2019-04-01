@@ -89,7 +89,8 @@ public class DatabaseManager extends SQLiteOpenHelper {
                 card_id + " INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
                 question + " TEXT NOT NULL, " +
                 answer + " TEXT NOT NULL, " +
-                set_id + " INTEGER NOT NULL REFERENCES " + SETS_TABLE + "(" + set_id + "))";
+                set_id + " INTEGER NOT NULL REFERENCES " +
+                SETS_TABLE + "(" + set_id + "))";
         db.execSQL(query);
     }
 
@@ -158,6 +159,22 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return database.insert(USERS_TABLE, null, values);
     }
 
+    public void updateUserFirstName(){
+
+    }
+
+    public void updateUserLastName(){
+
+    }
+
+    public void updateUserUsername(){
+
+    }
+
+    public void updateUserEmail(){
+
+    }
+
     public void removeUser(){
         /*
             The statement of code that calls this method will be located in the 'AccountActivity'.
@@ -221,38 +238,16 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return database.insert(SETS_TABLE, null, values);
     }
 
-    public void updateSetSize(int setId, int value){
+    public void updateSetSize(Set set){
         SQLiteDatabase database = this.getWritableDatabase();
-        String query = "UPDATE " + SETS_TABLE + " SET " + set_size + " = " + value + " WHERE " + set_id + " = " + setId;
+        String query = "UPDATE " + SETS_TABLE + " SET " + set_size + " = " + set.getSetSize() + " WHERE " + set_id + " = " + set.getSetId();
         database.execSQL(query);
     }
 
-    public void deleteSet(Set set){
-
-        /*
-            There are two places in the application where this method can be called. One in the 'MainActivity' when
-            the user long-pressed one of the listview items in which a selection-mode is presented for deletion, and
-            again in the 'SetActivity' for which there will be a deletion option when the user presses the edit button
-            (pencil icon). In the MainActivity, the option of multiple set deletion will be an option.
-            The statement of code that calls this method from the MainActivity will be in a for loop in which each iteration
-            will call this method passing a 'Set' object to be deleted. Create a query that locates the set and
-            removes it from the database. You will have to consider who owns the set (HINT: Foreign Key),
-            and the id of the set (Hint: primary key). Verify that the correct set is selected or located
-            in the database and delete it. For the SetActivity, only the set that is currently being viewed will need
-            to be deleted. Regardless though, this method will be called one at a time by passing a single set object.
-        */
-
-        // YOUR CODE GOES HERE
-
-
-
-
-
-
-
-
-
-
+    public void deleteSet(int setId){
+        SQLiteDatabase database = this.getWritableDatabase();
+        String query = "DELETE FROM " + SETS_TABLE + " WHERE " + set_id + " = " + setId;
+        database.execSQL(query);
     }
 
     public ArrayList<Card> getCards(int setID){
@@ -279,6 +274,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
     }
 
     public long addCard(Card card){
+        Log.d(TAG, "FK : " + String.valueOf(card.getFK()));
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(question, card.getCardQuestion());
@@ -287,29 +283,10 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return db.insert(CARDS_TABLE,null, values);
     }
 
-    public  void removeCard(Card card){
-
-        /*
-            This method should be called within the 'SetActivity' class. When the user long-presses a listview
-            item, they will be presented with a selection-mode in which they can select multiple listview items (cards)
-            and then press the delete button. The statement of code that calls this method will be in a for loop in which
-            each iteration will call this method passing a 'Card' object to be deleted. Create a query that locates the Card
-            and removes it from the database. You will have to consider who owns the set for which the card belongs to
-            (HINT: Foreign Key), and the id of the Card (Hint: primary key). Verify that the correct Card is selected or located
-            in the database and delete it.
-        */
-
-        // YOUR CODE GOES HERE
-
-
-
-
-
-
-
-
-
-
+    public  void deleteCard(int cardId){
+        SQLiteDatabase database = this.getWritableDatabase();
+        String query = "DELETE FROM " + CARDS_TABLE + " WHERE " + card_id + " = " + cardId;
+        database.execSQL(query);
     }
 
 }

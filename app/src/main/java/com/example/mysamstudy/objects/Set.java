@@ -123,7 +123,7 @@ public class Set implements Parcelable{
     }
 
     public void setSetSize(int setSize) {
-        setSetSize(setSize);
+        this.setSize = setSize;
     }
 
     public ArrayList<Card> getCards() {

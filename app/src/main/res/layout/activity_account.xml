@@ -170,7 +170,7 @@
                 android:textSize="16sp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/bottom_border_accessory_black"
-                android:textColor="?attr/primaryText"/>
+                android:textColor="@color/lightOrange"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -186,7 +186,7 @@
                 android:textSize="16sp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/bottom_border_accessory_black"
-                android:textColor="?attr/primaryText"/>
+                android:textColor="@color/lightOrange"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -202,7 +202,23 @@
                 android:background="@drawable/bottom_border_accessory_black"
                 android:textSize="16sp"
                 android:layout_marginTop="10dp"
+                android:textColor="@color/lightOrange"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email..."
+                android:layout_marginTop="10dp"
                 android:textColor="?attr/primaryText"/>
+
+            <EditText
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bottom_border_accessory_black"
+                android:textSize="16sp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/lightOrange"/>
 
             <TextView
                 android:layout_width="wrap_content"
