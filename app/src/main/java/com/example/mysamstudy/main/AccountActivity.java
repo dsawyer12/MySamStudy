@@ -16,8 +16,11 @@ import android.widget.TextView;
 
 import com.example.mysamstudy.R;
 import com.example.mysamstudy.objects.Set;
+import com.example.mysamstudy.objects.User;
+import com.example.mysamstudy.utils.DatabaseManager;
 import com.example.mysamstudy.utils.SetSelectShareAdapter;
 import com.example.mysamstudy.utils.SettingsManager;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -29,7 +32,7 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
 
     ImageView back_btn, share_list;
     TextView account_created;
-    EditText first_name, last_name, username;
+    EditText first_name, last_name, username, email;
     RadioGroup share_radio_group;
     RadioButton share_all, select_share, share_none;
     ListView list;
@@ -37,6 +40,7 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
     SetSelectShareAdapter.OnItemCheckedListener listener;
     SetSelectShareAdapter adapter;
 
+    private User user;
     ArrayList<Set> sets = new ArrayList<>();
     java.util.Set<Integer> selectedSet = new HashSet<>();
 
@@ -65,6 +69,7 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
         first_name = findViewById(R.id.first_name);
         last_name = findViewById(R.id.last_name);
         username = findViewById(R.id.username);
+        email = findViewById(R.id.email);
         share_radio_group = findViewById(R.id.share_radio_group);
         share_all = findViewById(R.id.share_all);
         select_share = findViewById(R.id.select_share);
@@ -80,6 +85,17 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
         password.setOnClickListener(this);
         save_changes.setOnClickListener(this);
         share_radio_group.setOnCheckedChangeListener(this);
+
+        SettingsManager.getSharedPreferences(this, SettingsManager.user_session);
+        Gson gson = new Gson();
+        String jobj = SettingsManager.getUserSession(SettingsManager.user_session);
+        user = gson.fromJson(jobj, User.class);
+
+        first_name.setText(user.getFirst_name());
+        last_name.setText(user.getLast_name());
+        username.setText(user.getUsername());
+        email.setText(user.getEmail());
+        account_created.setText("Account Created - " + user.getRegister_date());
 
         initializeSettings();
     }
@@ -97,7 +113,6 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
         }
 
         SettingsManager.getSharedPreferences(this, SettingsManager.user_session);
-        Log.d(TAG, SettingsManager.getUserSession(SettingsManager.user_session));
 
         sets = getIntent().getParcelableArrayListExtra("sets");
         if (sets != null){
@@ -148,6 +163,21 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
     public void verifySettings(){
         SettingsManager.getSharedPreferences(this, SettingsManager.share_selected_items);
         SettingsManager.write(SettingsManager.share_selected_items, selectedSet);
+        DatabaseManager dbm = new DatabaseManager(this);
+        if (!first_name.getText().toString().equals(user.getFirst_name())){
+            dbm.updateUserFirstName();
+        }
+        if (!last_name.getText().toString().equals(user.getLast_name())){
+            dbm.updateUserLastName();
+        }
+        if (!username.getText().toString().equals(user.getUsername())){
+            dbm.updateUserUsername();
+        }
+        if(!email.getText().toString().equals(user.getEmail())){
+            dbm.updateUserEmail();
+        }
+
+        //update shared preferences to reflect users new data
     }
 
     @Override

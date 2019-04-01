@@ -159,6 +159,22 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return database.insert(USERS_TABLE, null, values);
     }
 
+    public void updateUserFirstName(){
+
+    }
+
+    public void updateUserLastName(){
+
+    }
+
+    public void updateUserUsername(){
+
+    }
+
+    public void updateUserEmail(){
+
+    }
+
     public void removeUser(){
         /*
             The statement of code that calls this method will be located in the 'AccountActivity'.
