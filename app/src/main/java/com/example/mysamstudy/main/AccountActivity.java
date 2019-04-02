@@ -1,6 +1,7 @@
 package com.example.mysamstudy.main;
 
 import android.content.Intent;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -164,20 +165,35 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
         SettingsManager.getSharedPreferences(this, SettingsManager.share_selected_items);
         SettingsManager.write(SettingsManager.share_selected_items, selectedSet);
         DatabaseManager dbm = new DatabaseManager(this);
+        SettingsManager.getSharedPreferences(this, SettingsManager.user_session);
+        Gson gson = new Gson();
         if (!first_name.getText().toString().equals(user.getFirst_name())){
             dbm.updateUserFirstName(user, first_name.getText().toString());
+            user.setFirst_name(first_name.getText().toString());
+            String jobj = gson.toJson(user);
+            SettingsManager.loadUserSession(SettingsManager.user_session, jobj);
         }
         if (!last_name.getText().toString().equals(user.getLast_name())){
             dbm.updateUserLastName(user, last_name.getText().toString());
+            user.setLast_name(last_name.getText().toString());
+            String jobj = gson.toJson(user);
+            SettingsManager.loadUserSession(SettingsManager.user_session, jobj);
         }
         if (!username.getText().toString().equals(user.getUsername())){
             dbm.updateUserUsername(user, username.getText().toString());
+            user.setUsername(username.getText().toString());
+            String jobj = gson.toJson(user);
+            SettingsManager.loadUserSession(SettingsManager.user_session, jobj);
         }
         if(!email.getText().toString().equals(user.getEmail())){
             dbm.updateUserEmail(user, email.getText().toString());
+            user.setEmail(email.getText().toString());
+            String jobj = gson.toJson(user);
+            SettingsManager.loadUserSession(SettingsManager.user_session, jobj);
         }
 
         SettingsManager.getSharedPreferences(this, SettingsManager.user_session);
+        Log.d(TAG, SettingsManager.getUserSession(SettingsManager.user_session));
 
 
         //update shared preferences to reflect users new data
