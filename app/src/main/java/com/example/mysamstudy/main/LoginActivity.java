@@ -86,12 +86,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Toast.makeText(this, "Could not retrieve user. Check your username and password and try again",
                     Toast.LENGTH_LONG).show();
         }
-
-
-
-
-
-
     }
 
     @Override

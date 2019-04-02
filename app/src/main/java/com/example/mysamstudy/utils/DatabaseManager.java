@@ -159,44 +159,28 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return database.insert(USERS_TABLE, null, values);
     }
 
-    public void updateUserFirstName(){
-
+    public void updateUserFirstName(User user, String Fname){
+        SQLiteDatabase database = this.getWritableDatabase();
+        String query = "UPDATE " + USERS_TABLE + "SET " + first_name + " = " + Fname
+                + " WHERE " + user_id + " = '" + user.getUser_id() + "'";
     }
 
-    public void updateUserLastName(){
-
+    public void updateUserLastName(User user, String Lname){
+        SQLiteDatabase database = this.getWritableDatabase();
+        String query = "";
     }
 
-    public void updateUserUsername(){
-
+    public void updateUserUsername(User user, String username){
+        SQLiteDatabase database = this.getWritableDatabase();
+        String query = "";
     }
 
-    public void updateUserEmail(){
-
+    public void updateUserEmail(User user, String email){
+        SQLiteDatabase database = this.getWritableDatabase();
+        String query = "";
     }
 
     public void removeUser(){
-        /*
-            The statement of code that calls this method will be located in the 'AccountActivity'.
-            Obtain the currently logged in users information via the shared preferences and create a query
-            that searches the database for that instance or tuple containing that users information.
-            Delete that tuple if the correct values are obtained. You will need to give this method (removeUser)
-            a parameter list of those values and pass them whenever you call this method from another activity or class.
-            You can pass the unique user_id to be sure you're deleting the correct user, but also pass some other
-            information about the user for verification like their username or email.
-
-        */
-
-        // YOUR CODE GOES HERE
-
-
-
-
-
-
-
-
-
 
     }
 

@@ -165,17 +165,20 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
         SettingsManager.write(SettingsManager.share_selected_items, selectedSet);
         DatabaseManager dbm = new DatabaseManager(this);
         if (!first_name.getText().toString().equals(user.getFirst_name())){
-            dbm.updateUserFirstName();
+            dbm.updateUserFirstName(user, first_name.getText().toString());
         }
         if (!last_name.getText().toString().equals(user.getLast_name())){
-            dbm.updateUserLastName();
+            dbm.updateUserLastName(user, last_name.getText().toString());
         }
         if (!username.getText().toString().equals(user.getUsername())){
-            dbm.updateUserUsername();
+            dbm.updateUserUsername(user, username.getText().toString());
         }
         if(!email.getText().toString().equals(user.getEmail())){
-            dbm.updateUserEmail();
+            dbm.updateUserEmail(user, email.getText().toString());
         }
+
+        SettingsManager.getSharedPreferences(this, SettingsManager.user_session);
+
 
         //update shared preferences to reflect users new data
     }
