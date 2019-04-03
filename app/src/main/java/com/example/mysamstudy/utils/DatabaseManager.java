@@ -161,7 +161,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
     public void updateUserFirstName(User user, String Fname){
         SQLiteDatabase database = this.getWritableDatabase();
-        String query = "UPDATE " + USERS_TABLE + "SET " + first_name + " = " + Fname
+        String query = "UPDATE " + USERS_TABLE + " SET " + first_name + " = '" + Fname + "'"
                 + " WHERE " + user_id + " = '" + user.getUser_id() + "'";
         database.execSQL(query);
     }
