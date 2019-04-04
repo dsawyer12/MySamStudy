@@ -209,7 +209,8 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
                 break;
 
             case(R.id.password):
-
+                UpdatePasswordDialogue dialog = new UpdatePasswordDialogue();
+                dialog.show(getSupportFragmentManager(), "updatePassword");
                 break;
 
             case(R.id.save_changes):
