@@ -24,7 +24,7 @@ public class UpdatePasswordDialogue extends DialogFragment implements View.OnCli
     private static final String TAG = "TAG";
 
     EditText current_p, new_p, confirm_p;
-    Button save_changes;
+    Button save_changes, cancel_change;
     private User user;
 
     @Nullable
@@ -48,7 +48,9 @@ public class UpdatePasswordDialogue extends DialogFragment implements View.OnCli
         confirm_p = view.findViewById(R.id.new_password_confirm);
 
         save_changes = view.findViewById(R.id.save_password_btn);
+        cancel_change = view.findViewById(R.id.cancel_pasw_change_btn);
         save_changes.setOnClickListener(this);
+        cancel_change.setOnClickListener(this);
     }
 
     public void verifyCredentials(){
@@ -63,7 +65,11 @@ public class UpdatePasswordDialogue extends DialogFragment implements View.OnCli
             return;
         }
         DatabaseManager dbm = new DatabaseManager(getActivity());
-//        dbm.updateUserPassword();
+        dbm.updateUserPassword(user, new_p.getText().toString().trim());
+        user.setPassword(new_p.getText().toString().trim());
+        Gson gson = new Gson();
+        String jobj = gson.toJson(user);
+        SettingsManager.loadUserSession(SettingsManager.user_session, jobj);
         getDialog().dismiss();
     }
 
@@ -81,6 +87,10 @@ public class UpdatePasswordDialogue extends DialogFragment implements View.OnCli
         switch (view.getId()){
             case(R.id.save_password_btn):
                 verifyCredentials();
+                break;
+
+            case(R.id.cancel_pasw_change_btn):
+                getDialog().dismiss();
                 break;
         }
     }

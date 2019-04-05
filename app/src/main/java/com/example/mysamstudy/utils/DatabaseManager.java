@@ -102,11 +102,11 @@ public class DatabaseManager extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void getUserById(int id){
-        SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT " + " FROM " + "USER_TABLE";
-
-    }
+//    public void getUserById(int id){
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        String query = "SELECT " + " FROM " + "USER_TABLE";
+//
+//    }
 
     public User getUser(String mUsername, String mPassword){
         SQLiteDatabase database = this.getWritableDatabase();
@@ -168,21 +168,36 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
     public void updateUserLastName(User user, String Lname){
         SQLiteDatabase database = this.getWritableDatabase();
-        String query = "";
+        String query = "UPDATE " + USERS_TABLE + " SET " + last_name + " = '" + Lname + "'"
+                + " WHERE " + user_id + " = '" + user.getUser_id() + "'";
+        database.execSQL(query);
     }
 
-    public void updateUserUsername(User user, String username){
+    public void updateUserUsername(User user, String mUsername){
         SQLiteDatabase database = this.getWritableDatabase();
-        String query = "";
+        String query = "UPDATE " + USERS_TABLE + " SET " + username + " = '" + mUsername + "'"
+                + " WHERE " + user_id + " = '" + user.getUser_id() + "'";
+        database.execSQL(query);
     }
 
-    public void updateUserEmail(User user, String email){
+    public void updateUserEmail(User user, String mEmail){
         SQLiteDatabase database = this.getWritableDatabase();
-        String query = "";
+        String query = "UPDATE " + USERS_TABLE + " SET " + email + " = '" + mEmail + "'"
+                + " WHERE " + user_id + " = '" + user.getUser_id() + "'";
+        database.execSQL(query);
     }
 
-    public void removeUser(){
+    public void updateUserPassword(User user, String mPassword){
+        SQLiteDatabase database = this.getWritableDatabase();
+        String query = "UPDATE " + USERS_TABLE + " SET " + password + " = '"
+                + mPassword +"' WHERE " + user_id + " = " + user.getUser_id();
+        database.execSQL(query);
+    }
 
+    public void removeUser(User user){
+        SQLiteDatabase database = this.getWritableDatabase();
+        String query = "DELETE FROM " + USERS_TABLE + " WHERE " + user_id + " = " + user.getUser_id();
+        database.execSQL(query);
     }
 
     public ArrayList<Set> getSets(int userId){

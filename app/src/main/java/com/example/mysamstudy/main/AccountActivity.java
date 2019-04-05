@@ -167,36 +167,30 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
         DatabaseManager dbm = new DatabaseManager(this);
         SettingsManager.getSharedPreferences(this, SettingsManager.user_session);
         Gson gson = new Gson();
-        if (!first_name.getText().toString().equals(user.getFirst_name())){
-            dbm.updateUserFirstName(user, first_name.getText().toString());
-            user.setFirst_name(first_name.getText().toString());
+        if (!first_name.getText().toString().trim().equals(user.getFirst_name())){
+            dbm.updateUserFirstName(user, first_name.getText().toString().trim());
+            user.setFirst_name(first_name.getText().toString().trim());
             String jobj = gson.toJson(user);
             SettingsManager.loadUserSession(SettingsManager.user_session, jobj);
         }
-        if (!last_name.getText().toString().equals(user.getLast_name())){
-            dbm.updateUserLastName(user, last_name.getText().toString());
-            user.setLast_name(last_name.getText().toString());
+        if (!last_name.getText().toString().trim().equals(user.getLast_name())){
+            dbm.updateUserLastName(user, last_name.getText().toString().trim());
+            user.setLast_name(last_name.getText().toString().trim());
             String jobj = gson.toJson(user);
             SettingsManager.loadUserSession(SettingsManager.user_session, jobj);
         }
-        if (!username.getText().toString().equals(user.getUsername())){
-            dbm.updateUserUsername(user, username.getText().toString());
-            user.setUsername(username.getText().toString());
+        if (!username.getText().toString().trim().equals(user.getUsername())){
+            dbm.updateUserUsername(user, username.getText().toString().trim());
+            user.setUsername(username.getText().toString().trim());
             String jobj = gson.toJson(user);
             SettingsManager.loadUserSession(SettingsManager.user_session, jobj);
         }
-        if(!email.getText().toString().equals(user.getEmail())){
-            dbm.updateUserEmail(user, email.getText().toString());
-            user.setEmail(email.getText().toString());
+        if(!email.getText().toString().trim().equals(user.getEmail())){
+            dbm.updateUserEmail(user, email.getText().toString().trim());
+            user.setEmail(email.getText().toString().trim());
             String jobj = gson.toJson(user);
             SettingsManager.loadUserSession(SettingsManager.user_session, jobj);
         }
-
-        SettingsManager.getSharedPreferences(this, SettingsManager.user_session);
-        Log.d(TAG, SettingsManager.getUserSession(SettingsManager.user_session));
-
-
-        //update shared preferences to reflect users new data
     }
 
     @Override
@@ -215,9 +209,9 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
 
             case(R.id.save_changes):
                 verifySettings();
-//                Intent intent1 = new Intent(AccountActivity.this, MainActivity.class);
-//                startActivity(intent1);
-//                finish();
+                Intent intent1 = new Intent(AccountActivity.this, MainActivity.class);
+                startActivity(intent1);
+                finish();
                 break;
 
             case(R.id.share_list):

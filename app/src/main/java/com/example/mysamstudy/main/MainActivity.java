@@ -204,14 +204,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case(R.id.settings):
                 Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
                 startActivity(intent);
-                finish();
                 break;
 
             case(R.id.account):
                 Intent intent1 = new Intent(MainActivity.this, AccountActivity.class);
                 intent1.putParcelableArrayListExtra("sets", sets);
                 startActivity(intent1);
-                finish();
                 break;
         }
         DrawerLayout drawer = findViewById(R.id.drawer);
