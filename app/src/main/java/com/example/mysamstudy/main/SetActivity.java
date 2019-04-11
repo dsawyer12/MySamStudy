@@ -6,11 +6,13 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.text.InputType;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -42,11 +44,10 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
     ImageView delete_cards;
     InputMethodManager inputManager;
     SetListAdapter.OnCardClickListener listener;
-    boolean is_delete_view = false;
+    boolean is_delete_view = false, createMode = false;
 
     private SetListAdapter adapter;
     private Set set;
-    private boolean createMode;
 
     @Override
     public void onRemove(boolean remove) {
@@ -100,7 +101,11 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
         header_title = findViewById(R.id.card_list_header_title);
         header_exapansion = findViewById(R.id.card_list_expansion);
         new_card_question = findViewById(R.id.card_question);
+        new_card_question.setImeOptions(EditorInfo.IME_ACTION_NEXT);
+        new_card_question.setRawInputType(InputType.TYPE_CLASS_TEXT);
         new_card_answer = findViewById(R.id.card_answer);
+        new_card_answer.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        new_card_answer.setRawInputType(InputType.TYPE_CLASS_TEXT);
         inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
         back_btn.setOnClickListener(this);
@@ -133,10 +138,6 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
         set = getIntent().getParcelableExtra("selectedSet");
         if (set != null){
             set_title.setText(set.getSetName());
-//            SettingsManager.getSharedPreferences(this, SettingsManager.user_session);
-//            Gson gson = new Gson();
-//            String jobj =  SettingsManager.getUserSession(SettingsManager.user_session);
-//            User user = gson.fromJson(jobj, User.class);
             setList();
         }
 
@@ -184,7 +185,7 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
         }
     }
 
-    private void addListItem(String question, String answer) {
+    private void addListItem(String question, String answer){
         DatabaseManager dbm = new DatabaseManager(this);
         Card newCard = new Card(question, answer, set.getSetId());
         dbm.addCard(newCard);

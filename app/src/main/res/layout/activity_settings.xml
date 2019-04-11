@@ -69,7 +69,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="some random words that will only satisfy me at the moment and will never be published like so. i must change this text whenever i am finished designing and creatingf this application"
+                android:text="Dummy text to display under the 'settings title' to guarantee that everything fits into place properly and that nothing is out of line. "
                 android:textColor="?attr/primaryText"
                 android:layout_marginTop="8dp"/>
 
