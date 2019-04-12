@@ -6,10 +6,15 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -35,19 +40,19 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
         ConfirmRemoveCardsDialogue.OnCardsReomved {
     private static final String TAG = "TAG";
 
+    boolean is_delete_view = false, createMode = false;
+    LinearLayout root_view, header;
     TextView set_title, header_title;
-    ImageView set_edit, set_add, back_btn, header_exapansion;
+    ImageView set_edit, set_add, back_btn, header_exapansion, new_card_back, new_card_finish, delete_cards;
     EditText new_card_question, new_card_answer;
-    LinearLayout header;
     CardView new_card, no_cards;
     ListView list;
-    ImageView delete_cards;
+    View editToolbar;
+    Toolbar toolbar;
+    Set set;
     InputMethodManager inputManager;
     SetListAdapter.OnCardClickListener listener;
-    boolean is_delete_view = false, createMode = false;
-
-    private SetListAdapter adapter;
-    private Set set;
+    SetListAdapter adapter;
 
     @Override
     public void onRemove(boolean remove) {
@@ -58,12 +63,11 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
             }
             set.setSetSize(set.getSetSize() - adapter.getDelete_set().size());
             dbm.updateSetSize(set);
-
             is_delete_view = false;
-            delete_cards.setVisibility(View.GONE);
             set.getCards().removeAll(adapter.getDelete_set());
+            delete_cards.setVisibility(View.GONE);
             adapter.updateSet();
-            adapter.notifyDataSetChanged();
+            reInitList();
 
             if (set.getSetSize() != 0){
                 header_title.setText(String.valueOf(set.getSetSize()) + " Card");
@@ -89,6 +93,8 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set);
 
+        root_view = findViewById(R.id.set_root_view);
+        toolbar = findViewById(R.id.toolbar);
         set_title = findViewById(R.id.set_title);
         set_edit = findViewById(R.id.set_edit);
         set_add = findViewById(R.id.set_add);
@@ -140,33 +146,6 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
             set_title.setText(set.getSetName());
             setList();
         }
-
-        new_card_question.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE){
-                    new_card_answer.requestFocus();
-                    inputManager.showSoftInput(new_card_answer, InputMethodManager.SHOW_IMPLICIT);
-                    return true;
-                }
-                else{
-                    return false;
-                }
-            }
-        });
-
-        new_card_answer.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE){
-                    inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
-                    return true;
-                }
-                else{
-                    return false;
-                }
-            }
-        });
     }
 
     private void setList() {
@@ -188,41 +167,57 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
     private void addListItem(String question, String answer){
         DatabaseManager dbm = new DatabaseManager(this);
         Card newCard = new Card(question, answer, set.getSetId());
-        dbm.addCard(newCard);
-        set.setSetSize(set.getSetSize()+1);
-        dbm.updateSetSize(set);
-        if (set.getCards() != null){
-            set.getCards().add(newCard);
-            inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
-            reInitList();
+        long success = dbm.addCard(newCard);
+        if(success < 0){
+            Toast.makeText(this, "Failed to add card", Toast.LENGTH_SHORT).show();
         }
         else{
-            ArrayList<Card> newSetCardList = new ArrayList<>();
-            newSetCardList.add(newCard);
-            set.setCards(newSetCardList);
-            inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
-            reInitList();
+            set.setSetSize(set.getSetSize()+1);
+            dbm.updateSetSize(set);
+            header_title.setText(String.valueOf(set.getSetSize()) + " Card");
+            header_title.setTextColor(ContextCompat.getColor(this, R.color.lightOrange));
+
+            if (set.getCards() != null){
+                set.getCards().add(newCard);
+                new_card_question.setText(null);
+                new_card_answer.setText(null);
+                new_card_question.requestFocus();
+                reInitList();
+            }
+            else{
+                ArrayList<Card> newSetCardList = new ArrayList<>();
+                newSetCardList.add(newCard);
+                set.setCards(newSetCardList);
+                new_card_question.setText(null);
+                new_card_answer.setText(null);
+                new_card_question.requestFocus();
+                reInitList();
+            }
         }
     }
 
     public void reInitList(){
         if (adapter != null){
-            createMode = false;
             adapter.notifyDataSetChanged();
-            new_card.setVisibility(View.GONE);
-            list.setVisibility(View.VISIBLE);
-            set_add.setImageResource(R.drawable.ic_add);
-            header_exapansion.setImageResource(R.drawable.ic_collapse);
         }
         else{
             adapter = new SetListAdapter(this, set, listener);
             list.setAdapter(adapter);
-            createMode = false;
-            new_card.setVisibility(View.GONE);
-            list.setVisibility(View.VISIBLE);
-            set_add.setImageResource(R.drawable.ic_add);
-            header_exapansion.setImageResource(R.drawable.ic_collapse);
         }
+    }
+
+    public void exitCreateMode(){
+        createMode = false;
+        root_view.removeView(editToolbar);
+        toolbar.setVisibility(View.VISIBLE);
+        inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
+        new_card.setVisibility(View.GONE);
+        list.setVisibility(View.VISIBLE);
+        header_exapansion.setImageResource(R.drawable.ic_collapse);
+        new_card_question.setText(null);
+        new_card_answer.setText(null);
+//        setList();
+        reInitList();
     }
 
     @Override
@@ -233,44 +228,51 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
                 break;
 
             case(R.id.set_add):
-                if (createMode){
-                    String question = new_card_question.getText().toString().trim();
-                    String answer = new_card_answer.getText().toString().trim();
-                    if (!question.isEmpty() && !answer.isEmpty()){
-                        new_card_question.getText().clear();
-                        new_card_answer.getText().clear();
-                        addListItem(question, answer);
+                createMode = true;
+                toolbar.setVisibility(View.GONE);
+                editToolbar = getLayoutInflater().inflate(R.layout.layout_new_card_action_bar, null);
+                root_view.addView(editToolbar, 0);
+                new_card_back = findViewById(R.id.new_card_back);
+                new_card_finish = findViewById(R.id.new_card_finish);
+                new_card_back.setOnClickListener(this);
+                new_card_finish.setOnClickListener(this);
+
+                new_card.setVisibility(View.VISIBLE);
+                no_cards.setVisibility(View.GONE);
+                list.setVisibility(View.GONE);
+                header_exapansion.setImageResource(R.drawable.ic_expand);
+                new_card_question.requestFocus();
+                inputManager.showSoftInput(new_card_question, InputMethodManager.SHOW_IMPLICIT);
+                break;
+
+            case(R.id.new_card_finish):
+                if (!new_card_question.getText().toString().trim().isEmpty() &&
+                            !new_card_answer.getText().toString().trim().isEmpty()){
+                        addListItem(new_card_question.getText().toString().trim(),
+                                new_card_answer.getText().toString().trim());
                     }
 
-                    if (question.isEmpty() && !answer.isEmpty()){
+                    if (new_card_question.getText().toString().trim().isEmpty() &&
+                            !new_card_answer.getText().toString().trim().isEmpty()){
                         new_card_question.setError("Enter a Question");
                         new_card_question.requestFocus();
                         return;
                     }
-                    if (answer.isEmpty() && !question.isEmpty()){
+                    if (new_card_answer.getText().toString().trim().isEmpty() &&
+                            !new_card_question.getText().toString().trim().isEmpty()){
                         new_card_answer.setError("Enter an Answer");
                         new_card_answer.requestFocus();
                         return;
                     }
-                    else{
-                        createMode = false;
-                        new_card.setVisibility(View.GONE);
-                        list.setVisibility(View.VISIBLE);
-                        set_add.setImageResource(R.drawable.ic_add);
-                        header_exapansion.setImageResource(R.drawable.ic_collapse);
-                        setList();
-                    }
-                }
-                else{
-                    createMode = true;
-                    new_card.setVisibility(View.VISIBLE);
-                    no_cards.setVisibility(View.GONE);
-                    list.setVisibility(View.GONE);
-                    set_add.setImageResource(R.drawable.ic_finish);
-                    header_exapansion.setImageResource(R.drawable.ic_expand);
-                    new_card_question.requestFocus();
-                    inputManager.showSoftInput(new_card_question, InputMethodManager.SHOW_IMPLICIT);
-                }
+//                    else{
+//                        Log.d(TAG, "both are empty");
+//                        new_card_question.setText(null);
+//                        new_card_answer.setText(null);
+//                    }
+                break;
+
+            case(R.id.new_card_back):
+               exitCreateMode();
                 break;
 
             case(R.id.card_list_header):
@@ -285,9 +287,7 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
                 break;
 
             case(R.id.back_btn):
-                Intent intent = new Intent(SetActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+                onBackPressed();
                 break;
 
             case(R.id.delete_cards):
@@ -308,8 +308,8 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
     @Override
     public void onBackPressed() {
         if (createMode){
-            reInitList();
-            return;
+           exitCreateMode();
+           return;
         }
         if (is_delete_view){
             is_delete_view = false;
@@ -318,6 +318,8 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
             adapter.notifyDataSetChanged();
             return;
         }
-        super.onBackPressed();
+        Intent intent = new Intent(SetActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

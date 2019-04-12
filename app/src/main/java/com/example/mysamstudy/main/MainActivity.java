@@ -45,8 +45,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button log_out;
     ImageView add_new, delete_set;
 
-    DatabaseManager dbManager;
-
     ArrayList<Set> sets;
 
     CardListAdapter adapter;
@@ -82,8 +80,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         log_out.setOnClickListener(this);
         add_new.setOnClickListener(this);
         delete_set.setOnClickListener(this);
-
-        dbManager = new DatabaseManager(this);
 
         setUpNavigationDrawer();
 

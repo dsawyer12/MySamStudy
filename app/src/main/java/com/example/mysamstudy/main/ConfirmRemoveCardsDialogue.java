@@ -49,8 +49,10 @@ public class ConfirmRemoveCardsDialogue extends DialogFragment implements View.O
 
         delete_set = getSetFromBundle();
 
-        BaseCardListAdapter adapter = new BaseCardListAdapter(getActivity(), delete_set);
-        listview.setAdapter(adapter);
+        if(delete_set != null){
+            BaseCardListAdapter adapter = new BaseCardListAdapter(getActivity(), delete_set);
+            listview.setAdapter(adapter);
+        }
     }
 
     public ArrayList<Card> getSetFromBundle(){
@@ -76,12 +78,7 @@ public class ConfirmRemoveCardsDialogue extends DialogFragment implements View.O
     public void onClick(View view) {
         switch (view.getId()){
             case(R.id.confirm_btn):
-                DatabaseManager dbm = new DatabaseManager(getActivity());
-
                 listener.onRemove(true);
-//                Intent intent = new Intent(getActivity(), SetActivity.class);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                startActivity(intent);
                 getDialog().dismiss();
                 break;
 
