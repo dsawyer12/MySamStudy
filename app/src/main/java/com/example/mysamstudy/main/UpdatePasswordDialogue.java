@@ -13,6 +13,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.example.mysamstudy.R;
 import com.example.mysamstudy.objects.User;
@@ -54,22 +55,38 @@ public class UpdatePasswordDialogue extends DialogFragment implements View.OnCli
     }
 
     public void verifyCredentials(){
-        if (!current_p.getText().toString().trim().equals(user.getPassword())){
-            current_p.setError("Invalid password");
-            current_p.requestFocus();
+
+        if (new_p.getText().toString().trim().length() < 6){
+            new_p.setError("minimum of 6 characters");
+            new_p.requestFocus();
             return;
         }
+
         if (!confirm_p.getText().toString().trim().equals(new_p.getText().toString().trim())){
             confirm_p.setError("Password's do not match");
             confirm_p.requestFocus();
             return;
         }
+
+        if (!current_p.getText().toString().trim().equals(user.getPassword())){
+            current_p.setError("Invalid");
+            current_p.requestFocus();
+            return;
+        }
+
+        if (new_p.getText().toString().trim().equals(user.getPassword())){
+            new_p.setError("New Password can't be your current one");
+            new_p.requestFocus();
+            return;
+        }
+
         DatabaseManager dbm = new DatabaseManager(getActivity());
         dbm.updateUserPassword(user, new_p.getText().toString().trim());
         user.setPassword(new_p.getText().toString().trim());
         Gson gson = new Gson();
         String jobj = gson.toJson(user);
         SettingsManager.loadUserSession(SettingsManager.user_session, jobj);
+        Toast.makeText(getActivity(), "Password Updated", Toast.LENGTH_SHORT).show();
         getDialog().dismiss();
     }
 
