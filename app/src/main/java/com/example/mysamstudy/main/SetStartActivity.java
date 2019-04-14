@@ -75,7 +75,7 @@ public class SetStartActivity extends AppCompatActivity implements View.OnClickL
     }
 
     public void setFragment(Fragment fragment){
-        final FragmentManager fragmentManager = this.getSupportFragmentManager();
+        FragmentManager fragmentManager = this.getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.frame, fragment).addToBackStack(null).commit();
     }
 

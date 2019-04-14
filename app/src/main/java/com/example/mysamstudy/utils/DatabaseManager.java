@@ -283,6 +283,17 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return db.insert(CARDS_TABLE,null, values);
     }
 
+    public void updateCard(Card card){
+        Log.d(TAG, "updateCard: called");
+        SQLiteDatabase database = this.getWritableDatabase();
+        String query = "UPDATE " + CARDS_TABLE + " SET " +
+                question + " = '" + card.getCardQuestion() + "'" + " WHERE " + card_id + " = " + card.getCardID();
+        String query2 = "UPDATE " + CARDS_TABLE + " SET " +
+                answer + " = '" + card.getCardAnswer() + "'" + " WHERE " + card_id + " = " + card.getCardID();
+        database.execSQL(query);
+        database.execSQL(query2);
+    }
+
     public  void deleteCard(int cardId){
         SQLiteDatabase database = this.getWritableDatabase();
         String query = "DELETE FROM " + CARDS_TABLE + " WHERE " + card_id + " = " + cardId;

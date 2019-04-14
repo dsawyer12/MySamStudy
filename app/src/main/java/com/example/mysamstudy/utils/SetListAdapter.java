@@ -27,7 +27,7 @@ public class SetListAdapter extends BaseAdapter {
 
     public interface OnCardClickListener{
         void onLongCLick(boolean is_delete_view);
-        void onClick();
+        void onClick(Card card);
     }
 
     public SetListAdapter(Context context, Set set, OnCardClickListener listener) {
@@ -115,6 +115,9 @@ public class SetListAdapter extends BaseAdapter {
                         holder.checkBox.setChecked(true);
                         delete_set.add(set.getCards().get(position));
                     }
+                }
+                else{
+                    listener.onClick(set.getCards().get(position));
                 }
             }
         });

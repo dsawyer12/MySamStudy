@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/backGround"
+    android:orientation="vertical"
+    android:clickable="true">
+
+<include layout="@layout/layout_edit_action_bar"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="5dp"
+        android:text="Question"
+        android:layout_marginTop="30dp"
+        android:textSize="16sp"
+        android:textColor="?attr/primaryText"/>
+
+    <EditText
+        android:id="@+id/card_question"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/full_border_accessory_orange"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
+        android:padding="10dp"
+        android:text="this is the question from the card that wsas passsed by from the set activity layout"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="5dp"
+        android:text="Answer"
+        android:textSize="16sp"
+        android:textColor="?attr/primaryText"/>
+
+    <EditText
+        android:id="@+id/card_answer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/full_border_accessory_orange"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:padding="10dp"
+        android:textColor="@color/lightBlue"
+        android:text="this is the answer from the card that wsas passsed by from the set activity layout"/>
+
+</LinearLayout>

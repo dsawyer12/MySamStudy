@@ -200,9 +200,7 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()){
             case(R.id.back_btn):
-                Intent intent = new Intent(AccountActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+               exit();
                 break;
 
             case(R.id.password):
@@ -212,9 +210,7 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
 
             case(R.id.save_changes):
                 verifySettings();
-                Intent intent1 = new Intent(AccountActivity.this, MainActivity.class);
-                startActivity(intent1);
-                finish();
+                exit();
                 break;
 
             case(R.id.share_list):
@@ -242,5 +238,16 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
             list.setVisibility(View.GONE);
             share_list.setImageResource(R.drawable.ic_expand);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        exit();
+    }
+
+    public void exit(){
+        Intent intent1 = new Intent(AccountActivity.this, MainActivity.class);
+        startActivity(intent1);
+        finish();
     }
 }

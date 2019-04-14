@@ -17,9 +17,10 @@
             android:src="@drawable/ic_back"/>
 
         <TextView
+            android:id="@+id/edit_card_toolbar_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="New Card"
+            android:text="Edit Card"
             android:maxLines="1"
             android:ellipsize="end"
             android:layout_weight="1"

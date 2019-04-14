@@ -2,22 +2,18 @@ package com.example.mysamstudy.main;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
 import android.text.InputType;
-import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -28,21 +24,19 @@ import android.widget.Toast;
 import com.example.mysamstudy.R;
 import com.example.mysamstudy.objects.Card;
 import com.example.mysamstudy.objects.Set;
-import com.example.mysamstudy.objects.User;
 import com.example.mysamstudy.utils.DatabaseManager;
 import com.example.mysamstudy.utils.SetListAdapter;
 import com.example.mysamstudy.utils.SettingsManager;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
 public class SetActivity extends AppCompatActivity implements View.OnClickListener,
-        ConfirmRemoveCardsDialogue.OnCardsReomved {
+        ConfirmRemoveCardsDialogue.OnCardsReomved, FragmentManager.OnBackStackChangedListener {
     private static final String TAG = "TAG";
 
     boolean is_delete_view = false, createMode = false;
     LinearLayout root_view, header;
-    TextView set_title, header_title;
+    TextView set_title, header_title, edit_toolbar_title;
     ImageView set_edit, set_add, back_btn, header_exapansion, new_card_back, new_card_finish, delete_cards;
     EditText new_card_question, new_card_answer;
     CardView new_card, no_cards;
@@ -105,6 +99,7 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
         delete_cards = findViewById(R.id.delete_cards);
         header = findViewById(R.id.card_list_header);
         header_title = findViewById(R.id.card_list_header_title);
+        edit_toolbar_title = findViewById(R.id.edit_card_toolbar_title);
         header_exapansion = findViewById(R.id.card_list_expansion);
         new_card_question = findViewById(R.id.card_question);
         new_card_question.setImeOptions(EditorInfo.IME_ACTION_NEXT);
@@ -119,6 +114,9 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
         set_add.setOnClickListener(this);
         header.setOnClickListener(this);
         delete_cards.setOnClickListener(this);
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.addOnBackStackChangedListener(this);
 
         listener = new SetListAdapter.OnCardClickListener() {
             @Override
@@ -136,8 +134,12 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
             }
 
             @Override
-            public void onClick() {
-
+            public void onClick(Card card) {
+                EditCardFragment editCardFragment = new EditCardFragment();
+                Bundle args = new Bundle();
+                args.putParcelable("editCard", card);
+                editCardFragment.setArguments(args);
+                setFragment(editCardFragment, "editCard");
             }
         };
 
@@ -230,7 +232,7 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
             case(R.id.set_add):
                 createMode = true;
                 toolbar.setVisibility(View.GONE);
-                editToolbar = getLayoutInflater().inflate(R.layout.layout_new_card_action_bar, null);
+                editToolbar = getLayoutInflater().inflate(R.layout.layout_edit_action_bar, null);
                 root_view.addView(editToolbar, 0);
                 new_card_back = findViewById(R.id.new_card_back);
                 new_card_finish = findViewById(R.id.new_card_finish);
@@ -239,8 +241,6 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
 
                 new_card.setVisibility(View.VISIBLE);
                 no_cards.setVisibility(View.GONE);
-                list.setVisibility(View.GONE);
-                header_exapansion.setImageResource(R.drawable.ic_expand);
                 new_card_question.requestFocus();
                 inputManager.showSoftInput(new_card_question, InputMethodManager.SHOW_IMPLICIT);
                 break;
@@ -305,6 +305,11 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
         }
     }
 
+    public void setFragment(Fragment fragment, String tag){
+        FragmentManager fm = this.getSupportFragmentManager();
+        fm.beginTransaction().replace(R.id.frame, fragment, tag).addToBackStack(null).commit();
+    }
+
     @Override
     public void onBackPressed() {
         if (createMode){
@@ -318,8 +323,20 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
             adapter.notifyDataSetChanged();
             return;
         }
+        if (getSupportFragmentManager().findFragmentByTag("editCard") != null){
+            getSupportFragmentManager().beginTransaction()
+                    .remove(getSupportFragmentManager().findFragmentByTag("editCard")).commit();
+            getSupportFragmentManager().popBackStack();
+            return;
+        }
+
         Intent intent = new Intent(SetActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void onBackStackChanged() {
+        setList();
     }
 }
