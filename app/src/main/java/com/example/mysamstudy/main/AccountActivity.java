@@ -40,7 +40,7 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
     RadioGroup share_radio_group;
     RadioButton share_all, select_share, share_none;
     ListView list;
-    Button password, save_changes;
+    Button password, save_changes, delete_account;
     SetSelectShareAdapter.OnItemCheckedListener listener;
     SetSelectShareAdapter adapter;
 
@@ -80,6 +80,7 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
         share_none = findViewById(R.id.share_none);
         list = findViewById(R.id.listview);
         back_btn = findViewById(R.id.back_btn);
+        delete_account = findViewById(R.id.delete_account_btn);
         share_list = findViewById(R.id.share_list);
         password = findViewById(R.id.password);
         save_changes = findViewById(R.id.save_changes);
@@ -87,6 +88,7 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
         back_btn.setOnClickListener(this);
         share_list.setOnClickListener(this);
         password.setOnClickListener(this);
+        delete_account.setOnClickListener(this);
         save_changes.setOnClickListener(this);
         share_radio_group.setOnCheckedChangeListener(this);
 
@@ -222,6 +224,11 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
                     share_list.setImageResource(R.drawable.ic_collapse);
                     list.setVisibility(View.VISIBLE);
                 }
+                break;
+
+            case(R.id.delete_account_btn):
+                ConfirmDeleteAccountDialogue deleteAccountDialogue = new ConfirmDeleteAccountDialogue();
+                deleteAccountDialogue.show(getSupportFragmentManager(), "delete_account_dialog");
                 break;
         }
     }

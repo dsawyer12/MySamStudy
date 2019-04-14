@@ -7,7 +7,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:id="@+id/drawer">
+    android:id="@+id/drawer"
+    tools:openDrawer="start">
 
     <FrameLayout
         android:id="@+id/frame"
@@ -135,7 +136,7 @@
                 android:id="@+id/logout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button_accessory_orange"
+                android:background="@drawable/button_accessory_red"
                 android:gravity="center"
                 android:text="Log out"
                 android:textAllCaps="false"

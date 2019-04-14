@@ -58,6 +58,12 @@ public class DatabaseManager extends SQLiteOpenHelper {
         createCardsTable(db);
     }
 
+    @Override
+    public void onOpen(SQLiteDatabase db) {
+        super.onOpen(db);
+        db.execSQL("PRAGMA foreign_keys=ON");
+    }
+
     private void createUsersTable(SQLiteDatabase db) {
         String query = "CREATE TABLE " + USERS_TABLE + "("
                 + user_id + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -79,7 +85,8 @@ public class DatabaseManager extends SQLiteOpenHelper {
                 show_answers + " BIT NOT NULL DEFAULT (0), " +
                 loop_set + " BIT NOT NULL DEFAULT (0), " +
                 share_set + " BIT NOT NULL DEFAULT (0), " +
-                user_id + " INTEGER NOT NULL REFERENCES " + USERS_TABLE + "(" + user_id + "))";
+                user_id + " INTEGER NOT NULL REFERENCES " + USERS_TABLE + "(" + user_id + ")" +
+                " ON DELETE CASCADE)";
         db.execSQL(query);
     }
 
@@ -90,7 +97,8 @@ public class DatabaseManager extends SQLiteOpenHelper {
                 question + " TEXT NOT NULL, " +
                 answer + " TEXT NOT NULL, " +
                 set_id + " INTEGER NOT NULL REFERENCES " +
-                SETS_TABLE + "(" + set_id + "))";
+                SETS_TABLE + "(" + set_id + ")" +
+                " ON DELETE CASCADE)";
         db.execSQL(query);
     }
 
@@ -147,6 +155,12 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return true;
     }
 
+    public void removeAccount(User user){
+        SQLiteDatabase database = this.getWritableDatabase();
+        String query = "DELETE FROM " + USERS_TABLE + " WHERE " + user_id + " = '" + user.getUser_id() + "'";
+        database.execSQL(query);
+    }
+
     public long addUser(User user){
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -191,12 +205,6 @@ public class DatabaseManager extends SQLiteOpenHelper {
         SQLiteDatabase database = this.getWritableDatabase();
         String query = "UPDATE " + USERS_TABLE + " SET " + password + " = '"
                 + mPassword +"' WHERE " + user_id + " = " + user.getUser_id();
-        database.execSQL(query);
-    }
-
-    public void removeUser(User user){
-        SQLiteDatabase database = this.getWritableDatabase();
-        String query = "DELETE FROM " + USERS_TABLE + " WHERE " + user_id + " = " + user.getUser_id();
         database.execSQL(query);
     }
 

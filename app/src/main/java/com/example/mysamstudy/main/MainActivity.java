@@ -189,7 +189,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void setFragment(Fragment fragment){
-        final FragmentManager fragmentManager = this.getSupportFragmentManager();
+        FragmentManager fragmentManager = this.getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.frame, fragment).addToBackStack(null).commit();
     }
 
