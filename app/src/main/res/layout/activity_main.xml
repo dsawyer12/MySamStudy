@@ -121,9 +121,9 @@
         android:fitsSystemWindows="true"
         android:background="?attr/navView"
         app:itemTextColor="?attr/menuItem"
-        app:itemBackground="@drawable/bottom_border_accessory_orange"
         app:headerLayout="@layout/snippet_drawer_header"
-        app:menu="@menu/drawer_menu">
+        app:menu="@menu/drawer_menu"
+        app:itemIconTint="?attr/primaryText">
 
         <LinearLayout
             android:layout_width="match_parent"

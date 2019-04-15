@@ -1,28 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:id="@+id/group1"
-        android:checkableBehavior="single">
+    <group android:id="@+id/group1">
 
         <item
-            android:id="@+id/settings"
-            android:title="Settings">
-        </item>
-
-        <item
-            android:id="@+id/account"
-            android:title="Account">
+            android:id="@+id/search"
+            android:title="Search"
+            android:icon="@drawable/ic_search">
         </item>
 
         <item
             android:id="@+id/groups"
-            android:title="Groups">
+            android:title="Groups"
+            android:icon="@drawable/ic_groups">
         </item>
 
         <item
-            android:id="@+id/search"
-            android:title="Search">
+            android:id="@+id/favorites"
+            android:title="Favorites"
+            android:icon="@drawable/ic_favorites">
         </item>
+
+    </group>
+
+    <group android:id="@+id/group2">
+
+        <item
+            android:id="@+id/settings"
+            android:title="Settings"
+            android:icon="@drawable/ic_settings">
+        </item>
+
+        <item
+            android:id="@+id/account"
+            android:title="Account"
+            android:icon="@drawable/ic_account">
+        </item>
+
 
     </group>
 

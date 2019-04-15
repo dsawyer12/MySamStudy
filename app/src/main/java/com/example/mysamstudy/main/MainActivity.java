@@ -1,6 +1,7 @@
 package com.example.mysamstudy.main;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -19,6 +20,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.mysamstudy.R;
@@ -125,6 +127,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navView.setNavigationItemSelectedListener(this);
+        View header = navView.getHeaderView(0);
+        header.setOnClickListener(this);
     }
 
     public void getData(){
@@ -184,6 +188,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     dialog.setArguments(args);
                     dialog.show(getSupportFragmentManager(), "remove_sets_dialog");
                 }
+                break;
+            case(R.id.drawer_header):
+                Uri uri = Uri.parse("https://shsu.edu/");
+
+                Intent link = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(link);
                 break;
         }
     }

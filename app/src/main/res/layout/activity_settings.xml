@@ -62,16 +62,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Settings title"
+                android:text="Settings Title"
                 android:textStyle="bold"
-                android:textColor="?attr/primaryText"/>
+                android:textColor="@color/lightBlue"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Dummy text to display under the 'settings title' to guarantee that everything fits into place properly and that nothing is out of line. "
                 android:textColor="?attr/primaryText"
-                android:layout_marginTop="8dp"/>
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="5dp"/>
 
         </LinearLayout>
 
@@ -87,7 +88,7 @@
                 android:layout_height="wrap_content"
                 android:text="Enable Dark Theme"
                 android:textStyle="bold"
-                android:textColor="?attr/primaryText"/>
+                android:textColor="@color/lightBlue"/>
 
             <Switch
                 android:id="@+id/dark_theme_switch"
@@ -95,6 +96,43 @@
                 android:layout_height="wrap_content"
                 android:textColor="?attr/primaryText"
                 android:text="Dark Theme"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="5dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bottom_border_accessory_orange"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Study Preferences"
+                android:textStyle="bold"
+                android:textColor="@color/lightBlue"/>
+
+            <CheckBox
+                android:id="@+id/loop_set_checkbox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Always loop sets"
+                android:textColor="?attr/primaryText"
+                android:layout_marginStart="5dp"
+                android:layoutDirection="rtl"
+                android:layout_marginTop="8dp"/>
+
+            <CheckBox
+                android:id="@+id/show_answer_checkox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Always show answers"
+                android:layoutDirection="rtl"
+                android:textColor="?attr/primaryText"
+                android:layout_marginStart="5dp"
                 android:layout_marginTop="8dp"/>
 
         </LinearLayout>

@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="150dp"
     android:layout_marginTop="20dp"
-    android:background="@drawable/shsu_banner">
+    android:background="@drawable/shsu_banner"
+    android:id="@+id/drawer_header">
 
 </RelativeLayout>
