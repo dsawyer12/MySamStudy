@@ -1,6 +1,8 @@
 package com.example.mysamstudy.main;
 
 import android.content.Intent;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -9,6 +11,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -30,7 +33,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
     EditText search_box;
     TextView search_error;
-    ImageView search_btn;
+    ImageView search_btn, back_btn;
     ListView search_list;
     private DatabaseManager dbm;
     ArrayList<Set> sets;
@@ -51,9 +54,11 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         search_box = findViewById(R.id.search_box);
         search_error = findViewById(R.id.search_error);
         search_btn = findViewById(R.id.search_btn);
+        back_btn = findViewById(R.id.search_back_btn);
         search_list = findViewById(R.id.search_list);
 
         search_btn.setOnClickListener(this);
+        back_btn.setOnClickListener(this);
 
         search_box.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -62,6 +67,13 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                     searchDatabase();
                 }
                 return false;
+            }
+        });
+
+        search_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                viewSet(adapter.getItem(position));
             }
         });
     }
@@ -95,17 +107,45 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
+    public void viewSet(Set set){
+        SearchItemFragment item = new SearchItemFragment();
+        Bundle args = new Bundle();
+        /*
+         * eventually, after being able to search for items other than sets (i.e. cards etc.)
+         * i can also pass another argument which will be the ITEM_TYPE which i can then
+         * navigate to the appropriate fragment based on that type.
+         *
+         */
+        args.putParcelable("item", set);
+        item.setArguments(args);
+        setFragment(item, "item");
+    }
+
+    public void setFragment(Fragment fragment, String tag){
+        FragmentManager manager = this.getSupportFragmentManager();
+        manager.beginTransaction().replace(R.id.searchFrame, fragment, tag).addToBackStack(null).commit();
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case(R.id.search_btn):
                 searchDatabase();
                 break;
+            case(R.id.search_back_btn):
+                Intent intent = new Intent(SearchActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+                break;
         }
     }
 
     @Override
     public void onBackPressed() {
+        if (getSupportFragmentManager().findFragmentByTag("item") != null){
+            getSupportFragmentManager().popBackStackImmediate();
+            return;
+        }
         Intent intent = new Intent(SearchActivity.this, MainActivity.class);
         startActivity(intent);
         finish();

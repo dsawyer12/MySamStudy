@@ -2,6 +2,7 @@ package com.example.mysamstudy.utils;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import com.example.mysamstudy.objects.Set;
 import java.util.ArrayList;
 
 public class SearchListAdapter extends BaseAdapter {
+    private static final String TAG = "TAG";
 
     Context context;
     ArrayList<Set> sets;
@@ -39,8 +41,8 @@ public class SearchListAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
-        return position;
+    public Set getItem(int position) {
+        return sets.get(position);
     }
 
     @Override
