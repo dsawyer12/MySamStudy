@@ -55,15 +55,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d(TAG, "onCreate: ");
         SettingsManager.getSharedPreferences(this, SettingsManager.dark_theme_preferences);
-        if (!SettingsManager.getDarkTheme(SettingsManager.dark_theme_preferences)){
+        if (!SettingsManager.getDarkTheme(SettingsManager.dark_theme_preferences))
             setTheme(R.style.AppThemeLight);
-        }
-        else {
+        else
             setTheme(R.style.AppThemeDark);
-        }
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -191,7 +187,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case(R.id.drawer_header):
                 Uri uri = Uri.parse("https://shsu.edu/");
-
                 Intent link = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(link);
                 break;
@@ -209,12 +204,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case(R.id.settings):
                 Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
                 startActivity(intent);
+                finish();
                 break;
 
             case(R.id.account):
                 Intent intent1 = new Intent(MainActivity.this, AccountActivity.class);
                 intent1.putParcelableArrayListExtra("sets", sets);
                 startActivity(intent1);
+                finish();
+                break;
+
+            case(R.id.search):
+                Intent intent2 = new Intent(MainActivity.this, SearchActivity.class);
+                startActivity(intent2);
+                finish();
                 break;
         }
         DrawerLayout drawer = findViewById(R.id.drawer);

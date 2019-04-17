@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".main.SearchActivity"
+    android:orientation="vertical"
+    android:background="?attr/backGround">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/search_box"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="20dp"
+            android:layout_weight="1"
+            android:hint="Search..."
+            android:paddingStart="20dp"
+            android:paddingEnd="0dp"
+            android:maxLines="1"
+            android:inputType="text"
+            android:textColor="@color/darkBlue"
+            android:background="@drawable/search_button_accessory"/>
+
+        <ImageView
+            android:id="@+id/search_btn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:paddingStart="0dp"
+            android:paddingEnd="20dp"
+            android:src="@drawable/ic_search"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/search_error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="We couldn't find a match for your search"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:visibility="gone"
+        android:padding="30dp"
+        android:textColor="@color/lightGrey"/>
+
+    <ListView
+        android:id="@+id/search_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </ListView>
+
+</LinearLayout>

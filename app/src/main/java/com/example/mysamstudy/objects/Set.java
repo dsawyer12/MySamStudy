@@ -22,6 +22,14 @@ public class Set implements Parcelable{
         cards = null;
     }
 
+    public Set(int id, String setName, int setSize, int FK) {
+        this.setId = id;
+        this.setName = setName;
+        this.setSize = setSize;
+        this.FK = FK;
+    }
+
+
     public Set(int id, String setName, int setSize, boolean show_answers, boolean loop_set, boolean share, int FK) {
         this.setId = id;
         this.setName = setName;

@@ -302,10 +302,55 @@ public class DatabaseManager extends SQLiteOpenHelper {
         database.execSQL(query2);
     }
 
-    public  void deleteCard(int cardId){
+    public void deleteCard(int cardId){
         SQLiteDatabase database = this.getWritableDatabase();
         String query = "DELETE FROM " + CARDS_TABLE + " WHERE " + card_id + " = " + cardId;
         database.execSQL(query);
     }
 
+    public ArrayList<Set> searchDatabase(String value, int searchType){
+        SQLiteDatabase database = this.getWritableDatabase();
+        String setQuery = "SELECT * FROM " + SETS_TABLE + " WHERE " + set_name + " LIKE '%" + value + "%'";
+        if (searchType == 0){
+            Cursor c = database.rawQuery(setQuery, null);
+            if (!(c.moveToFirst()) || c.getCount() == 0){
+                c.close();
+                return null;
+            }
+            else{
+                ArrayList<Set> sets = new ArrayList<>();
+                c.moveToFirst();
+                do {
+                    sets.add(new Set(
+                            c.getInt(c.getColumnIndex(set_id)),
+                            c.getString(c.getColumnIndex(set_name)),
+                            c.getInt(c.getColumnIndex(set_size)),
+                            c.getInt(c.getColumnIndex(user_id))));
+                }
+                while(c.moveToNext());
+                return sets;
+            }
+        }
+        return null;
+//        else if(searchType == 1){
+//            Cursor c = database.rawQuery(cardQuery, null);
+//            if (!(c.moveToFirst()) || c.getCount() == 0){
+//                c.close();
+//                return null;
+//            }
+//            else{
+//
+//            }
+//        }
+    }
 }
+
+
+
+
+
+
+
+
+
+
