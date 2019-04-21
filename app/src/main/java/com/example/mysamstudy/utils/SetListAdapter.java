@@ -18,7 +18,6 @@ import java.util.ArrayList;
 
 public class SetListAdapter extends BaseAdapter {
     private static final String TAG = "TAG";
-    private Context context;
     private Set set;
     private LayoutInflater inflater;
     private OnCardClickListener listener;
@@ -33,7 +32,7 @@ public class SetListAdapter extends BaseAdapter {
     public SetListAdapter(Context context, Set set, OnCardClickListener listener) {
         Log.d(TAG, "SetListAdapter: created");
         this.inflater = LayoutInflater.from(context);
-        this.context = context;
+        Context context1 = context;
         this.set = set;
         this.listener = listener;
         this.delete_set = new ArrayList<>();

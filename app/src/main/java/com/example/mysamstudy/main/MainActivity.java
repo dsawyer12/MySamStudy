@@ -12,6 +12,10 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
@@ -19,18 +23,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.mysamstudy.R;
 import com.example.mysamstudy.objects.Set;
 import com.example.mysamstudy.objects.User;
-import com.example.mysamstudy.utils.CardListAdapter;
 import com.example.mysamstudy.utils.DatabaseManager;
+import com.example.mysamstudy.utils.SetListRecyclerView;
 import com.example.mysamstudy.utils.SettingsManager;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 
@@ -42,15 +43,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private User user;
 
     DrawerLayout drawer;
-    ListView listview;
     CardView cardview;
     Button log_out;
     ImageView add_new, delete_set;
 
     ArrayList<Set> sets;
 
-    CardListAdapter adapter;
-    CardListAdapter.OnItemLongClickListener listener;
+    RecyclerView recyclerView;
+    SetListRecyclerView adapter;
+    SetListRecyclerView.OnItemClickListener listener;
+
     boolean is_delete_view = false;
 
     @Override
@@ -69,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String jobj = SettingsManager.getUserSession(SettingsManager.user_session);
         user = gson.fromJson(jobj, User.class);
 
-        listview = findViewById(R.id.listview);
+        recyclerView = findViewById(R.id.recyclerView);
         cardview = findViewById(R.id.cardview);
         add_new = findViewById(R.id.add_new);
         delete_set = findViewById(R.id.delete_sets);
@@ -81,31 +83,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         setUpNavigationDrawer();
 
-        listener = new CardListAdapter.OnItemLongClickListener() {
+        listener = new SetListRecyclerView.OnItemClickListener() {
             @Override
-            public void onLongClick(boolean in_deleteView) {
-                if (in_deleteView){
-                    is_delete_view = in_deleteView;
-                    delete_set.setVisibility(View.VISIBLE);
-                    adapter.notifyDataSetChanged();
-                }
-                else{
-                    is_delete_view = in_deleteView;
-                    delete_set.setVisibility(View.GONE);
-                    adapter.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onClick() {
-                Log.d(TAG, "onClick: ");
-            }
-
-            @Override
-            public void onClick(Set set) {
+            public void onSetClick(Set set) {
                 Intent intent = new Intent(MainActivity.this, SetActivity.class);
                 intent.putExtra("selectedSet", set);
                 startActivity(intent);
+            }
+
+            @Override
+            public void onSetLongClick(boolean delete_view) {
+                setDeleteView(delete_view);
             }
         };
 
@@ -128,19 +116,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void getData(){
-        sets = databaseManager.getSets(user.getUser_id());
-        if (sets != null){
-
-            for (int i = 0; i < sets.size(); i++){
-                Log.d(TAG, String.valueOf(sets.get(i).getSetSize()));
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                sets = databaseManager.getSets(user.getUser_id());
+                if (sets != null){
+                    adapter = new SetListRecyclerView(getApplicationContext(), sets, listener);
+                    recyclerView.setAdapter(adapter);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                }
+                else{
+                    Log.d(TAG, "no sets");
+                    cardview.setVisibility(View.VISIBLE);
+                }
             }
+        }).start();
+    }
 
-            adapter = new CardListAdapter(this, sets, listener);
-            listview.setAdapter(adapter);
+    public void setDeleteView(boolean deleteView){
+        if (deleteView){
+            is_delete_view = deleteView;
+            delete_set.setVisibility(View.VISIBLE);
+
         }
         else{
-            Log.d(TAG, "no sets");
-            cardview.setVisibility(View.VISIBLE);
+            is_delete_view = deleteView;
+            delete_set.setVisibility(View.GONE);
         }
     }
 

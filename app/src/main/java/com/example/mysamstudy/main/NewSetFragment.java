@@ -1,5 +1,6 @@
 package com.example.mysamstudy.main;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,9 +9,12 @@ import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -49,9 +53,13 @@ public class NewSetFragment extends Fragment implements View.OnClickListener {
         finish = view.findViewById(R.id.finish);
         set_title = view.findViewById(R.id.set_title);
         set_name = view.findViewById(R.id.set_name);
+        set_name.requestFocus();
 
         back_btn.setOnClickListener(this);
         finish.setOnClickListener(this);
+
+        InputMethodManager inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.showSoftInput(set_name, InputMethodManager.SHOW_IMPLICIT);
 
         set_name.addTextChangedListener(new TextWatcher() {
             @Override
@@ -67,6 +75,23 @@ public class NewSetFragment extends Fragment implements View.OnClickListener {
             @Override
             public void afterTextChanged(Editable s) {
 
+            }
+        });
+
+        set_name.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE){
+                    String setName = set_name.getText().toString().trim();
+                    if (!setName.isEmpty()){
+                        createSet(setName);
+                    }
+                    else{
+                        set_name.setError("Enter a name");
+                        set_name.requestFocus();
+                    }
+                }
+                return false;
             }
         });
     }

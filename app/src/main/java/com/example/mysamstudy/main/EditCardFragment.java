@@ -14,13 +14,14 @@ import android.widget.TextView;
 import com.example.mysamstudy.R;
 import com.example.mysamstudy.objects.Card;
 import com.example.mysamstudy.utils.DatabaseManager;
+import com.example.mysamstudy.utils.GeneralDialogue;
 
 public class EditCardFragment extends Fragment implements View.OnClickListener{
     private static final String TAG = "TAG";
 
     TextView toolbar_header;
     EditText card_question, card_answer;
-    ImageView finish, back;
+    ImageView edit_card_finish, edit_card_back, edit_card_delete;
     Card card;
 
     @Nullable
@@ -36,11 +37,14 @@ public class EditCardFragment extends Fragment implements View.OnClickListener{
         toolbar_header = view.findViewById(R.id.edit_card_toolbar_title);
         card_question = view.findViewById(R.id.card_question);
         card_answer=  view.findViewById(R.id.card_answer);
-        finish = view.findViewById(R.id.new_card_finish);
-        back = view.findViewById(R.id.new_card_back);
+        edit_card_finish = view.findViewById(R.id.edit_card_finish);
+        edit_card_back = view.findViewById(R.id.edit_card_back);
+        edit_card_delete = view.findViewById(R.id.edit_card_delete);
+        edit_card_delete.setVisibility(View.VISIBLE);
 
-        finish.setOnClickListener(this);
-        back.setOnClickListener(this);
+        edit_card_finish.setOnClickListener(this);
+        edit_card_back.setOnClickListener(this);
+        edit_card_delete.setOnClickListener(this);
 
         card = getCardFromBundle();
         if (card != null)
@@ -76,15 +80,20 @@ public class EditCardFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case(R.id.new_card_finish):
+            case(R.id.edit_card_finish):
                 updateCard();
                 break;
 
-            case(R.id.new_card_back):
+            case(R.id.edit_card_back):
 
                 // if fields are updated, display a dialogue fragment to make sure they want to quit
 
                 getActivity().getSupportFragmentManager().popBackStackImmediate();
+                break;
+
+            case(R.id.edit_card_delete):
+                GeneralDialogue dialogue = new GeneralDialogue();
+                dialogue.show(getActivity().getSupportFragmentManager(), "dialogue");
                 break;
         }
     }

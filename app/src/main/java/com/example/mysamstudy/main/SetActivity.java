@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -37,7 +36,7 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
     boolean is_delete_view = false, createMode = false;
     LinearLayout root_view, header;
     TextView set_title, header_title, edit_toolbar_title;
-    ImageView set_edit, set_add, back_btn, header_exapansion, new_card_back, new_card_finish, delete_cards;
+    ImageView set_edit, set_add, back_btn, header_exapansion, edit_card_back, edit_card_finish, delete_cards;
     EditText new_card_question, new_card_answer;
     CardView new_card, no_cards;
     ListView list;
@@ -234,10 +233,10 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
                 toolbar.setVisibility(View.GONE);
                 editToolbar = getLayoutInflater().inflate(R.layout.layout_edit_action_bar, null);
                 root_view.addView(editToolbar, 0);
-                new_card_back = findViewById(R.id.new_card_back);
-                new_card_finish = findViewById(R.id.new_card_finish);
-                new_card_back.setOnClickListener(this);
-                new_card_finish.setOnClickListener(this);
+                edit_card_back = findViewById(R.id.edit_card_back);
+                edit_card_finish = findViewById(R.id.edit_card_finish);
+                edit_card_back.setOnClickListener(this);
+                edit_card_finish.setOnClickListener(this);
 
                 new_card.setVisibility(View.VISIBLE);
                 no_cards.setVisibility(View.GONE);
@@ -245,7 +244,7 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
                 inputManager.showSoftInput(new_card_question, InputMethodManager.SHOW_IMPLICIT);
                 break;
 
-            case(R.id.new_card_finish):
+            case(R.id.edit_card_finish):
                 if (!new_card_question.getText().toString().trim().isEmpty() &&
                             !new_card_answer.getText().toString().trim().isEmpty()){
                         addListItem(new_card_question.getText().toString().trim(),
@@ -271,7 +270,7 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
 //                    }
                 break;
 
-            case(R.id.new_card_back):
+            case(R.id.edit_card_back):
                exitCreateMode();
                 break;
 

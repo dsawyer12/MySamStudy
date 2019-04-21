@@ -63,6 +63,7 @@
         android:paddingEnd="0dp"
         android:paddingBottom="10dp"
         android:inputType="textCapWords"
+        android:imeOptions="actionDone"
         android:textColor="?attr/primaryText"
         android:textColorHint="?attr/primaryText"
         android:background="@drawable/bottom_border_accessory_orange"

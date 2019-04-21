@@ -7,8 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:id="@+id/drawer"
-    tools:openDrawer="start">
+    android:id="@+id/drawer">
 
     <FrameLayout
         android:id="@+id/frame"
@@ -99,13 +98,20 @@
 
                 </android.support.v7.widget.CardView>
 
-                <ListView
-                    android:id="@+id/listview"
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="?attr/backGround">
+                    android:layout_height="match_parent">
 
-                </ListView>
+                </android.support.v7.widget.RecyclerView>
+
+                <!--<ListView-->
+                    <!--android:id="@+id/listview"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:background="?attr/backGround">-->
+
+                <!--</ListView>-->
 
             </LinearLayout>
 

@@ -26,9 +26,9 @@
         android:background="@drawable/full_border_accessory_orange"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
+        android:textColor="?attr/primaryText"
         android:layout_marginBottom="10dp"
-        android:padding="10dp"
-        android:text="this is the question from the card that wsas passsed by from the set activity layout"/>
+        android:padding="10dp"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -48,7 +48,6 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:padding="10dp"
-        android:textColor="@color/lightBlue"
-        android:text="this is the answer from the card that wsas passsed by from the set activity layout"/>
+        android:textColor="@color/lightBlue"/>
 
 </LinearLayout>

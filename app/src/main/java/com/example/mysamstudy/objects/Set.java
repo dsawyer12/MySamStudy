@@ -7,12 +7,12 @@ import android.util.Log;
 import java.util.ArrayList;
 
 public class Set implements Parcelable{
-    private static final String TAG = "TAG";
     private String setName;
     private int setId, FK;
     private int setSize = 0;
     private boolean show_answers, loop_set, share;
     private ArrayList<Card> cards;
+    private boolean isSelected = false;
 
     public Set() {}
 
@@ -49,6 +49,7 @@ public class Set implements Parcelable{
         loop_set = in.readByte() != 0;
         share = in.readByte() != 0;
         cards = in.createTypedArrayList(Card.CREATOR);
+        isSelected = in.readByte() != 0;
     }
 
     @Override
@@ -61,6 +62,7 @@ public class Set implements Parcelable{
         dest.writeByte((byte) (loop_set ? 1 : 0));
         dest.writeByte((byte) (share ? 1 : 0));
         dest.writeTypedList(cards);
+        dest.writeByte((byte) (isSelected ? 1 : 0));
     }
 
     @Override
@@ -79,6 +81,14 @@ public class Set implements Parcelable{
             return new Set[size];
         }
     };
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
 
     public int getFK() {
         return FK;
