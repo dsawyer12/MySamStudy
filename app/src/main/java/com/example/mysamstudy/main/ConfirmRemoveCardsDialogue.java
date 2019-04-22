@@ -1,7 +1,8 @@
 package com.example.mysamstudy.main;
 
+import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,16 +19,15 @@ import android.widget.RelativeLayout;
 import com.example.mysamstudy.R;
 import com.example.mysamstudy.objects.Card;
 import com.example.mysamstudy.utils.BaseCardListAdapter;
-import com.example.mysamstudy.utils.DatabaseManager;
 
 import java.util.ArrayList;
 
 public class ConfirmRemoveCardsDialogue extends DialogFragment implements View.OnClickListener {
     private static final String TAG = "TAG";
     ArrayList<Card> delete_set;
-    OnCardsReomved listener;
+    OnCardsRemoved listener;
 
-    public interface OnCardsReomved{
+    public interface OnCardsRemoved {
         void onRemove(boolean remove);
     }
 
@@ -69,7 +69,7 @@ public class ConfirmRemoveCardsDialogue extends DialogFragment implements View.O
     @Override
     public void onAttach(Context context) {
         try {
-            listener = (OnCardsReomved) getActivity();
+            listener = (OnCardsRemoved) getActivity();
         } catch (Exception e) {
             Log.d(TAG, e.getMessage());
         }
@@ -97,5 +97,13 @@ public class ConfirmRemoveCardsDialogue extends DialogFragment implements View.O
         params.width = RelativeLayout.LayoutParams.MATCH_PARENT;
         params.height = RelativeLayout.LayoutParams.MATCH_PARENT;
         getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        final Activity activity = getActivity();
+        if (activity instanceof DialogInterface.OnDismissListener) {
+            ((DialogInterface.OnDismissListener) activity).onDismiss(dialog);
+        }
     }
 }

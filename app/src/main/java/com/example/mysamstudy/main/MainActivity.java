@@ -85,6 +85,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         listener = new SetListRecyclerView.OnItemClickListener() {
             @Override
+            public void onSetStart(Set set) {
+                Intent intent = new Intent(MainActivity.this, SetStartActivity.class);
+                intent.putExtra("mySet", set);
+                startActivity(intent);
+            }
+
+            @Override
             public void onSetClick(Set set) {
                 Intent intent = new Intent(MainActivity.this, SetActivity.class);
                 intent.putExtra("selectedSet", set);
@@ -94,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onSetLongClick(boolean delete_view) {
                 setDeleteView(delete_view);
+                adapter.notifyDataSetChanged();
             }
         };
 
@@ -137,11 +145,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (deleteView){
             is_delete_view = deleteView;
             delete_set.setVisibility(View.VISIBLE);
-
+            add_new.setVisibility(View.INVISIBLE);
         }
         else{
             is_delete_view = deleteView;
             delete_set.setVisibility(View.GONE);
+            add_new.setVisibility(View.VISIBLE);
         }
     }
 
@@ -154,6 +163,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             is_delete_view = false;
             adapter.setIs_deleteView(false);
             delete_set.setVisibility(View.GONE);
+            add_new.setVisibility(View.VISIBLE);
             adapter.notifyDataSetChanged();
             return;
         }

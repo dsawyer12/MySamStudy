@@ -12,7 +12,7 @@ public class Set implements Parcelable{
     private int setSize = 0;
     private boolean show_answers, loop_set, share;
     private ArrayList<Card> cards;
-    private boolean isSelected = false;
+    private boolean isSelected;
 
     public Set() {}
 

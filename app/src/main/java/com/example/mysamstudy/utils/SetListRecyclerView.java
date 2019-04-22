@@ -29,6 +29,7 @@ public class SetListRecyclerView extends RecyclerView.Adapter<SetListRecyclerVie
     private boolean delete_view = false;
 
     public interface OnItemClickListener{
+        void onSetStart(Set set);
         void onSetClick(Set set);
         void onSetLongClick(boolean delete_view);
     }
@@ -61,6 +62,13 @@ public class SetListRecyclerView extends RecyclerView.Adapter<SetListRecyclerVie
         return delete_set;
     }
 
+    public void clearDeleteSet(){
+        delete_set.clear();
+        for (int i = 0; i < sets.size(); i++){
+            sets.get(i).setSelected(false);
+        }
+    }
+
     public void setIs_deleteView(boolean delete_view){
         this.delete_view = delete_view;
         delete_set.clear();
@@ -74,7 +82,7 @@ public class SetListRecyclerView extends RecyclerView.Adapter<SetListRecyclerVie
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         holder.setName.setText(sets.get(position).getSetName());
         if (sets.get(position).getSetSize() != 0){
             holder.numCards.setText(String.valueOf(sets.get(position).getSetSize() + " card"));
@@ -82,7 +90,6 @@ public class SetListRecyclerView extends RecyclerView.Adapter<SetListRecyclerVie
         }
         else{
             holder.numCards.setText("No Cards");
-            holder.numCards.setTextColor(ContextCompat.getColor(context, R.color.darkOrange));
             holder.start.setEnabled(false);
         }
 
@@ -105,16 +112,19 @@ public class SetListRecyclerView extends RecyclerView.Adapter<SetListRecyclerVie
             @Override
             public void onClick(View v) {
                 if (delete_view){
-                    if (holder.checkBox.isChecked()){
+                    if (sets.get(holder.getAdapterPosition()).isSelected()){
+                        sets.get(holder.getAdapterPosition()).setSelected(false);
                         holder.checkBox.setChecked(false);
                         delete_set.remove(sets.get(holder.getAdapterPosition()));
                     }
                     else{
+                        sets.get(holder.getAdapterPosition()).setSelected(true);
                         holder.checkBox.setChecked(true);
                         delete_set.add(sets.get(holder.getAdapterPosition()));
                     }
                 }
                 else{
+                    clearDeleteSet();
                     listener.onSetClick(sets.get(holder.getAdapterPosition()));
                 }
             }
@@ -125,16 +135,17 @@ public class SetListRecyclerView extends RecyclerView.Adapter<SetListRecyclerVie
             public boolean onLongClick(View v) {
                 if (delete_view){
                     delete_view = false;
+                    sets.get(holder.getAdapterPosition()).setSelected(false);
                     listener.onSetLongClick(false);
-                    delete_set.clear();
-                    notifyDataSetChanged();
+                    clearDeleteSet();
+//                    notifyDataSetChanged();
                 }
                 else{
                     delete_view = true;
+                    sets.get(holder.getAdapterPosition()).setSelected(true);
                     delete_set.add(sets.get(holder.getAdapterPosition()));
                     listener.onSetLongClick(true);
-                    sets.get(holder.getAdapterPosition()).setSelected(true);
-                    notifyDataSetChanged();
+//                    notifyDataSetChanged();
                 }
                 return true;
             }
@@ -143,9 +154,7 @@ public class SetListRecyclerView extends RecyclerView.Adapter<SetListRecyclerVie
         holder.start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, SetStartActivity.class);
-                intent.putExtra("mySet", sets.get(holder.getAdapterPosition()));
-                context.startActivity(intent);
+                listener.onSetStart(sets.get(holder.getAdapterPosition()));
             }
         });
     }

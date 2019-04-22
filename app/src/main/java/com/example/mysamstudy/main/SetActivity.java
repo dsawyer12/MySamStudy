@@ -1,51 +1,54 @@
 package com.example.mysamstudy.main;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mysamstudy.R;
 import com.example.mysamstudy.objects.Card;
 import com.example.mysamstudy.objects.Set;
+import com.example.mysamstudy.utils.CardListRecyclerView;
 import com.example.mysamstudy.utils.DatabaseManager;
-import com.example.mysamstudy.utils.SetListAdapter;
 import com.example.mysamstudy.utils.SettingsManager;
 
 import java.util.ArrayList;
 
 public class SetActivity extends AppCompatActivity implements View.OnClickListener,
-        ConfirmRemoveCardsDialogue.OnCardsReomved, FragmentManager.OnBackStackChangedListener {
+        ConfirmRemoveCardsDialogue.OnCardsRemoved, FragmentManager.OnBackStackChangedListener,
+        DialogInterface.OnDismissListener, DeleteCardDialogue.OnDeleteCard {
     private static final String TAG = "TAG";
 
     boolean is_delete_view = false, createMode = false;
     LinearLayout root_view, header;
     TextView set_title, header_title, edit_toolbar_title;
-    ImageView set_edit, set_add, back_btn, header_exapansion, edit_card_back, edit_card_finish, delete_cards;
+    ImageView set_edit, set_add, back_btn, header_expansion, edit_card_back, edit_card_finish, delete_cards;
     EditText new_card_question, new_card_answer;
     CardView new_card, no_cards;
-    ListView list;
     View editToolbar;
     Toolbar toolbar;
     Set set;
     InputMethodManager inputManager;
-    SetListAdapter.OnCardClickListener listener;
-    SetListAdapter adapter;
+    RecyclerView recyclerView;
+    CardListRecyclerView adapter;
+    CardListRecyclerView.OnCardClickListener listener;
 
     @Override
     public void onRemove(boolean remove) {
@@ -62,16 +65,26 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
             adapter.updateSet();
             reInitList();
 
-            if (set.getSetSize() != 0){
+            if (set.getSetSize() != 0)
                 header_title.setText(String.valueOf(set.getSetSize()) + " Card");
-                header_title.setTextColor(ContextCompat.getColor(this, R.color.lightOrange));
-            }
             else{
                 header_title.setText("No Cards");
-                header_title.setTextColor(ContextCompat.getColor(this, R.color.darkOrange));
                 no_cards.setVisibility(View.VISIBLE);
             }
         }
+    }
+
+    @Override
+    public void onDelete(final int cardId) {
+        DatabaseManager dbm = new DatabaseManager(this);
+        dbm.deleteCard(cardId);
+        set.setSetSize(set.getSetSize() - 1);
+        dbm.updateSetSize(set);
+        for(int i = 0; i < set.getCards().size(); i++){
+            if (set.getCards().get(i).getCardID() == cardId)
+                set.getCards().remove(i);
+        }
+        reInitList();
     }
 
     @Override
@@ -92,14 +105,14 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
         set_edit = findViewById(R.id.set_edit);
         set_add = findViewById(R.id.set_add);
         back_btn = findViewById(R.id.back_btn);
-        list = findViewById(R.id.listview);
+        recyclerView = findViewById(R.id.recyclerView);
         new_card = findViewById(R.id.new_card);
         no_cards = findViewById(R.id.cardview);
         delete_cards = findViewById(R.id.delete_cards);
         header = findViewById(R.id.card_list_header);
         header_title = findViewById(R.id.card_list_header_title);
         edit_toolbar_title = findViewById(R.id.edit_card_toolbar_title);
-        header_exapansion = findViewById(R.id.card_list_expansion);
+        header_expansion = findViewById(R.id.card_list_expansion);
         new_card_question = findViewById(R.id.card_question);
         new_card_question.setImeOptions(EditorInfo.IME_ACTION_NEXT);
         new_card_question.setRawInputType(InputType.TYPE_CLASS_TEXT);
@@ -117,28 +130,40 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.addOnBackStackChangedListener(this);
 
-        listener = new SetListAdapter.OnCardClickListener() {
+        listener = new CardListRecyclerView.OnCardClickListener() {
             @Override
-            public void onLongCLick(boolean in_delete_view) {
-                if (in_delete_view){
-                    delete_cards.setVisibility(View.VISIBLE);
-                    is_delete_view = in_delete_view;
-                    adapter.notifyDataSetChanged();
+            public void onLongCLick(boolean delete_view) {
+                if (!createMode){
+                    if (delete_view){
+                        delete_cards.setVisibility(View.VISIBLE);
+                        is_delete_view = delete_view;
+                        adapter.notifyDataSetChanged();
+                        set_edit.setVisibility(View.GONE);
+                        set_add.setVisibility(View.INVISIBLE);
+                    }
+                    else{
+                        delete_cards.setVisibility(View.GONE);
+                        is_delete_view = delete_view;
+                        adapter.clearDeleteSet();
+                        adapter.notifyDataSetChanged();
+                        set_edit.setVisibility(View.VISIBLE);
+                        set_add.setVisibility(View.VISIBLE);
+                    }
                 }
-                else{
-                    delete_cards.setVisibility(View.GONE);
-                    is_delete_view = in_delete_view;
-                    adapter.notifyDataSetChanged();
-                }
+//                else
+//                    createMode = false;
+//                    onBackPressed();
             }
 
             @Override
             public void onClick(Card card) {
-                EditCardFragment editCardFragment = new EditCardFragment();
-                Bundle args = new Bundle();
-                args.putParcelable("editCard", card);
-                editCardFragment.setArguments(args);
-                setFragment(editCardFragment, "editCard");
+                if (!createMode){
+                    EditCardFragment editCardFragment = new EditCardFragment();
+                    Bundle args = new Bundle();
+                    args.putParcelable("editCard", card);
+                    editCardFragment.setArguments(args);
+                    setFragment(editCardFragment, "editCard");
+                }
             }
         };
 
@@ -154,13 +179,12 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
         set.setCards(dbm.getCards(set.getSetId()));
         if (set.getSetSize() != 0){
             header_title.setText(String.valueOf(set.getSetSize()) + " Card");
-            header_title.setTextColor(ContextCompat.getColor(this, R.color.lightOrange));
-            adapter = new SetListAdapter(this, set, listener);
-            list.setAdapter(adapter);
+            adapter = new CardListRecyclerView(this, set, listener);
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
         }
         else{
             header_title.setText("No Cards");
-            header_title.setTextColor(ContextCompat.getColor(this, R.color.darkOrange));
             no_cards.setVisibility(View.VISIBLE);
         }
     }
@@ -169,14 +193,12 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
         DatabaseManager dbm = new DatabaseManager(this);
         Card newCard = new Card(question, answer, set.getSetId());
         long success = dbm.addCard(newCard);
-        if(success < 0){
+        if(success < 0)
             Toast.makeText(this, "Failed to add card", Toast.LENGTH_SHORT).show();
-        }
         else{
             set.setSetSize(set.getSetSize()+1);
             dbm.updateSetSize(set);
             header_title.setText(String.valueOf(set.getSetSize()) + " Card");
-            header_title.setTextColor(ContextCompat.getColor(this, R.color.lightOrange));
 
             if (set.getCards() != null){
                 set.getCards().add(newCard);
@@ -198,12 +220,12 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
     }
 
     public void reInitList(){
-        if (adapter != null){
+        if (adapter != null)
             adapter.notifyDataSetChanged();
-        }
         else{
-            adapter = new SetListAdapter(this, set, listener);
-            list.setAdapter(adapter);
+            adapter = new CardListRecyclerView(this, set, listener);
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
         }
     }
 
@@ -213,12 +235,17 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
         toolbar.setVisibility(View.VISIBLE);
         inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
         new_card.setVisibility(View.GONE);
-        list.setVisibility(View.VISIBLE);
-        header_exapansion.setImageResource(R.drawable.ic_collapse);
+        recyclerView.setVisibility(View.VISIBLE);
+        header_expansion.setImageResource(R.drawable.ic_collapse);
         new_card_question.setText(null);
         new_card_answer.setText(null);
-//        setList();
-        reInitList();
+        if (set.getSetSize() != 0)
+            header_title.setText(String.valueOf(set.getSetSize()) + " Card");
+        else{
+            header_title.setText("No Cards");
+            no_cards.setVisibility(View.VISIBLE);
+        }
+        setList();
     }
 
     @Override
@@ -263,11 +290,6 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
                         new_card_answer.requestFocus();
                         return;
                     }
-//                    else{
-//                        Log.d(TAG, "both are empty");
-//                        new_card_question.setText(null);
-//                        new_card_answer.setText(null);
-//                    }
                 break;
 
             case(R.id.edit_card_back):
@@ -275,13 +297,13 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
                 break;
 
             case(R.id.card_list_header):
-                if (list.isShown()){
-                    list.setVisibility(View.GONE);
-                    header_exapansion.setImageResource(R.drawable.ic_expand);
+                if (recyclerView.isShown()){
+                    recyclerView.setVisibility(View.GONE);
+                    header_expansion.setImageResource(R.drawable.ic_expand);
                 }
                 else{
-                    list.setVisibility(View.VISIBLE);
-                    header_exapansion.setImageResource(R.drawable.ic_collapse);
+                    recyclerView.setVisibility(View.VISIBLE);
+                    header_expansion.setImageResource(R.drawable.ic_collapse);
                 }
                 break;
 
@@ -319,6 +341,9 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
             is_delete_view = false;
             adapter.setIs_deleteView(false);
             delete_cards.setVisibility(View.GONE);
+            set_edit.setVisibility(View.VISIBLE);
+            set_add.setVisibility(View.VISIBLE);
+            adapter.clearDeleteSet();
             adapter.notifyDataSetChanged();
             return;
         }
@@ -336,6 +361,12 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void onBackStackChanged() {
+        Log.d(TAG, "onBackStackChanged: ");
         setList();
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        set_add.setVisibility(View.VISIBLE);
     }
 }

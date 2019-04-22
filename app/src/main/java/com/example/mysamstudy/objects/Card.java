@@ -7,7 +7,7 @@ public class Card implements Parcelable {
     private int cardID, FK;
     private String cardQuestion, cardAnswer;
     private boolean showAnswer;
-    private boolean alwaysShowAnswer;
+    private boolean alwaysShowAnswer, isSelected;
 
     public Card(){}
 
@@ -40,6 +40,7 @@ public class Card implements Parcelable {
         dest.writeString(cardAnswer);
         dest.writeByte((byte) (showAnswer ? 1 : 0));
         dest.writeByte((byte) (alwaysShowAnswer ? 1 : 0));
+        dest.writeByte((byte) (isSelected ? 1 : 0));
     }
 
     @Override
@@ -58,6 +59,14 @@ public class Card implements Parcelable {
             return new Card[size];
         }
     };
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
 
     public int getCardID() {
         return cardID;

@@ -1,9 +1,11 @@
 package com.example.mysamstudy.main;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +16,6 @@ import android.widget.TextView;
 import com.example.mysamstudy.R;
 import com.example.mysamstudy.objects.Card;
 import com.example.mysamstudy.utils.DatabaseManager;
-import com.example.mysamstudy.utils.GeneralDialogue;
 
 public class EditCardFragment extends Fragment implements View.OnClickListener{
     private static final String TAG = "TAG";
@@ -48,12 +49,14 @@ public class EditCardFragment extends Fragment implements View.OnClickListener{
 
         card = getCardFromBundle();
         if (card != null)
+            Log.d(TAG, String.valueOf(card.getCardID()));
             initLayout();
     }
 
     public void initLayout(){
         card_question.setText(card.getCardQuestion());
         card_answer.setText(card.getCardAnswer());
+        card_question.requestFocus();
     }
 
     public void updateCard(){
@@ -92,7 +95,10 @@ public class EditCardFragment extends Fragment implements View.OnClickListener{
                 break;
 
             case(R.id.edit_card_delete):
-                GeneralDialogue dialogue = new GeneralDialogue();
+                DeleteCardDialogue dialogue = new DeleteCardDialogue();
+                Bundle args = new Bundle();
+                args.putParcelable("deleteCard", card);
+                dialogue.setArguments(args);
                 dialogue.show(getActivity().getSupportFragmentManager(), "dialogue");
                 break;
         }

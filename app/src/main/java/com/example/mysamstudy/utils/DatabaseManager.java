@@ -292,7 +292,6 @@ public class DatabaseManager extends SQLiteOpenHelper {
     }
 
     public void updateCard(Card card){
-        Log.d(TAG, "updateCard: called");
         SQLiteDatabase database = this.getWritableDatabase();
         String query = "UPDATE " + CARDS_TABLE + " SET " +
                 question + " = '" + card.getCardQuestion() + "'" + " WHERE " + card_id + " = " + card.getCardID();

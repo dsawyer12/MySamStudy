@@ -13,7 +13,7 @@
         android:textColor="?attr/primaryText"
         android:gravity="center"
         android:padding="30dp"
-        android:textSize="16sp"/>
+        android:textSize="18sp"/>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -24,21 +24,23 @@
         android:showDividers="middle">
 
         <TextView
+            android:id="@+id/cancel"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="Cancel"
             android:layout_weight="1"
             android:gravity="center"
-            android:textSize="16sp"
-            android:textColor="@color/lightBlue"/>
+            android:textSize="18sp"
+            android:textColor="@color/lightOrange"/>
 
         <TextView
+            android:id="@+id/confirm"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="Confirm"
             android:layout_weight="1"
             android:gravity="center"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:textColor="@color/lightBlue"/>
 
     </LinearLayout>
