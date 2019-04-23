@@ -11,6 +11,8 @@ public class SettingsManager {
     public static final String share_selection_preferences = "share_selection_preferences";
     public static final String share_selected_items = "share_selection_items";
     public static final String user_session = "user_session";
+    public static final String study_preferences_loop = "study_preferences_loop";
+    public static final String study_preferences_show_answer = "study_preferences_show_answer";
 
     public SettingsManager(){}
 
@@ -28,6 +30,10 @@ public class SettingsManager {
 
     public static Set getSetList(String preferences){
         return sharedPreferences.getStringSet(preferences, null);
+    }
+
+    public static Boolean get_study_preferences(String preferences){
+        return sharedPreferences.getBoolean(preferences, false);
     }
 
     public static void write(String preferences, boolean value){

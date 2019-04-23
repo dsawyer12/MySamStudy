@@ -39,15 +39,19 @@ public class CardFragment extends Fragment implements View.OnClickListener {
         if (card != null){
             card_question.setText(card.getCardQuestion());
             card_answer.setText(card.getCardAnswer());
+        }
 
-            if (card.isAlwaysShowAnswer()){
-                card_answer.setVisibility(View.VISIBLE);
-                show_answer.setVisibility(View.GONE);
-            }
-            else{
-                card_answer.setVisibility(View.GONE);
-                show_answer.setVisibility(View.VISIBLE);
-            }
+        initPreferences();
+    }
+
+    public void initPreferences(){
+        if (SetStartActivity.SHOW_ANSWERS){
+            card_answer.setVisibility(View.VISIBLE);
+            show_answer.setVisibility(View.GONE);
+        }
+        else{
+            card_answer.setVisibility(View.GONE);
+            show_answer.setVisibility(View.VISIBLE);
         }
     }
 

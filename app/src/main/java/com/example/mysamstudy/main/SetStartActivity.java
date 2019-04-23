@@ -23,6 +23,7 @@ import com.example.mysamstudy.utils.SettingsManager;
 public class SetStartActivity extends AppCompatActivity implements View.OnClickListener{
     private static final String TAG = "TAG";
 
+    public static boolean SHOW_ANSWERS, LOOP_SET;
     int current_card;
     CardFragment cardFragment;
     Set set;
@@ -61,8 +62,27 @@ public class SetStartActivity extends AppCompatActivity implements View.OnClickL
             DatabaseManager dmb = new DatabaseManager(this);
             set.setCards(dmb.getCards(set.getSetId()));
 
+            initUserPreferences();
             startSession();
         }
+    }
+
+    public void initUserPreferences(){
+        SettingsManager.getSharedPreferences(this, SettingsManager.study_preferences_loop);
+        if (!SettingsManager.get_study_preferences(SettingsManager.study_preferences_loop)){
+            LOOP_SET = false;
+            set.setLoop_set(false);
+        }
+        else{
+            LOOP_SET = true;
+            set.setLoop_set(true);
+        }
+
+        SettingsManager.getSharedPreferences(this, SettingsManager.study_preferences_show_answer);
+        if (!SettingsManager.get_study_preferences(SettingsManager.study_preferences_show_answer))
+            SHOW_ANSWERS = false;
+        else
+            SHOW_ANSWERS = true;
     }
 
     public void startSession(){
@@ -95,6 +115,10 @@ public class SetStartActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.start_set_menu, menu);
+        if (LOOP_SET)
+            menu.getItem(0).setChecked(true);
+        if (SHOW_ANSWERS)
+            menu.getItem(1).setChecked(true);
         return true;
     }
 
@@ -119,13 +143,12 @@ public class SetStartActivity extends AppCompatActivity implements View.OnClickL
                     current_card--;
                     startSession();
                 }
-                else{
+                else {
                     item.setChecked(true);
                     set.setAnswerAlwaysOn(true);
                     current_card--;
                     startSession();
                 }
-
                 break;
         }
         return super.onOptionsItemSelected(item);
