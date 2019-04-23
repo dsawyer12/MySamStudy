@@ -10,7 +10,7 @@ public class Set implements Parcelable{
     private String setName;
     private int setId, FK;
     private int setSize = 0;
-    private boolean show_answers, loop_set, share;
+    private boolean share;
     private ArrayList<Card> cards;
     private boolean isSelected;
 
@@ -34,8 +34,6 @@ public class Set implements Parcelable{
         this.setId = id;
         this.setName = setName;
         this.setSize = setSize;
-        this.show_answers = show_answers;
-        this.loop_set = loop_set;
         this.share = share;
         this.FK = FK;
     }
@@ -45,8 +43,6 @@ public class Set implements Parcelable{
         setId = in.readInt();
         FK = in.readInt();
         setSize = in.readInt();
-        show_answers = in.readByte() != 0;
-        loop_set = in.readByte() != 0;
         share = in.readByte() != 0;
         cards = in.createTypedArrayList(Card.CREATOR);
         isSelected = in.readByte() != 0;
@@ -58,8 +54,6 @@ public class Set implements Parcelable{
         dest.writeInt(setId);
         dest.writeInt(FK);
         dest.writeInt(setSize);
-        dest.writeByte((byte) (show_answers ? 1 : 0));
-        dest.writeByte((byte) (loop_set ? 1 : 0));
         dest.writeByte((byte) (share ? 1 : 0));
         dest.writeTypedList(cards);
         dest.writeByte((byte) (isSelected ? 1 : 0));
@@ -106,20 +100,6 @@ public class Set implements Parcelable{
         this.share = share;
     }
 
-    public boolean isShow_answers() {
-        return show_answers;
-    }
-
-    public void setShow_answers(boolean show_answers) {
-        this.show_answers = show_answers;
-    }
-
-    public void setAnswerAlwaysOn(boolean value){
-        for(int i = 0; i < cards.size(); i++){
-            cards.get(i).setAlwaysShowAnswer(value);
-        }
-    }
-
     public String getSetName() {
         return setName;
     }
@@ -152,11 +132,4 @@ public class Set implements Parcelable{
         this.cards = cards;
     }
 
-    public boolean isLoop_set() {
-        return loop_set;
-    }
-
-    public void setLoop_set(boolean loop_set) {
-        this.loop_set = loop_set;
-    }
 }

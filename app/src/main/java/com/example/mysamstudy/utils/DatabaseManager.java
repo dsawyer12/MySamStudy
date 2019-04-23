@@ -310,7 +310,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
     public ArrayList<Set> searchDatabase(String value, int searchType){
         SQLiteDatabase database = this.getWritableDatabase();
         String setQuery = "SELECT * FROM " + SETS_TABLE + " WHERE " + set_name + " LIKE '%" + value + "%'";
-        if (searchType == 0){
+        if (searchType == 1){
             Cursor c = database.rawQuery(setQuery, null);
             if (!(c.moveToFirst()) || c.getCount() == 0){
                 c.close();

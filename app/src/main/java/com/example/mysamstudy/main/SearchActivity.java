@@ -12,6 +12,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -28,12 +29,14 @@ import java.util.ArrayList;
 
 public class SearchActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "TAG";
-    private static final int SEARCH_SETS = 0;
-    private static final int SEARCH_CARDS = 1;
+    private static final int SEARCH_ALL = 0;
+    private static final int SEARCH_SETS = 1;
+    private static final int SEARCH_CARDS = 2;
 
     EditText search_box;
     TextView search_error;
-    ImageView search_btn, back_btn;
+    ImageView search_btn, back_btn, more_options;
+    CheckBox search_all, search_sets, search_cards;
     ListView search_list;
     private DatabaseManager dbm;
     ArrayList<Set> sets;
@@ -56,6 +59,10 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         search_btn = findViewById(R.id.search_btn);
         back_btn = findViewById(R.id.search_back_btn);
         search_list = findViewById(R.id.search_list);
+        more_options = findViewById(R.id.more_options);
+        search_all = findViewById(R.id.search_all);
+        search_sets = findViewById(R.id.search_sets);
+        search_cards = findViewById(R.id.search_cards);
 
         search_btn.setOnClickListener(this);
         back_btn.setOnClickListener(this);

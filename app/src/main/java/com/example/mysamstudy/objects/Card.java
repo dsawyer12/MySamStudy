@@ -6,8 +6,7 @@ import android.os.Parcelable;
 public class Card implements Parcelable {
     private int cardID, FK;
     private String cardQuestion, cardAnswer;
-    private boolean showAnswer;
-    private boolean alwaysShowAnswer, isSelected;
+    private boolean isSelected;
 
     public Card(){}
 
@@ -28,8 +27,6 @@ public class Card implements Parcelable {
         cardID = in.readInt();
         cardQuestion = in.readString();
         cardAnswer = in.readString();
-        showAnswer = in.readByte() != 0;
-        alwaysShowAnswer = in.readByte() != 0;
     }
 
     @Override
@@ -38,8 +35,6 @@ public class Card implements Parcelable {
         dest.writeInt(FK);
         dest.writeString(cardQuestion);
         dest.writeString(cardAnswer);
-        dest.writeByte((byte) (showAnswer ? 1 : 0));
-        dest.writeByte((byte) (alwaysShowAnswer ? 1 : 0));
         dest.writeByte((byte) (isSelected ? 1 : 0));
     }
 
@@ -98,21 +93,5 @@ public class Card implements Parcelable {
 
     public void setCardAnswer(String cardAnswer) {
         this.cardAnswer = cardAnswer;
-    }
-
-    public boolean isShowAnswer() {
-        return showAnswer;
-    }
-
-    public void setShowAnswer(boolean showAnswer) {
-        this.showAnswer = showAnswer;
-    }
-
-    public boolean isAlwaysShowAnswer() {
-        return alwaysShowAnswer;
-    }
-
-    public void setAlwaysShowAnswer(boolean alwaysShowAnswer) {
-        this.alwaysShowAnswer = alwaysShowAnswer;
     }
 }

@@ -69,14 +69,10 @@ public class SetStartActivity extends AppCompatActivity implements View.OnClickL
 
     public void initUserPreferences(){
         SettingsManager.getSharedPreferences(this, SettingsManager.study_preferences_loop);
-        if (!SettingsManager.get_study_preferences(SettingsManager.study_preferences_loop)){
+        if (!SettingsManager.get_study_preferences(SettingsManager.study_preferences_loop))
             LOOP_SET = false;
-            set.setLoop_set(false);
-        }
-        else{
+        else
             LOOP_SET = true;
-            set.setLoop_set(true);
-        }
 
         SettingsManager.getSharedPreferences(this, SettingsManager.study_preferences_show_answer);
         if (!SettingsManager.get_study_preferences(SettingsManager.study_preferences_show_answer))
@@ -127,25 +123,25 @@ public class SetStartActivity extends AppCompatActivity implements View.OnClickL
         switch (item.getItemId()){
             case(R.id.loop_set):
                 if (item.isChecked()){
+                    LOOP_SET = false;
                     item.setChecked(false);
-                    set.setLoop_set(false);
                 }
                 else{
+                    LOOP_SET = true;
                     item.setChecked(true);
-                    set.setLoop_set(true);
                 }
                 break;
 
             case(R.id.show_answer):
                 if (item.isChecked()){
+                    SHOW_ANSWERS = false;
                     item.setChecked(false);
-                    set.setAnswerAlwaysOn(false);
                     current_card--;
                     startSession();
                 }
                 else {
+                    SHOW_ANSWERS = true;
                     item.setChecked(true);
-                    set.setAnswerAlwaysOn(true);
                     current_card--;
                     startSession();
                 }
@@ -161,7 +157,7 @@ public class SetStartActivity extends AppCompatActivity implements View.OnClickL
                 if (current_card < set.getSetSize()){
                     startSession();
                 }
-                else if (current_card == set.getSetSize() && set.isLoop_set()){
+                else if (current_card == set.getSetSize() && LOOP_SET){
                     current_card = 0;
                     startSession();
                 }
