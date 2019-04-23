@@ -355,6 +355,7 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
         }
 
         Intent intent = new Intent(SetActivity.this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
     }

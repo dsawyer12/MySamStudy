@@ -113,6 +113,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
     public void exit(){
         Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
     }
@@ -132,9 +133,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
-        startActivity(intent);
-        finish();
+        exit();
     }
 }
 

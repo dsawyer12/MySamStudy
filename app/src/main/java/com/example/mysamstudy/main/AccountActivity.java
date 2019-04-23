@@ -52,13 +52,11 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         SettingsManager.getSharedPreferences(this, SettingsManager.dark_theme_preferences);
-        if (!SettingsManager.getDarkTheme(SettingsManager.dark_theme_preferences)){
+        if (!SettingsManager.getDarkTheme(SettingsManager.dark_theme_preferences))
             setTheme(R.style.AppThemeLight);
-        }
-        else{
+        else
             setTheme(R.style.AppThemeDark);
 
-        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
 
@@ -106,12 +104,10 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
         int shareSelectedOption = SettingsManager.getShareSelectionPreferences(SettingsManager.share_selection_preferences);
         share_radio_group.indexOfChild(findViewById(share_radio_group.getCheckedRadioButtonId()));
         share_radio_group.check(shareSelectedOption);
-        if (shareSelectedOption == select_share.getId()){
+        if (shareSelectedOption == select_share.getId())
             share_list.setVisibility(View.VISIBLE);
-        }
-        else{
+        else
             share_list.setVisibility(View.GONE);
-        }
 
         SettingsManager.getSharedPreferences(this, SettingsManager.user_session);
 
@@ -249,6 +245,7 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
 
     public void exit(){
         Intent intent1 = new Intent(AccountActivity.this, MainActivity.class);
+        intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent1);
         finish();
     }

@@ -133,6 +133,14 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         manager.beginTransaction().replace(R.id.searchFrame, fragment, tag).addToBackStack(null).commit();
     }
 
+    public void exit(){
+        Intent intent = new Intent(SearchActivity.this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
+
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -140,9 +148,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                 searchDatabase();
                 break;
             case(R.id.search_back_btn):
-                Intent intent = new Intent(SearchActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+               exit();
                 break;
         }
     }
@@ -153,8 +159,6 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
             getSupportFragmentManager().popBackStackImmediate();
             return;
         }
-        Intent intent = new Intent(SearchActivity.this, MainActivity.class);
-        startActivity(intent);
-        finish();
+        exit();
     }
 }
