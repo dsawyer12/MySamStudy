@@ -97,7 +97,8 @@
                         android:switchPadding="40dp"
                         android:layout_marginTop="5dp"
                         android:paddingBottom="5dp"
-                        android:text="Allow your profile to be searched and viewed by others"/>
+                        android:text="Allow your profile to be searched and viewed by others"
+                        android:textColor="?attr/primaryText"/>
 
                 </LinearLayout>
 
@@ -130,10 +131,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
-                        android:paddingBottom="2dp"
+                        android:paddingBottom="5dp"
                         android:layout_marginTop="10dp"
                         android:maxLines="1"
-                        android:background="@drawable/bottom_border_accessory_black"
+                        android:background="@drawable/bottom_border_accessory_grey"
                         android:textColor="@color/lightOrange"/>
 
                     <TextView
@@ -149,9 +150,9 @@
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
                         android:maxLines="1"
-                        android:paddingBottom="2dp"
+                        android:paddingBottom="5dp"
                         android:layout_marginTop="10dp"
-                        android:background="@drawable/bottom_border_accessory_black"
+                        android:background="@drawable/bottom_border_accessory_grey"
                         android:textColor="@color/lightOrange"/>
 
                     <TextView
@@ -165,10 +166,10 @@
                         android:id="@+id/username"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/bottom_border_accessory_black"
+                        android:background="@drawable/bottom_border_accessory_grey"
                         android:textSize="16sp"
                         android:maxLines="1"
-                        android:paddingBottom="2dp"
+                        android:paddingBottom="5dp"
                         android:layout_marginTop="10dp"
                         android:textColor="@color/lightOrange"/>
 
@@ -183,10 +184,10 @@
                         android:id="@+id/email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/bottom_border_accessory_black"
+                        android:background="@drawable/bottom_border_accessory_grey"
                         android:textSize="16sp"
                         android:maxLines="1"
-                        android:paddingBottom="2dp"
+                        android:paddingBottom="5dp"
                         android:layout_marginTop="10dp"
                         android:textColor="@color/lightOrange"/>
 

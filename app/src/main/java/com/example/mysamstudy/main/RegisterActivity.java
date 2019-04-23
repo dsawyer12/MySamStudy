@@ -104,15 +104,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             Toast.makeText(this, "An error occurred.", Toast.LENGTH_SHORT).show();
         else{
             Toast.makeText(this, "Success!", Toast.LENGTH_SHORT).show();
-//            setDefaultSettings();
             login();
         }
     }
-
-//    public void setDefaultSettings(){
-//        SettingsManager.getSharedPreferences(this, SettingsManager.share_selection_preferences);
-//        SettingsManager.write(SettingsManager.share_selection_preferences, 0);
-//    }
 
     public void login(){
         Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);

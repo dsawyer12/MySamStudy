@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import com.example.mysamstudy.R;
 import com.example.mysamstudy.objects.Set;
@@ -32,6 +33,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     Button save_changes;
     CheckBox loop_set, show_answer;
     ImageView back_btn, share_list;
+    TextView no_sets_mssg;
     RadioGroup share_radio_group;
     RadioButton share_all, select_share, share_none;
     ListView list;
@@ -57,6 +59,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         save_changes = findViewById(R.id.save_changes);
         back_btn = findViewById(R.id.back_btn);
         loop_set = findViewById(R.id.loop_set_checkbox);
+        no_sets_mssg = findViewById(R.id.no_sets_mssg);
         show_answer = findViewById(R.id.show_answer_checkox);
         share_radio_group = findViewById(R.id.share_radio_group);
         share_all = findViewById(R.id.share_all);
@@ -98,24 +101,45 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     }
 
     public void initSettings(){
+        sets = getIntent().getParcelableArrayListExtra("sets");
         SettingsManager.getSharedPreferences(this, SettingsManager.share_selection_preferences);
         int shareSelectedOption = SettingsManager.getShareSelectionPreferences(SettingsManager.share_selection_preferences);
-        share_radio_group.indexOfChild(findViewById(share_radio_group.getCheckedRadioButtonId()));
-        share_radio_group.check(shareSelectedOption);
-        if (shareSelectedOption == select_share.getId()){
-            share_list.setVisibility(View.VISIBLE);
-            share_list.setImageResource(R.drawable.ic_collapse);
-            list.setVisibility(View.VISIBLE);
+        if (shareSelectedOption == 0){
+            Log.d(TAG, "initSettings: ZERO");
+            share_none.setChecked(true);
+            SettingsManager.getSharedPreferences(this, SettingsManager.share_selection_preferences);
+            SettingsManager.write(SettingsManager.share_selection_preferences, share_none.getId());
         }
         else{
-            share_list.setVisibility(View.GONE);
-            share_list.setImageResource(R.drawable.ic_expand);
-            list.setVisibility(View.GONE);
+            Log.d(TAG, "initSettings: NOT zero");
+            Log.d(TAG, String.valueOf(shareSelectedOption));
+            share_radio_group.indexOfChild(findViewById(share_radio_group.getCheckedRadioButtonId()));
+            share_radio_group.check(shareSelectedOption);
+            if (shareSelectedOption == select_share.getId()){
+                Log.d(TAG, "initSettings: select share is selected");
+                if (sets != null){
+                    Log.d(TAG, "initSettings: and sets is not NULL");
+                    share_list.setVisibility(View.VISIBLE);
+                    share_list.setImageResource(R.drawable.ic_collapse);
+                    list.setVisibility(View.VISIBLE);
+                    no_sets_mssg.setVisibility(View.GONE);
+                }
+                else{
+                    Log.d(TAG, "initSettings: sets IS null");
+                    list.setVisibility(View.GONE);
+                    no_sets_mssg.setVisibility(View.VISIBLE);
+                }
+            }
+            else{
+                Log.d(TAG, "initSettings: select share is NOT selected");
+                share_list.setVisibility(View.GONE);
+                share_list.setImageResource(R.drawable.ic_expand);
+                list.setVisibility(View.GONE);
+                no_sets_mssg.setVisibility(View.GONE);
+            }
         }
 
-        sets = getIntent().getParcelableArrayListExtra("sets");
         if (sets != null){
-
             listener = new SetSelectShareAdapter.OnItemCheckedListener() {
                 @Override
                 public void onChecked(int position) {
@@ -137,6 +161,10 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
             adapter = new SetSelectShareAdapter(this, sets, listener);
             list.setAdapter(adapter);
         }
+//        else{
+//            list.setVisibility(View.GONE);
+//            no_sets_mssg.setVisibility(View.VISIBLE);
+//        }
     }
 
     public void setDarkTheme(boolean isChecked){
@@ -209,14 +237,21 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         SettingsManager.getSharedPreferences(this, SettingsManager.share_selection_preferences);
         SettingsManager.write(SettingsManager.share_selection_preferences, checkedId);
         if (SettingsManager.getShareSelectionPreferences(SettingsManager.share_selection_preferences) == select_share.getId()){
-            share_list.setVisibility(View.VISIBLE);
-            share_list.setImageResource(R.drawable.ic_collapse);
-            list.setVisibility(View.VISIBLE);
+            if (sets != null){
+                share_list.setVisibility(View.VISIBLE);
+                share_list.setImageResource(R.drawable.ic_collapse);
+                list.setVisibility(View.VISIBLE);
+            }
+            else{
+                list.setVisibility(View.GONE);
+                no_sets_mssg.setVisibility(View.VISIBLE);
+            }
         }
         else{
             share_list.setVisibility(View.GONE);
             share_list.setImageResource(R.drawable.ic_expand);
             list.setVisibility(View.GONE);
+            no_sets_mssg.setVisibility(View.GONE);
         }
     }
 

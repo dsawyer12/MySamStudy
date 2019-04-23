@@ -9,7 +9,6 @@ public class SettingsManager {
     private static SharedPreferences sharedPreferences;
     public static final String dark_theme_preferences = "dark_theme_preferences";
     public static final String share_selection_preferences = "share_selection_preferences";
-    public static final String share_selected_items = "share_selection_items";
     public static final String user_session = "user_session";
     public static final String study_preferences_loop = "study_preferences_loop";
     public static final String study_preferences_show_answer = "study_preferences_show_answer";
@@ -28,10 +27,6 @@ public class SettingsManager {
         return sharedPreferences.getInt(preferences, 0);
     }
 
-    public static Set getSetList(String preferences){
-        return sharedPreferences.getStringSet(preferences, null);
-    }
-
     public static Boolean get_study_preferences(String preferences){
         return sharedPreferences.getBoolean(preferences, false);
     }
@@ -45,12 +40,6 @@ public class SettingsManager {
     public static void write(String preferences, int value){
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(preferences, value);
-        editor.apply();
-    }
-
-    public static void write(String preferences, Set value){
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putStringSet(preferences, value);
         editor.apply();
     }
 
