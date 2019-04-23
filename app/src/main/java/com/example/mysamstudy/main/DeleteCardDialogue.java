@@ -1,7 +1,6 @@
 package com.example.mysamstudy.main;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,12 +9,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.TextView;
 
 import com.example.mysamstudy.R;
 import com.example.mysamstudy.objects.Card;
-import com.example.mysamstudy.utils.DatabaseManager;
 
 public class DeleteCardDialogue extends DialogFragment implements View.OnClickListener {
     private static final String TAG = "TAG";
@@ -31,7 +28,7 @@ public class DeleteCardDialogue extends DialogFragment implements View.OnClickLi
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.dialogue_general, container, false);
+        return inflater.inflate(R.layout.dialogue_delete_card, container, false);
     }
 
     @Override
