@@ -30,7 +30,7 @@ public class Set implements Parcelable{
     }
 
 
-    public Set(int id, String setName, int setSize, boolean show_answers, boolean loop_set, boolean share, int FK) {
+    public Set(int id, String setName, int setSize, boolean share, int FK) {
         this.setId = id;
         this.setName = setName;
         this.setSize = setSize;

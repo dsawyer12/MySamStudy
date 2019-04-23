@@ -1,6 +1,7 @@
 package com.example.mysamstudy.utils;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.example.mysamstudy.objects.Set;
 import java.util.ArrayList;
 
 public class SetSelectShareAdapter extends BaseAdapter {
+    private static final String TAG = "TAG";
 
     Context context;
     ArrayList<Set> sets;
@@ -65,24 +67,26 @@ public class SetSelectShareAdapter extends BaseAdapter {
 
             convertView.setTag(holder);
         }
-        else{
+        else
             holder = (ViewHolder) convertView.getTag();
-        }
 
-        if (sets.get(position).isShare()){
+        if (sets.get(position).isShare())
             holder.checkBox.setChecked(true);
-        }
+        else
+            holder.checkBox.setChecked(false);
 
         holder.set_name.setText(sets.get(position).getSetName());
         holder.set_size.setText(String.valueOf(sets.get(position).getSetSize()) + " Card(s)");
         holder.rootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (holder.checkBox.isChecked()){
+                if (sets.get(position).isShare()){
+                    sets.get(position).setShare(false);
                     holder.checkBox.setChecked(false);
                     listener.onUnchecked(position);
                 }
                 else{
+                    sets.get(position).setShare(true);
                     holder.checkBox.setChecked(true);
                     listener.onChecked(position);
                 }

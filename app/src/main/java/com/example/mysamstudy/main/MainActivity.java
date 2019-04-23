@@ -214,13 +214,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (item.getItemId()){
             case(R.id.settings):
                 Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                intent.putParcelableArrayListExtra("sets", sets);
                 startActivity(intent);
                 finish();
                 break;
 
             case(R.id.account):
                 Intent intent1 = new Intent(MainActivity.this, AccountActivity.class);
-                intent1.putParcelableArrayListExtra("sets", sets);
                 startActivity(intent1);
                 finish();
                 break;

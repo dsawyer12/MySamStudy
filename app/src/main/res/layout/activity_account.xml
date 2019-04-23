@@ -76,7 +76,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Allow others to view your study sets"
+                    android:text="Privacy Settings"
                     android:textStyle="bold"
                     android:paddingTop="10dp"
                     android:textColor="@color/lightBlue"/>
@@ -90,62 +90,14 @@
                     android:paddingBottom="10dp"
                     android:background="@drawable/bottom_border_accessory_orange">
 
-                    <TextView
-                        android:layout_width="match_parent"
+                    <Switch
+                        android:id="@+id/account_viewable_switch"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:switchPadding="40dp"
                         android:layout_marginTop="5dp"
-                        android:text="Allow your study sets to be searchable and viewed by other users. You can share all of your sets or you can select the sets you want to share."
-                        android:textColor="?attr/primaryText"
-                        android:textSize="12sp"/>
-
-                    <RadioGroup
-                        android:id="@+id/share_radio_group"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <RadioButton
-                            android:id="@+id/share_none"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="?attr/primaryText"
-                            android:text="Don't Allow Sharing"
-                            android:buttonTint="@color/lightOrange"
-                            android:layout_marginTop="8dp"/>
-
-                        <RadioButton
-                            android:id="@+id/share_all"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="?attr/primaryText"
-                            android:text="Share All"
-                            android:buttonTint="@color/lightOrange"
-                            android:layout_marginTop="8dp"/>
-
-                        <RadioButton
-                            android:id="@+id/select_share"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="?attr/primaryText"
-                            android:text="Only Share Selected"
-                            android:buttonTint="@color/lightOrange"
-                            android:layout_marginTop="8dp"/>
-
-                    </RadioGroup>
-
-                    <ImageView
-                        android:id="@+id/share_list"
-                        android:layout_width="100dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/ic_expand" />
-
-                    <ListView
-                        android:id="@+id/listview"
-                        android:visibility="gone"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                    </ListView>
+                        android:paddingBottom="5dp"
+                        android:text="Allow your profile to be searched and viewed by others"/>
 
                 </LinearLayout>
 

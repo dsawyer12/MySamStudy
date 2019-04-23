@@ -25,23 +25,17 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 public class AccountActivity extends AppCompatActivity implements View.OnClickListener,
-        RadioGroup.OnCheckedChangeListener,
         SetSelectShareAdapter.OnItemCheckedListener{
     private static final String TAG = "TAG";
 
-    ImageView back_btn, share_list;
+    ImageView back_btn;
     TextView account_created;
     EditText first_name, last_name, username, email;
-    RadioGroup share_radio_group;
-    RadioButton share_all, select_share, share_none;
-    ListView list;
     Button password, save_changes, delete_account;
-    SetSelectShareAdapter.OnItemCheckedListener listener;
-    SetSelectShareAdapter adapter;
 
     private User user;
-    ArrayList<Set> sets = new ArrayList<>();
-    java.util.Set<Integer> selectedSet = new HashSet<>();
+//    ArrayList<Set> sets = new ArrayList<>();
+//    java.util.Set<Integer> selectedSet = new HashSet<>();
 
     @Override
     public void onChecked(int position) { }
@@ -67,23 +61,15 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
         last_name = findViewById(R.id.last_name);
         username = findViewById(R.id.username);
         email = findViewById(R.id.email);
-        share_radio_group = findViewById(R.id.share_radio_group);
-        share_all = findViewById(R.id.share_all);
-        select_share = findViewById(R.id.select_share);
-        share_none = findViewById(R.id.share_none);
-        list = findViewById(R.id.listview);
         back_btn = findViewById(R.id.back_btn);
         delete_account = findViewById(R.id.delete_account_btn);
-        share_list = findViewById(R.id.share_list);
         password = findViewById(R.id.password);
         save_changes = findViewById(R.id.save_changes);
 
         back_btn.setOnClickListener(this);
-        share_list.setOnClickListener(this);
         password.setOnClickListener(this);
         delete_account.setOnClickListener(this);
         save_changes.setOnClickListener(this);
-        share_radio_group.setOnCheckedChangeListener(this);
 
         SettingsManager.getSharedPreferences(this, SettingsManager.user_session);
         Gson gson = new Gson();
@@ -95,71 +81,9 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
         username.setText(user.getUsername());
         email.setText(user.getEmail());
         account_created.setText("Account Created - " + user.getRegister_date());
-
-        initializeSettings();
-    }
-
-    public void initializeSettings(){
-        SettingsManager.getSharedPreferences(this, SettingsManager.share_selection_preferences);
-        int shareSelectedOption = SettingsManager.getShareSelectionPreferences(SettingsManager.share_selection_preferences);
-        share_radio_group.indexOfChild(findViewById(share_radio_group.getCheckedRadioButtonId()));
-        share_radio_group.check(shareSelectedOption);
-        if (shareSelectedOption == select_share.getId())
-            share_list.setVisibility(View.VISIBLE);
-        else
-            share_list.setVisibility(View.GONE);
-
-        SettingsManager.getSharedPreferences(this, SettingsManager.user_session);
-
-        sets = getIntent().getParcelableArrayListExtra("sets");
-        if (sets != null){
-            listener = new SetSelectShareAdapter.OnItemCheckedListener() {
-                @Override
-                public void onChecked(int position) {
-                    selectedSet.add(sets.get(position).getSetId());
-//                    SettingsManager.write(SettingsManager.share_selected_items, selectedSet);
-
-                    // set the 'share' variable of this set appropriately in the database
-
-                    sets.get(position).setShare(true);
-                    adapter.notifyDataSetChanged();
-                }
-
-                @Override
-                public void onUnchecked(int position) {
-                    selectedSet.remove(sets.get(position).getSetId());
-//                    SettingsManager.write(SettingsManager.share_selected_items, selectedSet);
-
-                    // set the 'share' variable of this set appropriately in the database
-
-                    sets.get(position).setShare(false);
-                    adapter.notifyDataSetChanged();
-
-                }
-            };
-        }
-
-        SettingsManager.getSharedPreferences(this, SettingsManager.share_selected_items);
-        if (SettingsManager.getSetList(SettingsManager.share_selected_items) != null){
-            java.util.Set<Integer> hashSet = SettingsManager.getSetList(SettingsManager.share_selected_items);
-            for (int st : hashSet){
-                for (int i = 0; i < sets.size(); i++){
-                    if (sets.get(i).getSetId() == st){
-                        sets.get(i).setShare(true);
-                    }
-                }
-            }
-        }
-
-        if (sets != null){
-            adapter = new SetSelectShareAdapter(this, sets, listener);
-            list.setAdapter(adapter);
-        }
     }
 
     public void verifySettings(){
-        SettingsManager.getSharedPreferences(this, SettingsManager.share_selected_items);
-        SettingsManager.write(SettingsManager.share_selected_items, selectedSet);
         DatabaseManager dbm = new DatabaseManager(this);
         SettingsManager.getSharedPreferences(this, SettingsManager.user_session);
         Gson gson = new Gson();
@@ -206,35 +130,10 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
                 exit();
                 break;
 
-            case(R.id.share_list):
-                if (list.isShown()){
-                    share_list.setImageResource(R.drawable.ic_expand);
-                    list.setVisibility(View.GONE);
-                }
-                else{
-                    share_list.setImageResource(R.drawable.ic_collapse);
-                    list.setVisibility(View.VISIBLE);
-                }
-                break;
-
             case(R.id.delete_account_btn):
                 ConfirmDeleteAccountDialogue deleteAccountDialogue = new ConfirmDeleteAccountDialogue();
                 deleteAccountDialogue.show(getSupportFragmentManager(), "delete_account_dialog");
                 break;
-        }
-    }
-
-    @Override
-    public void onCheckedChanged(RadioGroup group, int checkedId) {
-        SettingsManager.getSharedPreferences(this, SettingsManager.share_selection_preferences);
-        SettingsManager.write(SettingsManager.share_selection_preferences, checkedId);
-        if (SettingsManager.getShareSelectionPreferences(SettingsManager.share_selection_preferences) == select_share.getId()){
-            share_list.setVisibility(View.VISIBLE);
-        }
-        else{
-            share_list.setVisibility(View.GONE);
-            list.setVisibility(View.GONE);
-            share_list.setImageResource(R.drawable.ic_expand);
         }
     }
 

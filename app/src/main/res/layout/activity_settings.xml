@@ -45,101 +45,159 @@
 
     </android.support.v7.widget.Toolbar>
 
-    <LinearLayout
-        android:orientation="vertical"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_margin="18dp">
+        android:layout_weight="1">
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:background="@drawable/bottom_border_accessory_orange">
+            android:layout_margin="18dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Settings Title"
+                android:text="Allow others to view your study sets"
                 android:textStyle="bold"
+                android:paddingTop="10dp"
                 android:textColor="@color/lightBlue"/>
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Dummy text to display under the 'settings title' to guarantee that everything fits into place properly and that nothing is out of line. "
-                android:textColor="?attr/primaryText"
-                android:layout_marginTop="8dp"
-                android:layout_marginStart="5dp"/>
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="10dp"
+                android:background="@drawable/bottom_border_accessory_orange">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Allow your study sets to be searchable and viewed by other users. You can share all of your sets or you can select the sets you want to share."
+                    android:textColor="?attr/primaryText"
+                    android:textSize="12sp"/>
+
+                <RadioGroup
+                    android:id="@+id/share_radio_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RadioButton
+                        android:id="@+id/share_none"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="?attr/primaryText"
+                        android:text="Don't Allow Sharing"
+                        android:buttonTint="@color/lightOrange"
+                        android:layout_marginTop="8dp"/>
+
+                    <RadioButton
+                        android:id="@+id/share_all"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="?attr/primaryText"
+                        android:text="Share All"
+                        android:buttonTint="@color/lightOrange"
+                        android:layout_marginTop="8dp"/>
+
+                    <RadioButton
+                        android:id="@+id/select_share"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="?attr/primaryText"
+                        android:text="Only Share Selected"
+                        android:buttonTint="@color/lightOrange"
+                        android:layout_marginTop="8dp"/>
+
+                </RadioGroup>
+
+                <ImageView
+                    android:id="@+id/share_list"
+                    android:layout_width="100dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_expand" />
+
+                <ListView
+                    android:id="@+id/listview"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:nestedScrollingEnabled="true">
+
+                </ListView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:background="@drawable/bottom_border_accessory_orange">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Enable Dark Theme"
+                    android:textStyle="bold"
+                    android:textColor="@color/lightBlue"/>
+
+                <Switch
+                    android:id="@+id/dark_theme_switch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="?attr/primaryText"
+                    android:text="Dark Theme"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="5dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bottom_border_accessory_orange"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Study Preferences"
+                    android:textStyle="bold"
+                    android:textColor="@color/lightBlue"/>
+
+                <CheckBox
+                    android:id="@+id/loop_set_checkbox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Always loop sets"
+                    android:textColor="?attr/primaryText"
+                    android:layout_marginStart="5dp"
+                    android:buttonTint="@color/lightBlue"
+                    android:layoutDirection="rtl"
+                    android:layout_marginTop="8dp"/>
+
+                <CheckBox
+                    android:id="@+id/show_answer_checkox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Always show answers"
+                    android:buttonTint="@color/lightBlue"
+                    android:layoutDirection="rtl"
+                    android:textColor="?attr/primaryText"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="8dp"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:background="@drawable/bottom_border_accessory_orange">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Enable Dark Theme"
-                android:textStyle="bold"
-                android:textColor="@color/lightBlue"/>
-
-            <Switch
-                android:id="@+id/dark_theme_switch"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="?attr/primaryText"
-                android:text="Dark Theme"
-                android:layout_marginTop="8dp"
-                android:layout_marginStart="5dp"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bottom_border_accessory_orange"
-            android:padding="10dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Study Preferences"
-                android:textStyle="bold"
-                android:textColor="@color/lightBlue"/>
-
-            <CheckBox
-                android:id="@+id/loop_set_checkbox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Always loop sets"
-                android:textColor="?attr/primaryText"
-                android:layout_marginStart="5dp"
-                android:buttonTint="@color/lightBlue"
-                android:layoutDirection="rtl"
-                android:layout_marginTop="8dp"/>
-
-            <CheckBox
-                android:id="@+id/show_answer_checkox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Always show answers"
-                android:buttonTint="@color/lightBlue"
-                android:layoutDirection="rtl"
-                android:textColor="?attr/primaryText"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="8dp"/>
-
-        </LinearLayout>
-
-    </LinearLayout>
+    </ScrollView>
 
     <Button
         android:id="@+id/save_changes"

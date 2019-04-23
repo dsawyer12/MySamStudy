@@ -43,6 +43,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_marginEnd="10dp"
+        android:buttonTint="@color/lightOrange"
+        android:clickable="false"
         android:checked="false"/>
 
 </LinearLayout>

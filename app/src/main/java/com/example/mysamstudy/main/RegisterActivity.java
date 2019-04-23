@@ -100,14 +100,19 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         User user = new User(firstName, lastName, mUsername, mEmail, mPassword, dateString);
         long id = dbm.addUser(user);
-        if (id <= 0){
+        if (id <= 0)
             Toast.makeText(this, "An error occurred.", Toast.LENGTH_SHORT).show();
-        }
         else{
             Toast.makeText(this, "Success!", Toast.LENGTH_SHORT).show();
+//            setDefaultSettings();
             login();
         }
     }
+
+//    public void setDefaultSettings(){
+//        SettingsManager.getSharedPreferences(this, SettingsManager.share_selection_preferences);
+//        SettingsManager.write(SettingsManager.share_selection_preferences, 0);
+//    }
 
     public void login(){
         Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);

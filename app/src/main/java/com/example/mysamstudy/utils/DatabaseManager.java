@@ -20,6 +20,9 @@ public class DatabaseManager extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "mySamStudy.db";
 
+    private static final int FALSE = 0;
+    private static final int TRUE = 1;
+
     /* Users table */
     private static final String USERS_TABLE = "users";
     private static final String user_id = "user_id";
@@ -41,8 +44,6 @@ public class DatabaseManager extends SQLiteOpenHelper {
     private static final String set_id = "set_id";
     private static final String set_name = "set_name";
     private static final String set_size = "set_size";
-    private static final String show_answers = "show_answers";
-    private static final String loop_set = "loop_set";
     private static final String share_set = "share_set";
 
     public DatabaseManager(@Nullable Context context) {
@@ -82,8 +83,6 @@ public class DatabaseManager extends SQLiteOpenHelper {
                 set_id + " INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
                 set_name + " TEXT NOT NULL, " +
                 set_size + " INTEGER NOT NULL DEFAULT (0), " +
-                show_answers + " BIT NOT NULL DEFAULT (0), " +
-                loop_set + " BIT NOT NULL DEFAULT (0), " +
                 share_set + " BIT NOT NULL DEFAULT (0), " +
                 user_id + " INTEGER NOT NULL REFERENCES " + USERS_TABLE + "(" + user_id + ")" +
                 " ON DELETE CASCADE)";
@@ -223,8 +222,6 @@ public class DatabaseManager extends SQLiteOpenHelper {
                     c.getInt(c.getColumnIndex(set_id)),
                     c.getString(c.getColumnIndex(set_name)),
                     c.getInt(c.getColumnIndex(set_size)),
-                    (c.getInt(c.getColumnIndex(show_answers)) != 0),
-                    (c.getInt(c.getColumnIndex(loop_set)) != 0),
                     (c.getInt(c.getColumnIndex(share_set)) != 0),
                     c.getInt(c.getColumnIndex(user_id))
             ));
@@ -239,8 +236,6 @@ public class DatabaseManager extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(set_name, set.getSetName());
         values.put(set_size, 0);
-        values.put(show_answers, 0);
-        values.put(loop_set, 0);
         values.put(share_set, 0);
         values.put(user_id, set.getFK());
         return database.insert(SETS_TABLE, null, values);
@@ -341,6 +336,16 @@ public class DatabaseManager extends SQLiteOpenHelper {
 //
 //            }
 //        }
+    }
+
+    public void updateSharedSetList(int setId, boolean share){
+        SQLiteDatabase database = this.getWritableDatabase();
+        String fQuery = "UPDATE " + SETS_TABLE + " SET " + share_set + " = " + FALSE + " WHERE " + set_id + " = " + setId;
+        String tQuery = "UPDATE " + SETS_TABLE + " SET " + share_set + " = " + TRUE + " WHERE " + set_id + " = " + setId;
+        if (!share)
+            database.execSQL(fQuery);
+        else
+            database.execSQL(tQuery);
     }
 }
 
