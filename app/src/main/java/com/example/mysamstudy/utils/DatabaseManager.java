@@ -46,6 +46,9 @@ public class DatabaseManager extends SQLiteOpenHelper {
     private static final String set_size = "set_size";
     private static final String share_set = "share_set";
 
+    /* favorites table will use the user_id and set_id as attributes */
+    private static final String FAVORITES_TABLE = "favorites";
+
     public DatabaseManager(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         SQLiteDatabase db = getWritableDatabase();
@@ -57,6 +60,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         createUsersTable(db);
         createSetsTable(db);
         createCardsTable(db);
+        createFavoritesTable(db);
     }
 
     @Override
@@ -98,6 +102,19 @@ public class DatabaseManager extends SQLiteOpenHelper {
                 set_id + " INTEGER NOT NULL REFERENCES " +
                 SETS_TABLE + "(" + set_id + ")" +
                 " ON DELETE CASCADE)";
+        db.execSQL(query);
+    }
+
+    private void createFavoritesTable(SQLiteDatabase db) {
+        String query = "CREATE TABLE " +
+                FAVORITES_TABLE + "(" +
+                user_id + " INTEGER NOT NULL, " +
+                set_id + " INTEGER NOT NULL, " +
+                "PRIMARY KEY (" + user_id + ", " + set_id + "), " +
+                "FOREIGN KEY (" + user_id + ") REFERENCES " + USERS_TABLE +
+                " (" + user_id + ") ON DELETE CASCADE, " +
+                "FOREIGN KEY (" + set_id + ") REFERENCES " + SETS_TABLE +
+                " (" + set_id + ") ON DELETE CASCADE)";
         db.execSQL(query);
     }
 

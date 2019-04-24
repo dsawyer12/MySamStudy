@@ -1,11 +1,11 @@
 package com.example.mysamstudy.utils;
 
 import android.content.Context;
-import android.content.Intent;
+import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +15,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.mysamstudy.R;
-import com.example.mysamstudy.main.SetStartActivity;
 import com.example.mysamstudy.objects.Set;
 
 import java.util.ArrayList;
@@ -26,7 +25,7 @@ public class SetListRecyclerView extends RecyclerView.Adapter<SetListRecyclerVie
     private Context context;
     private ArrayList<Set> sets;
     private ArrayList<Set> delete_set;
-    private boolean delete_view = false;
+    private boolean delete_view = false, is_dark_theme;
 
     public interface OnItemClickListener{
         void onSetStart(Set set);
@@ -36,6 +35,8 @@ public class SetListRecyclerView extends RecyclerView.Adapter<SetListRecyclerVie
     OnItemClickListener listener;
 
     public SetListRecyclerView(Context context, ArrayList<Set> sets, OnItemClickListener listener) {
+        SettingsManager.getSharedPreferences(context, SettingsManager.dark_theme_preferences);
+        is_dark_theme = SettingsManager.getDarkTheme(SettingsManager.dark_theme_preferences);
         this.context = context;
         this.sets = sets;
         this.listener = listener;
@@ -86,7 +87,10 @@ public class SetListRecyclerView extends RecyclerView.Adapter<SetListRecyclerVie
         holder.setName.setText(sets.get(position).getSetName());
         if (sets.get(position).getSetSize() != 0){
             holder.numCards.setText(String.valueOf(sets.get(position).getSetSize() + " card(s)"));
-            holder.numCards.setTextColor(ContextCompat.getColor(context, R.color.white));
+            if (is_dark_theme)
+                holder.numCards.setTextColor(ContextCompat.getColor(context, R.color.white));
+            else
+                holder.numCards.setTextColor(ContextCompat.getColor(context, R.color.black));
             holder.start.setEnabled(true);
         }
         else{
