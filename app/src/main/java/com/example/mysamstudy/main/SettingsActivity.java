@@ -161,10 +161,6 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
             adapter = new SetSelectShareAdapter(this, sets, listener);
             list.setAdapter(adapter);
         }
-//        else{
-//            list.setVisibility(View.GONE);
-//            no_sets_mssg.setVisibility(View.VISIBLE);
-//        }
     }
 
     public void setDarkTheme(boolean isChecked){
@@ -182,6 +178,19 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
     public void saveChanges(){
         DatabaseManager dbm = new DatabaseManager(this);
+
+        switch (share_radio_group.getCheckedRadioButtonId()){
+            case(R.id.share_none):
+                for (int i = 0; i < sets.size(); i++)
+                    updatedSets.put(sets.get(i).getSetId(), false);
+                break;
+
+            case(R.id.share_all):
+                for (int i = 0; i < sets.size(); i++)
+                    updatedSets.put(sets.get(i).getSetId(), true);
+                break;
+        }
+
         for (Map.Entry<Integer, Boolean> entry : updatedSets.entrySet())
             dbm.updateSharedSetList(entry.getKey(), entry.getValue());
 
@@ -190,7 +199,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
         SettingsManager.getSharedPreferences(this, SettingsManager.study_preferences_show_answer);
         SettingsManager.write(SettingsManager.study_preferences_show_answer, show_answer.isChecked());
-        
+
         exit();
     }
 
@@ -236,22 +245,30 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         SettingsManager.getSharedPreferences(this, SettingsManager.share_selection_preferences);
         SettingsManager.write(SettingsManager.share_selection_preferences, checkedId);
-        if (SettingsManager.getShareSelectionPreferences(SettingsManager.share_selection_preferences) == select_share.getId()){
-            if (sets != null){
-                share_list.setVisibility(View.VISIBLE);
-                share_list.setImageResource(R.drawable.ic_collapse);
-                list.setVisibility(View.VISIBLE);
-            }
-            else{
+        switch (checkedId){
+            case(R.id.share_none):
+                share_list.setVisibility(View.GONE);
                 list.setVisibility(View.GONE);
-                no_sets_mssg.setVisibility(View.VISIBLE);
-            }
-        }
-        else{
-            share_list.setVisibility(View.GONE);
-            share_list.setImageResource(R.drawable.ic_expand);
-            list.setVisibility(View.GONE);
-            no_sets_mssg.setVisibility(View.GONE);
+                no_sets_mssg.setVisibility(View.GONE);
+                break;
+
+            case(R.id.share_all):
+                share_list.setVisibility(View.GONE);
+                list.setVisibility(View.GONE);
+                no_sets_mssg.setVisibility(View.GONE);
+                break;
+
+            case(R.id.select_share):
+                if (sets != null){
+                    share_list.setVisibility(View.VISIBLE);
+                    share_list.setImageResource(R.drawable.ic_collapse);
+                    list.setVisibility(View.VISIBLE);
+                }
+                else{
+                    list.setVisibility(View.GONE);
+                    no_sets_mssg.setVisibility(View.VISIBLE);
+                }
+                break;
         }
     }
 

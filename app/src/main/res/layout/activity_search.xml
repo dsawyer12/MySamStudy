@@ -14,7 +14,8 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@drawable/bottom_border_accessory_grey">
 
             <ImageView
                 android:id="@+id/search_back_btn"
@@ -28,7 +29,7 @@
             <EditText
                 android:id="@+id/search_box"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
                 android:layout_weight="1"
@@ -51,51 +52,42 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:background="@color/lightOrange">
+        <!--<LinearLayout-->
+            <!--android:orientation="horizontal"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:paddingBottom="10dp"-->
+            <!--android:background="@drawable/bottom_border_accessory_grey">-->
 
-            <CheckBox
-                android:id="@+id/search_all"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/darkBlue"
-                android:buttonTint="@color/darkBlue"
-                android:layout_marginStart="10dp"
-                android:layout_weight="1"
-                android:text="All"/>
+            <!--<CheckBox-->
+                <!--android:id="@+id/search_all"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textColor="@color/darkBlue"-->
+                <!--android:buttonTint="@color/darkBlue"-->
+                <!--android:layout_marginStart="10dp"-->
+                <!--android:layout_weight="1"-->
+                <!--android:text="All"/>-->
 
-            <CheckBox
-                android:id="@+id/search_sets"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/darkBlue"
-                android:buttonTint="@color/darkBlue"
-                android:layout_weight="1"
-                android:text="Sets"/>
+            <!--<CheckBox-->
+                <!--android:id="@+id/search_sets"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textColor="@color/darkBlue"-->
+                <!--android:buttonTint="@color/darkBlue"-->
+                <!--android:layout_weight="1"-->
+                <!--android:text="Sets"/>-->
 
-            <CheckBox
-                android:id="@+id/search_cards"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/darkBlue"
-                android:buttonTint="@color/darkBlue"
-                android:layout_weight="1"
-                android:text="Cards"/>
+            <!--<CheckBox-->
+                <!--android:id="@+id/search_cards"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textColor="@color/darkBlue"-->
+                <!--android:buttonTint="@color/darkBlue"-->
+                <!--android:layout_weight="1"-->
+                <!--android:text="Cards"/>-->
 
-            <ImageView
-                android:id="@+id/more_options"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="more"
-                android:layout_marginEnd="5dp"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_options"/>
-
-        </LinearLayout>
+        <!--</LinearLayout>-->
 
         <TextView
             android:id="@+id/search_error"
