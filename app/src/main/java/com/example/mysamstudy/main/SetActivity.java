@@ -66,7 +66,7 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
             reInitList();
 
             if (set.getSetSize() != 0)
-                header_title.setText(String.valueOf(set.getSetSize()) + " Card");
+                header_title.setText(String.valueOf(set.getSetSize()) + " Card(s)");
             else{
                 header_title.setText("No Cards");
                 no_cards.setVisibility(View.VISIBLE);
@@ -178,7 +178,7 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
         DatabaseManager dbm = new DatabaseManager(this);
         set.setCards(dbm.getCards(set.getSetId()));
         if (set.getSetSize() != 0){
-            header_title.setText(String.valueOf(set.getSetSize()) + " Card");
+            header_title.setText(String.valueOf(set.getSetSize()) + " Card(s)");
             adapter = new CardListRecyclerView(this, set, listener);
             recyclerView.setAdapter(adapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -198,7 +198,7 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
         else{
             set.setSetSize(set.getSetSize()+1);
             dbm.updateSetSize(set);
-            header_title.setText(String.valueOf(set.getSetSize()) + " Card");
+            header_title.setText(String.valueOf(set.getSetSize()) + " Card(s)");
 
             if (set.getCards() != null){
                 set.getCards().add(newCard);
@@ -240,7 +240,7 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
         new_card_question.setText(null);
         new_card_answer.setText(null);
         if (set.getSetSize() != 0)
-            header_title.setText(String.valueOf(set.getSetSize()) + " Card");
+            header_title.setText(String.valueOf(set.getSetSize()) + " Card(s)");
         else{
             header_title.setText("No Cards");
             no_cards.setVisibility(View.VISIBLE);

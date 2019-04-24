@@ -64,8 +64,7 @@ public class SearchListAdapter extends BaseAdapter {
 
         holder.setName.setText(sets.get(position).getSetName());
         if (sets.get(position).getSetSize() != 0) {
-            holder.numCards.setText(String.valueOf(sets.get(position).getSetSize()) + " Cards");
-            holder.numCards.setTextColor(ContextCompat.getColor(context, R.color.lightOrange));
+            holder.numCards.setText(String.valueOf(sets.get(position).getSetSize()) + " Card(s)");
         }
         else {
             holder.numCards.setText("No Cards");

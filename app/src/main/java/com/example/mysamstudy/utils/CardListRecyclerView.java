@@ -22,7 +22,7 @@ public class CardListRecyclerView extends RecyclerView.Adapter<CardListRecyclerV
 
     private Context context;
     private Set set;
-    private boolean delete_view;
+    private boolean delete_view, clickable;
     private ArrayList<Card> delete_set;
     private OnCardClickListener listener;
 
@@ -36,6 +36,7 @@ public class CardListRecyclerView extends RecyclerView.Adapter<CardListRecyclerV
         this.set = set;
         this.listener = listener;
         delete_set = new ArrayList<>();
+        clickable = true;
     }
 
     public void updateSet(){
@@ -58,6 +59,10 @@ public class CardListRecyclerView extends RecyclerView.Adapter<CardListRecyclerV
         for (int i = 0; i < set.getCards().size(); i++){
             set.getCards().get(i).setSelected(false);
         }
+    }
+
+    public void setClickable(boolean clickable){
+        this.clickable = clickable;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -104,44 +109,46 @@ public class CardListRecyclerView extends RecyclerView.Adapter<CardListRecyclerV
             holder.checkBox.setChecked(false);
         }
 
-        holder.rootView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (delete_view){
-                    if (set.getCards().get(holder.getAdapterPosition()).isSelected()){
-                        set.getCards().get(holder.getAdapterPosition()).setSelected(false);
-                        holder.checkBox.setChecked(false);
-                        delete_set.remove(set.getCards().get(holder.getAdapterPosition()));
+        if (clickable){
+            holder.rootView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (delete_view){
+                        if (set.getCards().get(holder.getAdapterPosition()).isSelected()){
+                            set.getCards().get(holder.getAdapterPosition()).setSelected(false);
+                            holder.checkBox.setChecked(false);
+                            delete_set.remove(set.getCards().get(holder.getAdapterPosition()));
+                        }
+                        else{
+                            set.getCards().get(holder.getAdapterPosition()).setSelected(true);
+                            holder.checkBox.setChecked(true);
+                            delete_set.add(set.getCards().get(holder.getAdapterPosition()));
+                        }
                     }
                     else{
-                        set.getCards().get(holder.getAdapterPosition()).setSelected(true);
-                        holder.checkBox.setChecked(true);
-                        delete_set.add(set.getCards().get(holder.getAdapterPosition()));
+                        listener.onClick(set.getCards().get(holder.getAdapterPosition()));
                     }
                 }
-                else{
-                    listener.onClick(set.getCards().get(holder.getAdapterPosition()));
-                }
-            }
-        });
+            });
 
-        holder.rootView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                if (delete_view){
-                    delete_view = false;
-                    clearDeleteSet();
-                    listener.onLongCLick(delete_view);
+            holder.rootView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    if (delete_view){
+                        delete_view = false;
+                        clearDeleteSet();
+                        listener.onLongCLick(delete_view);
+                    }
+                    else{
+                        delete_view = true;
+                        set.getCards().get(holder.getAdapterPosition()).setSelected(true);
+                        delete_set.add(set.getCards().get(holder.getAdapterPosition()));
+                        listener.onLongCLick(delete_view);
+                    }
+                    return true;
                 }
-                else{
-                    delete_view = true;
-                    set.getCards().get(holder.getAdapterPosition()).setSelected(true);
-                    delete_set.add(set.getCards().get(holder.getAdapterPosition()));
-                    listener.onLongCLick(delete_view);
-                }
-                return true;
-            }
-        });
+            });
+        }
     }
 
     @Override

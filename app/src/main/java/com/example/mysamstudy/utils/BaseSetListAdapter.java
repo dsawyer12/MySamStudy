@@ -58,7 +58,7 @@ public class BaseSetListAdapter extends BaseAdapter {
             holder.set_size.setText("No Cards");
         }
         else{
-            holder.set_size.setText(String.valueOf(sets.get(position).getSetSize()));
+            holder.set_size.setText(String.valueOf(sets.get(position).getSetSize()) + "Card(s)");
         }
         return convertView;
     }

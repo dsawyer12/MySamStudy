@@ -85,11 +85,13 @@ public class SetListRecyclerView extends RecyclerView.Adapter<SetListRecyclerVie
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         holder.setName.setText(sets.get(position).getSetName());
         if (sets.get(position).getSetSize() != 0){
-            holder.numCards.setText(String.valueOf(sets.get(position).getSetSize() + " card"));
+            holder.numCards.setText(String.valueOf(sets.get(position).getSetSize() + " card(s)"));
+            holder.numCards.setTextColor(ContextCompat.getColor(context, R.color.white));
             holder.start.setEnabled(true);
         }
         else{
             holder.numCards.setText("No Cards");
+            holder.numCards.setTextColor(ContextCompat.getColor(context, R.color.darkOrange));
             holder.start.setEnabled(false);
         }
 
@@ -138,14 +140,12 @@ public class SetListRecyclerView extends RecyclerView.Adapter<SetListRecyclerVie
                     sets.get(holder.getAdapterPosition()).setSelected(false);
                     listener.onSetLongClick(false);
                     clearDeleteSet();
-//                    notifyDataSetChanged();
                 }
                 else{
                     delete_view = true;
                     sets.get(holder.getAdapterPosition()).setSelected(true);
                     delete_set.add(sets.get(holder.getAdapterPosition()));
                     listener.onSetLongClick(true);
-//                    notifyDataSetChanged();
                 }
                 return true;
             }

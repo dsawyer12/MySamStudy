@@ -6,11 +6,91 @@
     android:clickable="true"
     android:background="?attr/backGround">
 
-    <TextView
+    <ImageView
+        android:id="@+id/search_set_back"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/ic_back"
+        android:tint="?attr/primaryText"
+        android:layout_margin="20dp"/>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="item fragment"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:paddingBottom="20dp">
+
+        <TextView
+            android:id="@+id/search_set_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Set Name"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textColor="@color/lightOrange"
+            android:textSize="28sp"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:id="@+id/search_set_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Set Name"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textColor="?attr/primaryText"
+            android:textSize="18sp"
+            android:layout_gravity="center"/>
+
+        <ImageView
+            android:id="@+id/search_set_favorite"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_favorites"
+            android:tint="@color/lightGrey"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/no_cards"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="This set has no cards"
+        android:textSize="14sp"
         android:gravity="center"
-        android:textSize="26sp"/>
+        android:padding="30dp"
+        android:visibility="gone"
+        android:textColor="@color/lightGrey"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/linearLayout">
+
+    </android.support.v7.widget.RecyclerView>
 
 </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

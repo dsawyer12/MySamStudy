@@ -35,7 +35,7 @@
                     android:maxLines="1"
                     android:ellipsize="end"
                     android:layout_marginTop="10dp"
-                    android:textColor="?attr/primaryButton"
+                    android:textColor="@color/lightOrange"
                     android:textSize="20sp"/>
 
                 <TextView
