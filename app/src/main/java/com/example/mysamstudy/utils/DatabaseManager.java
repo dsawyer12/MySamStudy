@@ -261,6 +261,12 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return database.insert(SETS_TABLE, null, values);
     }
 
+    public void updateSetName(String name, int setId){
+        SQLiteDatabase database = this.getWritableDatabase();
+        String query = "UPDATE " + SETS_TABLE + " SET " + set_name + " = '" + name + "'" + " WHERE " + set_id + " = " + setId;
+        database.execSQL(query);
+    }
+
     public void updateSetSize(Set set){
         SQLiteDatabase database = this.getWritableDatabase();
         String query = "UPDATE " + SETS_TABLE + " SET " + set_size + " = " + set.getSetSize() + " WHERE " + set_id + " = " + set.getSetId();

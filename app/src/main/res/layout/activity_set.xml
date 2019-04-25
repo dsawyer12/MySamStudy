@@ -31,11 +31,13 @@
                     android:layout_marginEnd="20dp"
                     android:src="@drawable/ic_back"/>
 
-                <TextView
+                <EditText
                     android:id="@+id/set_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:background="@color/lightOrange"
                     android:maxLines="1"
+                    android:enabled="false"
                     android:ellipsize="end"
                     android:paddingStart="0dp"
                     android:paddingEnd="10dp"

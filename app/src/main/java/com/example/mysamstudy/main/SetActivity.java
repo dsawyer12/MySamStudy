@@ -38,9 +38,9 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
 
     boolean is_delete_view = false, createMode = false;
     LinearLayout root_view, header;
-    TextView set_title, header_title, edit_toolbar_title;
+    TextView header_title, edit_toolbar_title;
     ImageView set_edit, set_add, back_btn, header_expansion, edit_card_back, edit_card_finish, delete_cards;
-    EditText new_card_question, new_card_answer;
+    EditText set_title, new_card_question, new_card_answer;
     CardView new_card, no_cards;
     View editToolbar;
     Toolbar toolbar;
@@ -252,7 +252,23 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()){
             case(R.id.set_edit):
-
+                if(!set_title.isEnabled()){
+                    set_title.setEnabled(true);
+                    set_add.setEnabled(false);
+                    set_title.requestFocus();
+                    set_edit.setImageResource(R.drawable.ic_finish);
+                    set_title.setSelection(set_title.getText().length());
+                    inputManager.showSoftInput(set_title, InputMethodManager.SHOW_IMPLICIT);
+                }
+                else{
+                    if (!set_title.getText().toString().trim().equals(set.getSetName())){
+                        DatabaseManager dbm = new DatabaseManager(this);
+                        dbm.updateSetName(set_title.getText().toString().trim(), set.getSetId());
+                    }
+                    set_title.setEnabled(false);
+                    set_add.setEnabled(true);
+                    set_edit.setImageResource(R.drawable.ic_edit);
+                }
                 break;
 
             case(R.id.set_add):
@@ -351,6 +367,13 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
             getSupportFragmentManager().beginTransaction()
                     .remove(getSupportFragmentManager().findFragmentByTag("editCard")).commit();
             getSupportFragmentManager().popBackStack();
+            return;
+        }
+        if (set_title.isEnabled()){
+            set_title.setText(set.getSetName());
+            set_title.setEnabled(false);
+            set_add.setEnabled(true);
+            set_edit.setImageResource(R.drawable.ic_edit);
             return;
         }
 
