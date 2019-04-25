@@ -24,7 +24,7 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/full_border_accessory_orange">
+            android:background="?attr/cardView">
 
             <TextView
                 android:id="@+id/card_question"
@@ -35,7 +35,7 @@
                 android:layout_margin="2dp"
                 android:padding="10dp"
                 android:textSize="18sp"
-                android:background="@drawable/bottom_border_accessory_orange"
+                android:background="@drawable/bottom_border_accessory_grey"
                 android:textColor="?attr/primaryText"/>
 
             <TextView
@@ -47,7 +47,7 @@
                 android:padding="10dp"
                 android:layout_marginStart="2dp"
                 android:layout_marginEnd="2dp"
-                android:background="@drawable/bottom_border_accessory_orange"
+
                 android:textSize="18sp"
                 android:textColor="?attr/colorAccent"/>
 

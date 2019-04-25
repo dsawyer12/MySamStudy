@@ -5,6 +5,7 @@
     <color name="darkBlue">#2C5197</color>
     <color name="lightBlue">@android:color/holo_blue_dark</color>
     <color name="white">#ffffff</color>
+    <color name="offWhite">#EEEEEE</color>
     <color name="lightGrey">#bbbbbb</color>
     <color name="black">#000000</color>
     <color name="lightBackground">#d7363636</color>

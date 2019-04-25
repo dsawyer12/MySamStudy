@@ -101,7 +101,10 @@ public class NewSetFragment extends Fragment implements View.OnClickListener {
         Gson gson = new Gson();
         String json = SettingsManager.getUserSession(SettingsManager.user_session);
         User user = gson.fromJson(json, User.class);
+
         Set set = new Set(setName, user.getUser_id());
+        SettingsManager.getSharedPreferences(getActivity(), SettingsManager.share_all_sets_preferences);
+        set.setShare(SettingsManager.get_share_all_sets_preferences(SettingsManager.share_all_sets_preferences));
         long result = databaseManager.addSet(set);
         if (result != 0){
             Log.d(TAG, "createSet: Success");

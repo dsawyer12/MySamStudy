@@ -106,9 +106,11 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         int shareSelectedOption = SettingsManager.getShareSelectionPreferences(SettingsManager.share_selection_preferences);
         if (shareSelectedOption == 0){
             Log.d(TAG, "initSettings: ZERO");
-            share_none.setChecked(true);
+            share_all.setChecked(true);
             SettingsManager.getSharedPreferences(this, SettingsManager.share_selection_preferences);
-            SettingsManager.write(SettingsManager.share_selection_preferences, share_none.getId());
+            SettingsManager.write(SettingsManager.share_selection_preferences, share_all.getId());
+            SettingsManager.getSharedPreferences(this, SettingsManager.share_all_sets_preferences);
+            SettingsManager.write(SettingsManager.share_all_sets_preferences, true);
         }
         else{
             Log.d(TAG, "initSettings: NOT zero");
@@ -178,16 +180,22 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
     public void saveChanges(){
         DatabaseManager dbm = new DatabaseManager(this);
-
+        SettingsManager.getSharedPreferences(this, SettingsManager.share_all_sets_preferences);
         switch (share_radio_group.getCheckedRadioButtonId()){
             case(R.id.share_none):
+                SettingsManager.write(SettingsManager.share_all_sets_preferences, false);
                 for (int i = 0; i < sets.size(); i++)
                     updatedSets.put(sets.get(i).getSetId(), false);
                 break;
 
             case(R.id.share_all):
+                SettingsManager.write(SettingsManager.share_all_sets_preferences, true);
                 for (int i = 0; i < sets.size(); i++)
                     updatedSets.put(sets.get(i).getSetId(), true);
+                break;
+
+            case(R.id.select_share):
+                SettingsManager.write(SettingsManager.share_all_sets_preferences, false);
                 break;
         }
 

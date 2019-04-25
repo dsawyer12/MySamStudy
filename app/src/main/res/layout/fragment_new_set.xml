@@ -65,8 +65,8 @@
         android:inputType="textCapWords"
         android:imeOptions="actionDone"
         android:textColor="?attr/primaryText"
-        android:textColorHint="?attr/primaryText"
+        android:textColorHint="@color/lightGrey"
         android:background="@drawable/bottom_border_accessory_orange"
-        android:hint="Name"/>
+        android:hint="Set name..."/>
 
 </LinearLayout>

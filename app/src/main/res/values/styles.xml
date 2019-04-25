@@ -7,7 +7,7 @@
         <item name="android:windowAnimationStyle">@style/FadeAnimation</item>
         <item name="colorPrimary">@color/lightOrange</item>
         <item name="colorPrimaryDark">@color/darkBlue</item>
-        <item name="backGround">@color/white</item>
+        <item name="backGround">@color/offWhite</item>
         <item name="cardView">@color/white</item>
         <item name="titleTextColor">@color/white</item>
         <item name="primaryText">@color/black</item>

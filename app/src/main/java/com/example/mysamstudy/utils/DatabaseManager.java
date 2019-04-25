@@ -253,7 +253,10 @@ public class DatabaseManager extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(set_name, set.getSetName());
         values.put(set_size, 0);
-        values.put(share_set, 0);
+        if (set.isShare())
+            values.put(share_set, 1);
+        else
+            values.put(share_set, 0);
         values.put(user_id, set.getFK());
         return database.insert(SETS_TABLE, null, values);
     }

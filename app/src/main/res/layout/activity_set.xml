@@ -161,12 +161,13 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="5dp"
-                android:background="@drawable/full_border_accessory_orange">
+                android:background="@drawable/button_accessory_blue">
 
                 <ImageView
                     android:id="@+id/card_list_expansion"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
+                    android:tint="@color/white"
                     android:src="@drawable/ic_collapse"/>
 
                 <TextView
@@ -177,7 +178,7 @@
                     android:layout_margin="5dp"
                     android:textStyle="bold"
                     android:textSize="16sp"
-                    android:textColor="@color/lightOrange"/>
+                    android:textColor="@color/white"/>
 
             </LinearLayout>
 

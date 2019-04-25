@@ -9,6 +9,7 @@ public class SettingsManager {
     private static SharedPreferences sharedPreferences;
     public static final String dark_theme_preferences = "dark_theme_preferences";
     public static final String share_selection_preferences = "share_selection_preferences";
+    public static final String share_all_sets_preferences = "share_all_sets_preferences";
     public static final String user_session = "user_session";
     public static final String study_preferences_loop = "study_preferences_loop";
     public static final String study_preferences_show_answer = "study_preferences_show_answer";
@@ -29,6 +30,10 @@ public class SettingsManager {
 
     public static Boolean get_study_preferences(String preferences){
         return sharedPreferences.getBoolean(preferences, false);
+    }
+
+    public static Boolean get_share_all_sets_preferences(String preferences){
+        return sharedPreferences.getBoolean(preferences, true);
     }
 
     public static void write(String preferences, boolean value){

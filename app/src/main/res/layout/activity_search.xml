@@ -14,8 +14,7 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bottom_border_accessory_grey">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/search_back_btn"
