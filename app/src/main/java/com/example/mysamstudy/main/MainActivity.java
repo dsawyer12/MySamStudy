@@ -12,10 +12,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
@@ -38,6 +36,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,
         NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = "TAG";
+    private static final int ACTIVITY_NUM = 0;
 
     DatabaseManager databaseManager;
     private User user;
@@ -88,6 +87,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onSetStart(Set set) {
                 Intent intent = new Intent(MainActivity.this, SetStartActivity.class);
                 intent.putExtra("mySet", set);
+                intent.putExtra("ACTIVITY_NUM", ACTIVITY_NUM);
                 startActivity(intent);
             }
 
@@ -127,9 +127,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         new Thread(new Runnable() {
             @Override
             public void run() {
-                sets = databaseManager.getSets(user.getUser_id());
+                sets = databaseManager.getUserSets(user.getUser_id());
                 if (sets != null){
-                    adapter = new SetListRecyclerView(getApplicationContext(), sets, listener);
+                    adapter = new SetListRecyclerView(getApplicationContext(), ACTIVITY_NUM, sets, listener);
                     recyclerView.setAdapter(adapter);
                     recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                 }
@@ -228,6 +228,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case(R.id.search):
                 Intent intent2 = new Intent(MainActivity.this, SearchActivity.class);
                 startActivity(intent2);
+                finish();
+                break;
+
+            case(R.id.favorites):
+                Intent intent3 = new Intent(MainActivity.this, FavoritesActivity.class);
+                startActivity(intent3);
                 finish();
                 break;
         }

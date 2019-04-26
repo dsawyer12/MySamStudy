@@ -5,14 +5,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -35,8 +31,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
     EditText search_box;
     TextView search_error;
-    ImageView search_btn, back_btn, more_options;
-//    CheckBox search_all, search_sets, search_cards;
+    ImageView search_btn, back_btn;
     ListView search_list;
     private DatabaseManager dbm;
     ArrayList<Set> sets;
@@ -59,10 +54,6 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         search_btn = findViewById(R.id.search_btn);
         back_btn = findViewById(R.id.search_back_btn);
         search_list = findViewById(R.id.search_list);
-//        more_options = findViewById(R.id.more_options);
-//        search_all = findViewById(R.id.search_all);
-//        search_sets = findViewById(R.id.search_sets);
-//        search_cards = findViewById(R.id.search_cards);
 
         search_btn.setOnClickListener(this);
         back_btn.setOnClickListener(this);

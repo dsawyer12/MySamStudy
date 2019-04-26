@@ -35,7 +35,7 @@
                 android:layout_margin="2dp"
                 android:padding="10dp"
                 android:textSize="18sp"
-                android:background="@drawable/bottom_border_accessory_grey"
+                android:background="@drawable/bottom_border_accessory_orange"
                 android:textColor="?attr/primaryText"/>
 
             <TextView

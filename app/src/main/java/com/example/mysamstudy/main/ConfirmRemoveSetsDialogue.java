@@ -5,18 +5,19 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.example.mysamstudy.R;
 import com.example.mysamstudy.objects.Set;
-import com.example.mysamstudy.utils.BaseSetListAdapter;
 import com.example.mysamstudy.utils.DatabaseManager;
+import com.example.mysamstudy.utils.SetListRecyclerView;
 
 import java.util.ArrayList;
 
@@ -24,6 +25,10 @@ public class ConfirmRemoveSetsDialogue extends DialogFragment implements View.On
     private static final String TAG = "TAG";
 
     ArrayList<Set> delete_set;
+
+    RecyclerView recyclerView;
+    SetListRecyclerView adapter;
+    SetListRecyclerView.OnItemClickListener listener;
 
     @Nullable
     @Override
@@ -36,17 +41,18 @@ public class ConfirmRemoveSetsDialogue extends DialogFragment implements View.On
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        recyclerView = view.findViewById(R.id.recyclerView);
         Button confirm_btn = view.findViewById(R.id.confirm_btn),
                 cancel_btn = view.findViewById(R.id.cancel_btn);
-        ListView listview = view.findViewById(R.id.remove_list);
 
         confirm_btn.setOnClickListener(this);
         cancel_btn.setOnClickListener(this);
 
         delete_set = getSetFromBundle();
 
-        BaseSetListAdapter adapter = new BaseSetListAdapter(getActivity(), delete_set);
-        listview.setAdapter(adapter);
+        adapter = new SetListRecyclerView(getActivity(), -1, delete_set, listener);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
     public ArrayList<Set> getSetFromBundle(){

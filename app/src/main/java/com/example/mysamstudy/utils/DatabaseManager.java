@@ -224,7 +224,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         database.execSQL(query);
     }
 
-    public ArrayList<Set> getSets(int userId){
+    public ArrayList<Set> getUserSets(int userId){
         SQLiteDatabase database = this.getWritableDatabase();
         ArrayList<Set> setsList = new ArrayList<>();
         String query = "SELECT * FROM " + SETS_TABLE + " WHERE " + user_id + " = '" + userId + "'";
@@ -246,6 +246,28 @@ public class DatabaseManager extends SQLiteOpenHelper {
         while (c.moveToNext());
         c.close();
         return setsList;
+    }
+
+    public Set getSetById(int setId){
+        SQLiteDatabase database = this.getWritableDatabase();
+        String query = "SELECT * FROM " + SETS_TABLE + " WHERE " + set_id + " = " + setId;
+        Cursor c = database.rawQuery(query, null);
+        if (!(c.moveToFirst()) || c.getCount() == 0){
+            c.close();
+            return null;
+        }
+        Set set = new Set();
+        c.moveToFirst();
+        do {
+            set.setSetId(c.getInt(c.getColumnIndex(set_id)));
+            set.setSetName( c.getString(c.getColumnIndex(set_name)));
+            set.setSetSize(c.getInt(c.getColumnIndex(set_size)));
+            set.setShare((c.getInt(c.getColumnIndex(share_set)) != 0));
+            set.setFK(c.getInt(c.getColumnIndex(user_id)));
+        }
+        while (c.moveToNext());
+        c.close();
+        return set;
     }
 
     public long addSet(Set set){
@@ -303,7 +325,6 @@ public class DatabaseManager extends SQLiteOpenHelper {
     }
 
     public long addCard(Card card){
-        Log.d(TAG, "FK : " + String.valueOf(card.getFK()));
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(question, card.getCardQuestion());
@@ -373,6 +394,55 @@ public class DatabaseManager extends SQLiteOpenHelper {
             database.execSQL(fQuery);
         else
             database.execSQL(tQuery);
+    }
+
+    public ArrayList<Integer> getFavoritesKeySet(int userId){
+        SQLiteDatabase database = this.getWritableDatabase();
+        ArrayList<Integer> keySet = new ArrayList<>();
+        String query = "SELECT * FROM " + FAVORITES_TABLE + " WHERE " + user_id + " = " + userId;
+        Cursor c = database.rawQuery(query, null);
+        if (!(c.moveToFirst()) || c.getCount() == 0){
+            c.close();
+            return null;
+        }
+        c.moveToFirst();
+        do
+            keySet.add(c.getInt(c.getColumnIndex(set_id)));
+        while(c.moveToNext());
+        c.close();
+        return keySet;
+    }
+
+    public boolean getSetFavorite(int userId, int setId){
+        SQLiteDatabase database = this.getWritableDatabase();
+        String query = "SELECT * FROM " + FAVORITES_TABLE + " WHERE " + user_id + " = " + userId +
+                " AND " + set_id + " = " + setId;
+        Cursor c = database.rawQuery(query, null);
+        if (!(c.moveToFirst()) || c.getCount() == 0){
+            c.close();
+            return false;
+        }
+        else{
+            c.close();
+            return true;
+        }
+    }
+
+    public void addSetFavorite(int userId, int setId){
+        Log.d(TAG, "addSetFavorite: ");
+        SQLiteDatabase database = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(user_id, userId);
+        values.put(set_id, setId);
+        database.insert(FAVORITES_TABLE, null, values);
+    }
+
+    public void removeSetFavorite(int userId, int setId){
+        Log.d(TAG, "removeSetFavorite: ");
+        SQLiteDatabase database = this.getWritableDatabase();
+        String query = "DELETE FROM " + FAVORITES_TABLE + " WHERE " + user_id + " = " + userId +
+                " AND " + set_id + " = " + setId;
+        database.execSQL(query);
     }
 }
 

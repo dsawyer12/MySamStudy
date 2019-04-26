@@ -12,42 +12,37 @@
         android:theme="@style/AppThemeLight"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <activity
-            android:name=".main.SearchActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
-            android:name=".main.SettingsActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
-            android:name=".main.SetStartActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
-            android:name=".main.SetActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
-            android:name=".main.RegisterActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
-            android:name=".main.AccountActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
-            android:name=".main.MainActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
             android:name=".main.LoginActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".main.FavoritesActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".main.SearchActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".main.SettingsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".main.SetStartActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".main.SetActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".main.RegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".main.AccountActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".main.MainActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

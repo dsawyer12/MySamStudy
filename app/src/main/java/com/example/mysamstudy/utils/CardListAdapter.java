@@ -12,13 +12,13 @@ import com.example.mysamstudy.objects.Card;
 
 import java.util.ArrayList;
 
-public class BaseCardListAdapter extends BaseAdapter {
+public class CardListAdapter extends BaseAdapter {
 
     private ArrayList<Card> cards;
     private Context context;
     private LayoutInflater layoutInflater;
 
-    public BaseCardListAdapter(Context context, ArrayList<Card> cards) {
+    public CardListAdapter(Context context, ArrayList<Card> cards) {
         this.context = context;
         this.cards = cards;
         this.layoutInflater = LayoutInflater.from(context);

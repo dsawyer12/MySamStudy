@@ -24,7 +24,7 @@ public class SetStartActivity extends AppCompatActivity implements View.OnClickL
     private static final String TAG = "TAG";
 
     public static boolean SHOW_ANSWERS, LOOP_SET;
-    int current_card;
+    int current_card, ACTIVITY_NUM;
     CardFragment cardFragment;
     Set set;
     TextView set_title;
@@ -54,6 +54,7 @@ public class SetStartActivity extends AppCompatActivity implements View.OnClickL
         next_btn.setOnClickListener(this);
 
         set = getIntent().getParcelableExtra("mySet");
+        ACTIVITY_NUM = getIntent().getIntExtra("ACTIVITY_NUM", -1);
 
         if (set != null){
             current_card = 0;
@@ -103,10 +104,26 @@ public class SetStartActivity extends AppCompatActivity implements View.OnClickL
     }
 
     public void exit(){
-        Intent intent = new Intent(SetStartActivity.this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        finish();
+        switch(ACTIVITY_NUM){
+            case(0):
+                Intent main = new Intent(SetStartActivity.this, MainActivity.class);
+                main.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(main);
+                finish();
+                break;
+            case(1):
+                Intent favorites = new Intent(SetStartActivity.this, FavoritesActivity.class);
+                favorites.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(favorites);
+                finish();
+                break;
+            case(-1):
+                Intent intent = new Intent(SetStartActivity.this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+                break;
+        }
     }
 
     @Override

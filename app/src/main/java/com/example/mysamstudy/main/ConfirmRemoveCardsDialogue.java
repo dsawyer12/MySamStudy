@@ -18,7 +18,7 @@ import android.widget.RelativeLayout;
 
 import com.example.mysamstudy.R;
 import com.example.mysamstudy.objects.Card;
-import com.example.mysamstudy.utils.BaseCardListAdapter;
+import com.example.mysamstudy.utils.CardListAdapter;
 
 import java.util.ArrayList;
 
@@ -52,7 +52,7 @@ public class ConfirmRemoveCardsDialogue extends DialogFragment implements View.O
         delete_set = getSetFromBundle();
 
         if(delete_set != null){
-            BaseCardListAdapter adapter = new BaseCardListAdapter(getActivity(), delete_set);
+            CardListAdapter adapter = new CardListAdapter(getActivity(), delete_set);
             listview.setAdapter(adapter);
         }
     }

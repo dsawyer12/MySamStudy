@@ -23,6 +23,7 @@ public class SetListRecyclerView extends RecyclerView.Adapter<SetListRecyclerVie
     private static final String TAG = "TAG";
 
     private Context context;
+    private int ACTIVITY_NUM;
     private ArrayList<Set> sets;
     private ArrayList<Set> delete_set;
     private boolean delete_view = false, is_dark_theme;
@@ -34,10 +35,11 @@ public class SetListRecyclerView extends RecyclerView.Adapter<SetListRecyclerVie
     }
     OnItemClickListener listener;
 
-    public SetListRecyclerView(Context context, ArrayList<Set> sets, OnItemClickListener listener) {
+    public SetListRecyclerView(Context context, int ACTIVITY_NUM, ArrayList<Set> sets, OnItemClickListener listener) {
         SettingsManager.getSharedPreferences(context, SettingsManager.dark_theme_preferences);
         is_dark_theme = SettingsManager.getDarkTheme(SettingsManager.dark_theme_preferences);
         this.context = context;
+        this.ACTIVITY_NUM = ACTIVITY_NUM;
         this.sets = sets;
         this.listener = listener;
         delete_set = new ArrayList<>();
@@ -99,68 +101,82 @@ public class SetListRecyclerView extends RecyclerView.Adapter<SetListRecyclerVie
             holder.start.setEnabled(false);
         }
 
-        if (delete_view){
-            holder.checkBox.setVisibility(View.VISIBLE);
-            holder.start.setVisibility(View.GONE);
-            if (sets.get(holder.getAdapterPosition()).isSelected())
-                holder.checkBox.setChecked(true);
-            else
-                holder.checkBox.setChecked(false);
+        if (listener != null){
+            if (ACTIVITY_NUM == 0){
+                if (delete_view){
+                    holder.checkBox.setVisibility(View.VISIBLE);
+                    holder.start.setVisibility(View.GONE);
+                    if (sets.get(holder.getAdapterPosition()).isSelected())
+                        holder.checkBox.setChecked(true);
+                    else
+                        holder.checkBox.setChecked(false);
+                }
+                else{
+                    delete_set.clear();
+                    holder.checkBox.setVisibility(View.GONE);
+                    holder.start.setVisibility(View.VISIBLE);
+                    holder.checkBox.setChecked(false);
+                }
+
+                holder.rootView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (delete_view){
+                            if (sets.get(holder.getAdapterPosition()).isSelected()){
+                                sets.get(holder.getAdapterPosition()).setSelected(false);
+                                holder.checkBox.setChecked(false);
+                                delete_set.remove(sets.get(holder.getAdapterPosition()));
+                            }
+                            else{
+                                sets.get(holder.getAdapterPosition()).setSelected(true);
+                                holder.checkBox.setChecked(true);
+                                delete_set.add(sets.get(holder.getAdapterPosition()));
+                            }
+                        }
+                        else{
+                            clearDeleteSet();
+                            listener.onSetClick(sets.get(holder.getAdapterPosition()));
+                        }
+                    }
+                });
+
+                holder.rootView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        if (delete_view){
+                            delete_view = false;
+                            sets.get(holder.getAdapterPosition()).setSelected(false);
+                            listener.onSetLongClick(false);
+                            clearDeleteSet();
+                        }
+                        else{
+                            delete_view = true;
+                            sets.get(holder.getAdapterPosition()).setSelected(true);
+                            delete_set.add(sets.get(holder.getAdapterPosition()));
+                            listener.onSetLongClick(true);
+                        }
+                        return true;
+                    }
+                });
+            }
+            else if(ACTIVITY_NUM == 1){
+                holder.rootView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                       listener.onSetClick(sets.get(holder.getAdapterPosition()));
+                    }
+                });
+            }
+            holder.start.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onSetStart(sets.get(holder.getAdapterPosition()));
+                }
+            });
         }
         else{
-            delete_set.clear();
-            holder.checkBox.setVisibility(View.GONE);
-            holder.start.setVisibility(View.VISIBLE);
-            holder.checkBox.setChecked(false);
+            holder.start.setVisibility(View.GONE);
         }
-
-        holder.rootView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (delete_view){
-                    if (sets.get(holder.getAdapterPosition()).isSelected()){
-                        sets.get(holder.getAdapterPosition()).setSelected(false);
-                        holder.checkBox.setChecked(false);
-                        delete_set.remove(sets.get(holder.getAdapterPosition()));
-                    }
-                    else{
-                        sets.get(holder.getAdapterPosition()).setSelected(true);
-                        holder.checkBox.setChecked(true);
-                        delete_set.add(sets.get(holder.getAdapterPosition()));
-                    }
-                }
-                else{
-                    clearDeleteSet();
-                    listener.onSetClick(sets.get(holder.getAdapterPosition()));
-                }
-            }
-        });
-
-        holder.rootView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                if (delete_view){
-                    delete_view = false;
-                    sets.get(holder.getAdapterPosition()).setSelected(false);
-                    listener.onSetLongClick(false);
-                    clearDeleteSet();
-                }
-                else{
-                    delete_view = true;
-                    sets.get(holder.getAdapterPosition()).setSelected(true);
-                    delete_set.add(sets.get(holder.getAdapterPosition()));
-                    listener.onSetLongClick(true);
-                }
-                return true;
-            }
-        });
-
-        holder.start.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.onSetStart(sets.get(holder.getAdapterPosition()));
-            }
-        });
     }
 
     @Override
