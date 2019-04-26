@@ -41,7 +41,6 @@
                     android:padding="20dp"
                     android:layout_marginStart="2dp"
                     android:layout_marginEnd="2dp"
-                    android:background="@drawable/bottom_border_accessory_orange"
                     android:textSize="18sp"
                     android:textColor="?attr/colorAccent"/>
 
