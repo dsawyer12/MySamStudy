@@ -17,9 +17,9 @@ import java.util.ArrayList;
 public class SearchListAdapter extends BaseAdapter {
     private static final String TAG = "TAG";
 
-    Context context;
-    ArrayList<Set> sets;
-    LayoutInflater inflater;
+    private Context context;
+    private ArrayList<Set> sets;
+    private LayoutInflater inflater;
 
     public SearchListAdapter(Context context, ArrayList<Set> sets) {
         this.context = context;

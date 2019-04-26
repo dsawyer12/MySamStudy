@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import com.example.mysamstudy.R;
 
 public class ConfirmDeleteAccountDialogue extends DialogFragment implements View.OnClickListener{
+    private static final String TAG = "TAG";
 
     Button cancel, confirm;
 

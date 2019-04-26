@@ -18,14 +18,12 @@ import com.google.gson.Gson;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
     private static final String TAG = "TAG";
-
     EditText username, password;
     Button login, register;
     private DatabaseManager dbm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d(TAG, "onCreate: Login");
         SettingsManager.getSharedPreferences(this, SettingsManager.dark_theme_preferences);
         if (!SettingsManager.getDarkTheme(SettingsManager.dark_theme_preferences)){
             setTheme(R.style.AppThemeLight);

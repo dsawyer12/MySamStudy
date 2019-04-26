@@ -49,7 +49,6 @@ public class EditCardFragment extends Fragment implements View.OnClickListener{
 
         card = getCardFromBundle();
         if (card != null)
-            Log.d(TAG, String.valueOf(card.getCardID()));
             initLayout();
     }
 
@@ -88,9 +87,6 @@ public class EditCardFragment extends Fragment implements View.OnClickListener{
                 break;
 
             case(R.id.edit_card_back):
-
-                // if fields are updated, display a dialogue fragment to make sure they want to quit
-
                 getActivity().getSupportFragmentManager().popBackStackImmediate();
                 break;
 
@@ -114,17 +110,3 @@ public class EditCardFragment extends Fragment implements View.OnClickListener{
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

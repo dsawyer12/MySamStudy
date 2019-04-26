@@ -32,7 +32,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginEnd="20dp"
-                        android:src="@drawable/ic_back" />
+                        android:src="@drawable/ic_back"
+                        android:contentDescription="@string/back_btn" />
 
                     <TextView
                         android:id="@+id/set_title"
@@ -68,7 +69,7 @@
         android:layout_height="56dp"
         android:layout_gravity="bottom"
         android:background="@drawable/button_accessory_orange"
-        android:text="Next Question"
+        android:text="@string/next_question"
         android:textColor="@color/white"
         android:textAllCaps="false"
         android:layout_margin="20dp"/>

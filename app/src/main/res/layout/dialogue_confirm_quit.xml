@@ -8,7 +8,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:text="Are you sure you want to quit?"
+        android:text="@string/quit_header_msg"
         android:textSize="22sp"
         android:textColor="?attr/primaryText"
         android:textStyle="bold"
@@ -25,7 +25,7 @@
         android:layout_marginBottom="10dp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
-        android:text="Quit"/>
+        android:text="@string/quit"/>
 
     <Button
         android:id="@+id/confirm_continue"
@@ -37,6 +37,6 @@
         android:layout_marginBottom="30dp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
-        android:text="Continue"/>
+        android:text="@string/_continue"/>
 
 </LinearLayout>

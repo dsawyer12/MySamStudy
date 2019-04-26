@@ -24,7 +24,8 @@
                 android:layout_height="30dp"
                 android:layout_gravity="center"
                 android:layout_marginEnd="20dp"
-                android:src="@drawable/ic_back"/>
+                android:src="@drawable/ic_back"
+                android:contentDescription="@string/back_btn" />
 
             <TextView
                 android:id="@+id/set_title"
@@ -46,7 +47,8 @@
                 android:layout_height="30dp"
                 android:layout_gravity="center"
                 android:layout_marginEnd="20dp"
-                android:src="@drawable/ic_finish"/>
+                android:src="@drawable/ic_finish"
+                android:contentDescription="@string/finish" />
 
         </LinearLayout>
 
@@ -67,6 +69,6 @@
         android:textColor="?attr/primaryText"
         android:textColorHint="@color/lightGrey"
         android:background="@drawable/bottom_border_accessory_orange"
-        android:hint="Set name..."/>
+        android:hint="@string/set_name_elp"/>
 
 </LinearLayout>

@@ -14,7 +14,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="5dp"
-        android:text="Question"
+        android:text="@string/question"
         android:layout_marginTop="30dp"
         android:textSize="16sp"
         android:textColor="?attr/primaryText"/>
@@ -36,7 +36,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="5dp"
-        android:text="Answer"
+        android:text="@string/answer"
         android:textSize="16sp"
         android:textColor="?attr/primaryText"/>
 

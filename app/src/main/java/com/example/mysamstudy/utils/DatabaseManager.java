@@ -126,12 +126,6 @@ public class DatabaseManager extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-//    public void getUserById(int id){
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        String query = "SELECT " + " FROM " + "USER_TABLE";
-//
-//    }
-
     public User getUser(String mUsername, String mPassword){
         SQLiteDatabase database = this.getWritableDatabase();
         String query = "SELECT * FROM " + USERS_TABLE + " WHERE " + username + " = '" + mUsername +
@@ -374,16 +368,6 @@ public class DatabaseManager extends SQLiteOpenHelper {
             }
         }
         return null;
-//        else if(searchType == 1){
-//            Cursor c = database.rawQuery(cardQuery, null);
-//            if (!(c.moveToFirst()) || c.getCount() == 0){
-//                c.close();
-//                return null;
-//            }
-//            else{
-//
-//            }
-//        }
     }
 
     public void updateSharedSetList(int setId, boolean share){

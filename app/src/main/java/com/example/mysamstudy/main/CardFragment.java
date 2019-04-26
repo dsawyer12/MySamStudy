@@ -14,6 +14,7 @@ import com.example.mysamstudy.R;
 import com.example.mysamstudy.objects.Card;
 
 public class CardFragment extends Fragment implements View.OnClickListener {
+    private static final String TAG = "TAG";
 
     Card card;
     TextView card_question, card_answer;

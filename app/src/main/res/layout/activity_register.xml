@@ -12,7 +12,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:text="Create an Account"
+        android:text="@string/create_an_account"
         android:textAlignment="center"
         android:textColor="@color/lightOrange"
         android:textSize="26sp" />
@@ -37,7 +37,7 @@
             android:backgroundTint="@color/lightOrange"
             android:layout_marginEnd="30dp"
             android:maxLines="1"
-            android:hint="First Name..."
+            android:hint="@string/first_name_elp"
             android:inputType="textCapWords"
             android:textColor="?attr/primaryText"
             android:textSize="14sp" />
@@ -54,7 +54,7 @@
             android:textColorHint="?attr/primaryText"
             android:backgroundTint="@color/lightOrange"
             android:maxLines="1"
-            android:hint="Last Name..."
+            android:hint="@string/last_name_elp"
             android:inputType="textCapWords"
             android:textColor="?attr/primaryText"
             android:textSize="14sp" />
@@ -71,7 +71,7 @@
             android:textColorHint="?attr/primaryText"
             android:backgroundTint="@color/lightOrange"
             android:maxLines="1"
-            android:hint="Email..."
+            android:hint="@string/email_elp"
             android:inputType="textEmailAddress"
             android:textColor="?attr/primaryText"
             android:textSize="14sp" />
@@ -88,7 +88,7 @@
             android:textColorHint="?attr/primaryText"
             android:backgroundTint="@color/lightOrange"
             android:maxLines="1"
-            android:hint="Username..."
+            android:hint="@string/username_elp"
             android:inputType="text"
             android:textColor="?attr/primaryText"
             android:textSize="14sp" />
@@ -106,7 +106,7 @@
             android:textColorHint="?attr/primaryText"
             android:backgroundTint="@color/lightOrange"
             android:maxLines="1"
-            android:hint="Password..."
+            android:hint="@string/password_elp"
             android:inputType="textVisiblePassword"
             android:textColor="?attr/primaryText"
             android:textSize="14sp" />
@@ -129,7 +129,7 @@
         android:layout_above="@id/register_login"
         android:layout_centerHorizontal="true"
         android:background="@drawable/button_accessory_blue"
-        android:text="Submit"
+        android:text="@string/submit"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="@color/white" />
@@ -145,7 +145,7 @@
         android:layout_marginStart="56dp"
         android:layout_marginEnd="56dp"
         android:backgroundTint="?attr/backGround"
-        android:text="Already have an account? Login"
+        android:text="@string/already_have_an_account_login"
         android:textAllCaps="false"
         android:textColor="@color/lightOrange"
         android:textSize="16sp" />

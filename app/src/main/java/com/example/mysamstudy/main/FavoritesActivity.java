@@ -25,6 +25,7 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 
 public class FavoritesActivity extends AppCompatActivity implements View.OnClickListener {
+    private static final String TAG = "TAG";
     private static final int ACTIVITY_NUM = 1;
 
     TextView favorites_error;

@@ -3,6 +3,7 @@ package com.example.mysamstudy.main;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -34,8 +35,6 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
     Button password, save_changes, delete_account;
 
     private User user;
-//    ArrayList<Set> sets = new ArrayList<>();
-//    java.util.Set<Integer> selectedSet = new HashSet<>();
 
     @Override
     public void onChecked(int position) { }

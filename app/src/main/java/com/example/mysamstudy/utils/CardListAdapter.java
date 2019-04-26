@@ -13,6 +13,7 @@ import com.example.mysamstudy.objects.Card;
 import java.util.ArrayList;
 
 public class CardListAdapter extends BaseAdapter {
+    private static final String TAG = "TAG";
 
     private ArrayList<Card> cards;
     private Context context;

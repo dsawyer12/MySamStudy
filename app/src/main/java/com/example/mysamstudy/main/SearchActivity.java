@@ -25,9 +25,9 @@ import java.util.ArrayList;
 
 public class SearchActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "TAG";
-    private static final int SEARCH_ALL = 0;
+//    private static final int SEARCH_ALL = 0;
+//    private static final int SEARCH_CARDS = 2;
     private static final int SEARCH_SETS = 1;
-    private static final int SEARCH_CARDS = 2;
 
     EditText search_box;
     TextView search_error;

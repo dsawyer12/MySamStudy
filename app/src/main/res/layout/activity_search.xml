@@ -23,7 +23,8 @@
                 android:layout_weight="3"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_back"
-                android:tint="@color/lightBlue" />
+                android:tint="@color/lightBlue"
+                android:contentDescription="@string/back_btn" />
 
             <EditText
                 android:id="@+id/search_box"
@@ -32,7 +33,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
                 android:layout_weight="1"
-                android:hint="Search..."
+                android:hint="@string/search_elp"
                 android:paddingStart="20dp"
                 android:paddingEnd="0dp"
                 android:maxLines="1"
@@ -47,52 +48,16 @@
                 android:layout_weight="3"
                 android:layout_gravity="center"
                 android:tint="@color/lightBlue"
-                android:src="@drawable/ic_search"/>
+                android:src="@drawable/ic_search"
+                android:contentDescription="@string/search_button" />
 
         </LinearLayout>
-
-        <!--<LinearLayout-->
-            <!--android:orientation="horizontal"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:paddingBottom="10dp"-->
-            <!--android:background="@drawable/bottom_border_accessory_grey">-->
-
-            <!--<CheckBox-->
-                <!--android:id="@+id/search_all"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:textColor="@color/darkBlue"-->
-                <!--android:buttonTint="@color/darkBlue"-->
-                <!--android:layout_marginStart="10dp"-->
-                <!--android:layout_weight="1"-->
-                <!--android:text="All"/>-->
-
-            <!--<CheckBox-->
-                <!--android:id="@+id/search_sets"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:textColor="@color/darkBlue"-->
-                <!--android:buttonTint="@color/darkBlue"-->
-                <!--android:layout_weight="1"-->
-                <!--android:text="Sets"/>-->
-
-            <!--<CheckBox-->
-                <!--android:id="@+id/search_cards"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:textColor="@color/darkBlue"-->
-                <!--android:buttonTint="@color/darkBlue"-->
-                <!--android:layout_weight="1"-->
-                <!--android:text="Cards"/>-->
-
-        <!--</LinearLayout>-->
 
         <TextView
             android:id="@+id/search_error"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="We couldn't find a match for your search"
+            android:text="@string/search_warning"
             android:textSize="14sp"
             android:gravity="center"
             android:visibility="gone"

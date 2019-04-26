@@ -39,7 +39,7 @@
                     android:paddingStart="30dp"
                     android:paddingEnd="10dp"
                     android:layout_weight="1"
-                    android:text="Favorites"
+                    android:text="@string/favorites"
                     android:textColor="?attr/titleTextColor"
                     android:layout_gravity="center"
                     android:textSize="20sp"/>
@@ -50,7 +50,8 @@
                     android:layout_height="30dp"
                     android:src="@drawable/ic_refresh"
                     android:layout_marginEnd="20dp"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/refresh" />
 
             </LinearLayout>
 

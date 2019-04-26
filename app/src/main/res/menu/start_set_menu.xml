@@ -3,13 +3,13 @@
 
     <item
         android:id="@+id/loop_set"
-        android:title="Loop Set"
+        android:title="@string/loop_set"
         android:checkable="true">
     </item>
 
     <item
         android:id="@+id/show_answer"
-        android:title="Show Answers"
+        android:title="@string/show_answers"
         android:checkable="true">
     </item>
 

@@ -150,9 +150,6 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
                         set_add.setVisibility(View.VISIBLE);
                     }
                 }
-//                else
-//                    createMode = false;
-//                    onBackPressed();
             }
 
             @Override

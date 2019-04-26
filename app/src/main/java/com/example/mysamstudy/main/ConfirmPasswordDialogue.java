@@ -21,6 +21,7 @@ import com.example.mysamstudy.utils.SettingsManager;
 import com.google.gson.Gson;
 
 public class ConfirmPasswordDialogue extends DialogFragment implements View.OnClickListener {
+    private static final String TAG = "TAG";
 
     Button verify_btn, cancel_btn;
     EditText password;

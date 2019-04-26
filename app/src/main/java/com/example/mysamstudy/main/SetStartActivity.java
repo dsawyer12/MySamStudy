@@ -99,8 +99,6 @@ public class SetStartActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onBackPressed() {
         exit();
-//        ConfirmQuitdialog dialog = new ConfirmQuitdialog();
-//        dialog.show(getSupportFragmentManager(), "quitDialog");
     }
 
     public void exit(){
@@ -186,9 +184,6 @@ public class SetStartActivity extends AppCompatActivity implements View.OnClickL
 
             case(R.id.back_button):
                 exit();
-//                ConfirmQuitdialog dialog = new ConfirmQuitdialog();
-//                dialog.show(getSupportFragmentManager(), "quitDialog");
-//                break;
         }
     }
 }

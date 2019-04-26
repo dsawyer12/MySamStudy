@@ -105,7 +105,6 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         SettingsManager.getSharedPreferences(this, SettingsManager.share_selection_preferences);
         int shareSelectedOption = SettingsManager.getShareSelectionPreferences(SettingsManager.share_selection_preferences);
         if (shareSelectedOption == 0){
-            Log.d(TAG, "initSettings: ZERO");
             share_all.setChecked(true);
             SettingsManager.getSharedPreferences(this, SettingsManager.share_selection_preferences);
             SettingsManager.write(SettingsManager.share_selection_preferences, share_all.getId());
@@ -113,27 +112,21 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
             SettingsManager.write(SettingsManager.share_all_sets_preferences, true);
         }
         else{
-            Log.d(TAG, "initSettings: NOT zero");
-            Log.d(TAG, String.valueOf(shareSelectedOption));
             share_radio_group.indexOfChild(findViewById(share_radio_group.getCheckedRadioButtonId()));
             share_radio_group.check(shareSelectedOption);
             if (shareSelectedOption == select_share.getId()){
-                Log.d(TAG, "initSettings: select share is selected");
                 if (sets != null){
-                    Log.d(TAG, "initSettings: and sets is not NULL");
                     share_list.setVisibility(View.VISIBLE);
                     share_list.setImageResource(R.drawable.ic_collapse);
                     list.setVisibility(View.VISIBLE);
                     no_sets_mssg.setVisibility(View.GONE);
                 }
                 else{
-                    Log.d(TAG, "initSettings: sets IS null");
                     list.setVisibility(View.GONE);
                     no_sets_mssg.setVisibility(View.VISIBLE);
                 }
             }
             else{
-                Log.d(TAG, "initSettings: select share is NOT selected");
                 share_list.setVisibility(View.GONE);
                 share_list.setImageResource(R.drawable.ic_expand);
                 list.setVisibility(View.GONE);
@@ -145,7 +138,6 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
             listener = new SetSelectShareAdapter.OnItemCheckedListener() {
                 @Override
                 public void onChecked(int position) {
-                    Log.d(TAG, Boolean.toString(sets.get(position).isShare()));
                     sets.get(position).setShare(true);
                     updatedSets.put(sets.get(position).getSetId(), true);
                     adapter.notifyDataSetChanged();
@@ -153,7 +145,6 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
                 @Override
                 public void onUnchecked(int position) {
-                    Log.d(TAG, Boolean.toString(sets.get(position).isShare()));
                     sets.get(position).setShare(false);
                     updatedSets.put(sets.get(position).getSetId(), false);
                     adapter.notifyDataSetChanged();
@@ -285,4 +276,3 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         exit();
     }
 }
-

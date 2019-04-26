@@ -18,10 +18,10 @@ import java.util.ArrayList;
 public class SetSelectShareAdapter extends BaseAdapter {
     private static final String TAG = "TAG";
 
-    Context context;
-    ArrayList<Set> sets;
-    LayoutInflater inflater;
-    OnItemCheckedListener listener;
+    private Context context;
+    private ArrayList<Set> sets;
+    private LayoutInflater inflater;
+    private OnItemCheckedListener listener;
 
     public interface OnItemCheckedListener{
         void onChecked(int position);
@@ -48,10 +48,6 @@ public class SetSelectShareAdapter extends BaseAdapter {
     @Override
     public long getItemId(int position) {
         return 0;
-    }
-
-    public int getSetId(int position){
-        return sets.get(position).getSetId();
     }
 
     @Override

@@ -25,7 +25,8 @@
                 android:layout_height="30dp"
                 android:layout_gravity="center"
                 android:layout_marginEnd="20dp"
-                android:src="@drawable/ic_back"/>
+                android:src="@drawable/ic_back"
+                android:contentDescription="@string/back_btn" />
 
             <TextView
                 android:layout_width="0dp"
@@ -36,7 +37,7 @@
                 android:paddingEnd="10dp"
                 android:gravity="center_vertical"
                 android:layout_weight="1"
-                android:text="Account Settings"
+                android:text="@string/account_settings"
                 android:textColor="?attr/titleTextColor"
                 android:layout_gravity="center"
                 android:textSize="20sp"/>
@@ -59,7 +60,6 @@
                 android:id="@+id/account_created"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Account created - Jan 1, 2019"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
                 android:textColor="?attr/primaryText"
@@ -76,7 +76,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Privacy Settings"
+                    android:text="@string/privacy_settings"
                     android:textStyle="bold"
                     android:paddingTop="10dp"
                     android:textColor="@color/lightBlue"/>
@@ -97,7 +97,7 @@
                         android:switchPadding="40dp"
                         android:layout_marginTop="5dp"
                         android:paddingBottom="5dp"
-                        android:text="Allow your profile to be searched and viewed by others"
+                        android:text="@string/privacy_settings_mssg"
                         android:textColor="?attr/primaryText"/>
 
                 </LinearLayout>
@@ -105,7 +105,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Personal Information"
+                    android:text="@string/personal_information"
                     android:textStyle="bold"
                     android:layout_marginTop="10dp"
                     android:textColor="@color/lightBlue"/>
@@ -122,7 +122,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="First Name"
+                       android:text="@string/first_name"
                         android:layout_marginTop="10dp"
                         android:textColor="?attr/primaryText"/>
 
@@ -140,7 +140,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Last Name"
+                        android:text="@string/last_name"
                         android:layout_marginTop="10dp"
                         android:textColor="?attr/primaryText"/>
 
@@ -158,7 +158,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Username"
+                        android:text="@string/username"
                         android:layout_marginTop="10dp"
                         android:textColor="?attr/primaryText"/>
 
@@ -176,7 +176,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Email"
+                        android:text="@string/email"
                         android:layout_marginTop="10dp"
                         android:textColor="?attr/primaryText"/>
 
@@ -194,7 +194,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Password"
+                        android:text="@string/password"
                         android:layout_marginTop="30dp"
                         android:textColor="?attr/primaryText"/>
 
@@ -202,7 +202,7 @@
                         android:id="@+id/password"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
-                        android:text="Edit Password"
+                        android:text="@string/edit_password"
                         android:textAllCaps="false"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="5dp"
@@ -217,7 +217,7 @@
                     android:id="@+id/delete_account_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="35dp"
-                    android:background="@drawable/button_accessory_red"
+                    android:background="@drawable/button_accessory_dark_orange"
                     android:layout_marginTop="30dp"
                     android:layout_gravity="center"
                     android:paddingStart="20dp"
@@ -225,7 +225,7 @@
                     android:layout_marginBottom="30dp"
                     android:layout_marginStart="60dp"
                     android:layout_marginEnd="60dp"
-                    android:text="Delete Account"
+                    android:text="@string/delete_account"
                     android:textAllCaps="false"
                     android:textColor="@color/white"/>
 
@@ -245,6 +245,6 @@
         android:layout_marginBottom="30dp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
-        android:text="Save Changes"/>
+        android:text="@string/save_changes"/>
 
 </LinearLayout>
