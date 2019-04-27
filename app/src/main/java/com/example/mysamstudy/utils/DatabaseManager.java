@@ -123,6 +123,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + USERS_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + SETS_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + CARDS_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + FAVORITES_TABLE);
         onCreate(db);
     }
 
